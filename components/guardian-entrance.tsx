@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Canvas } from '@react-three/fiber'
-import { useGLTF, useAnimations } from '@react-three/drei'
+import { useGLTF, useAnimations, ContactShadows } from '@react-three/drei'
 import { prefersReducedMotion } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
 import * as THREE from 'three'
@@ -31,7 +31,7 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
   }, [scene])
 
   useEffect(() => {
-    // Play idle animation if it exists, otherwise play the first available animation
+    // Play idle animation if it exists
     const idleAction = actions['Idle'] || (Object.keys(actions).length > 0 ? actions[Object.keys(actions)[0]] : null)
     if (idleAction) {
       idleAction.reset().fadeIn(0.5).play()
@@ -43,24 +43,30 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
     const section = document.getElementById(targetId)
     if (!section) return
 
+    // Calculate dynamic scaling and positioning to ensure head is visible
+    const targetScale = 2.1 // Scaled down from 2.8 to fit head in frame
+    const restY = -1.5 // Lowered resting vertical anchor
+    const restX = 2.8 // Kept on the right side
+    const restZ = -1
+
     if (prefersReducedMotion()) {
       onLandingComplete()
-      group.current.position.set(2.5, -0.5, -2) // higher resting position, shifted right
-      group.current.scale.setScalar(2.8) 
+      group.current.position.set(restX, restY, restZ) 
+      group.current.scale.setScalar(targetScale) 
       return
     }
 
     // Initial state high above and to the right
-    gsap.set(group.current.position, { x: 2.5, y: 12, z: -1 })
-    gsap.set(group.current.rotation, { x: Math.PI / 8, y: -Math.PI / 6 }) // rotated slightly towards center
-    gsap.set(group.current.scale, { x: 2.8, y: 2.8, z: 2.8 })
+    gsap.set(group.current.position, { x: restX, y: 12, z: 0 })
+    gsap.set(group.current.rotation, { x: Math.PI / 8, y: -Math.PI / 6 }) 
+    gsap.set(group.current.scale, { x: targetScale, y: targetScale, z: targetScale })
 
     // Timeline starting slightly after page load
     const tl = gsap.timeline({ delay: 0.6 })
 
     // 1. Fall down
     tl.to(group.current.position, {
-      y: -1.0,
+      y: restY,
       duration: 0.35,
       ease: 'power4.in',
     })
@@ -79,9 +85,9 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
 
     // 3. Settling - push back slightly into the background
     tl.to(group.current.position, {
-      z: -2,
-      y: -0.5,
-      x: 2.5, // remain on the right
+      z: restZ,
+      y: restY, // stay at grounded level
+      x: restX, // remain on the right
       duration: 0.6,
       ease: 'power2.out',
       onComplete: onLandingComplete
@@ -92,7 +98,13 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
     }
   }, [targetId, onLandingComplete])
 
-  return <primitive ref={group} object={scene} />
+  return (
+    <group ref={group}>
+      <primitive object={scene} />
+      {/* Contact shadow to ground the character */}
+      <ContactShadows position={[0, -0.2, 0]} opacity={0.65} scale={4} blur={2.5} far={4} color="#000000" />
+    </group>
+  )
 }
 
 type GuardianEntranceProps = {
@@ -144,10 +156,11 @@ export function GuardianEntrance({ targetId, onLandingComplete, className }: Gua
   }, [])
 
   return (
-    <div ref={containerRef} className={cn("absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center", className)} aria-hidden="true">
-      {/* 3D Canvas Layer */}
-      <div className="absolute inset-0 z-10 opacity-95">
-        <Canvas camera={{ position: [0, 1, 8], fov: 45 }}>
+    <div ref={containerRef} className={cn("absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center", className)} aria-hidden="true">
+      {/* 3D Canvas Layer - Hidden on mobile for performance/readability, visible on lg screens and up */}
+      <div className="absolute inset-0 z-0 opacity-95 hidden lg:block">
+        {/* Adjusted camera fov to fit the model fully across different viewports */}
+        <Canvas camera={{ position: [0, 1.5, 9], fov: 40 }}>
           {/* Base ambient lighting */}
           <ambientLight intensity={0.4} />
           {/* Key light (dramatic red) */}
