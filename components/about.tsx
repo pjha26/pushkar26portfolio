@@ -129,34 +129,52 @@ export function About() {
 
 function Pushpin() {
   return (
-    <svg className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 drop-shadow-md z-10" viewBox="0 0 24 24" fill="none" stroke="#b3453f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="6" r="4" fill="#b3453f" />
+    <svg className="absolute -top-2 left-1/2 -translate-x-1/2 w-5 h-5 drop-shadow-md z-10" viewBox="0 0 24 24" fill="none" stroke="#f5c400" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="6" r="4" fill="#f5c400" />
       <line x1="12" y1="10" x2="12" y2="22" stroke="#d1d5db" />
       <line x1="8" y1="10" x2="16" y2="10" />
     </svg>
   )
 }
 
-function RedString() {
-  const pathRef = useRef<SVGPathElement>(null)
+function EvidenceBoard() {
+  const containerRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
     if (prefersReducedMotion()) return
-    const path = pathRef.current
-    if (!path) return
-    const length = path.getTotalLength()
-    gsap.set(path, { strokeDasharray: length, strokeDashoffset: length })
+    const container = containerRef.current
+    if (!container) return
     
-    const tl = gsap.to(path, {
-      strokeDashoffset: 0,
-      duration: 1.5,
-      ease: 'power2.out',
+    const cards = container.querySelectorAll('.evidence-card')
+    const path = container.querySelector('.red-string-path') as SVGPathElement
+    
+    if (path) {
+      const length = path.getTotalLength()
+      gsap.set(path, { strokeDasharray: length, strokeDashoffset: length })
+    }
+    
+    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: path,
+        trigger: container,
         start: 'top 75%',
         once: true
       }
     })
+    
+    // Cards reveal first
+    tl.fromTo(cards, 
+      { autoAlpha: 0, y: 30 },
+      { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.15, ease: 'power2.out' }
+    )
+    
+    // Then string draws in
+    if (path) {
+      tl.to(path, {
+        strokeDashoffset: 0,
+        duration: 1.2,
+        ease: 'power2.inOut'
+      }, '-=0.2') // Slight overlap
+    }
     
     return () => {
       tl.scrollTrigger?.kill()
@@ -165,9 +183,32 @@ function RedString() {
   }, [])
 
   return (
-    <svg className="absolute top-12 left-[15%] w-[70%] h-32 pointer-events-none hidden md:block z-0" viewBox="0 0 100 20" preserveAspectRatio="none">
-      <path ref={pathRef} d="M0,0 Q25,20 50,0 T100,0" fill="none" stroke="#8b1a1a" strokeWidth="1.5" className="opacity-70 drop-shadow-sm" />
-    </svg>
+    <div ref={containerRef} className="relative mt-12 pt-4">
+      <svg className="absolute top-12 left-[16%] w-[68%] h-24 pointer-events-none hidden md:block z-0" viewBox="0 0 100 20" preserveAspectRatio="none">
+        <path className="red-string-path" d="M0,0 Q25,25 50,0 T100,0" fill="none" stroke="#8b1a1a" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+      <div className="grid gap-8 md:grid-cols-3 relative z-10">
+        {PRINCIPLES.map((p, i) => {
+          const rotation = i % 2 === 0 ? '-rotate-2' : 'rotate-2'
+          return (
+            <div key={p.code} className={cn("evidence-card relative transition-all duration-200 hover:rotate-0 hover:scale-[1.02]", rotation)}>
+              <Pushpin />
+              <TiltCard className="p-6 h-full flex flex-col bg-[#14141a]/95 border-border shadow-xl backdrop-blur-sm">
+                <p className="font-mono text-[10px] tracking-[0.25em] text-signal">
+                  {p.code}
+                </p>
+                <h3 className="dossier-heading mt-3 text-lg text-foreground uppercase tracking-widest">
+                  {p.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground flex-grow">
+                  {p.body}
+                </p>
+              </TiltCard>
+            </div>
+          )
+        })}
+      </div>
+    </div>
   )
 }
 
@@ -178,31 +219,7 @@ export function HowIBuild() {
       fileLabel="SECTION 02 // FIELD NOTES"
       title="How I Build"
     >
-      <div className="relative mt-8">
-        <RedString />
-        <div className="grid gap-8 md:grid-cols-3 relative z-10">
-          {PRINCIPLES.map((p, i) => {
-            const rotation = i % 2 === 0 ? '-rotate-2' : 'rotate-2'
-            
-            return (
-              <div key={p.code} className={cn("relative transition-transform duration-300 hover:rotate-0 hover:-translate-y-2", rotation)}>
-                <Pushpin />
-                <TiltCard className="p-6 h-full flex flex-col bg-[#14141a]/95 border-border shadow-xl backdrop-blur-sm">
-                  <p className="font-mono text-[10px] tracking-[0.25em] text-signal">
-                    {p.code}
-                  </p>
-                  <h3 className="dossier-heading mt-3 text-lg text-foreground uppercase tracking-widest">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground flex-grow">
-                    {p.body}
-                  </p>
-                </TiltCard>
-              </div>
-            )
-          })}
-        </div>
-      </div>
+      <EvidenceBoard />
     </Section>
   )
 }

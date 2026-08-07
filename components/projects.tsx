@@ -70,18 +70,23 @@ function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
   const [open, setOpen] = useState(false)
   const tabRef = useRef<HTMLButtonElement>(null)
   const drawerRef = useRef<HTMLDivElement>(null)
+  const thicknessRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
     if (prefersReducedMotion()) return
     
     if (open) {
       // Slide OUT horizontally (like pulling a folder)
-      gsap.to(tabRef.current, { x: 16, rotate: 1, duration: 0.4, ease: 'power2.out' })
+      gsap.to(tabRef.current, { x: 48, rotate: 1.5, duration: 0.4, ease: 'power2.out' })
       gsap.to(drawerRef.current, { autoAlpha: 1, height: 'auto', duration: 0.4, ease: 'power2.out', display: 'block' })
+      // Flatten file thickness
+      gsap.to(thicknessRef.current, { x: 0, y: 0, opacity: 0, duration: 0.3, ease: 'power2.out' })
     } else {
       // Slide back IN
       gsap.to(tabRef.current, { x: 0, rotate: 0, duration: 0.35, ease: 'power2.inOut' })
       gsap.to(drawerRef.current, { autoAlpha: 0, height: 0, duration: 0.35, ease: 'power2.inOut', display: 'none' })
+      // Restore file thickness
+      gsap.to(thicknessRef.current, { x: 4, y: 4, opacity: 1, duration: 0.35, ease: 'power2.inOut' })
     }
   }, [open])
 
@@ -92,6 +97,9 @@ function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
       className="group p-0 mb-6 bg-transparent border-none shadow-none"
     >
       <div className="relative">
+        {/* File thickness cue (stacked paper look) */}
+        <div ref={thicknessRef} className="absolute inset-0 bg-[#070709] border border-[#1a1a20] translate-x-1 translate-y-1 z-0 pointer-events-none" />
+        
         <button
           ref={tabRef}
           type="button"
@@ -176,6 +184,7 @@ function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
                   href={c.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   className="link-underline font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:text-signal"
                 >
                   GitHub ↗
@@ -186,6 +195,7 @@ function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
                   href={c.live}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   className="link-underline font-mono text-xs uppercase tracking-widest text-signal"
                 >
                   Live ↗
