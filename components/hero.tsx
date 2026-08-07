@@ -6,8 +6,13 @@ import { prefersReducedMotion } from '@/lib/use-reveal'
 import { scrollToSection } from '@/components/smooth-scroll'
 import { MagneticLink } from '@/components/magnetic-link'
 import { HeroRain, HeroSpotlight } from '@/components/gotham-atmosphere'
-import { GuardianEntrance } from '@/components/guardian-entrance'
 import { LINKS, SECTION_IDS } from '@/lib/dossier-data'
+import dynamic from 'next/dynamic'
+
+const GuardianEntrance = dynamic(
+  () => import('@/components/guardian-entrance').then((mod) => mod.GuardianEntrance),
+  { ssr: false }
+)
 
 const VALID_SECTIONS = new Set<string>(SECTION_IDS)
 

@@ -68,50 +68,63 @@ import { TiltCard } from '@/components/ui/tilt-card'
 
 function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
   const [open, setOpen] = useState(false)
-  const bodyId = `${c.fileNumber.replace(/\s/g, '-').toLowerCase()}-body`
+  const tabRef = useRef<HTMLButtonElement>(null)
+  const drawerRef = useRef<HTMLDivElement>(null)
+  
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+    
+    if (open) {
+      // Slide OUT horizontally (like pulling a folder)
+      gsap.to(tabRef.current, { x: 16, rotate: 1, duration: 0.4, ease: 'power2.out' })
+      gsap.to(drawerRef.current, { autoAlpha: 1, height: 'auto', duration: 0.4, ease: 'power2.out', display: 'block' })
+    } else {
+      // Slide back IN
+      gsap.to(tabRef.current, { x: 0, rotate: 0, duration: 0.35, ease: 'power2.inOut' })
+      gsap.to(drawerRef.current, { autoAlpha: 0, height: 0, duration: 0.35, ease: 'power2.inOut', display: 'none' })
+    }
+  }, [open])
 
   return (
     <TiltCard
       data-case-card
       data-cursor-card="OPEN"
-      className="group p-0 mb-6"
+      className="group p-0 mb-6 bg-transparent border-none shadow-none"
     >
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls={bodyId}
-        onClick={() => setOpen((v) => !v)}
-        className="flex w-full flex-col gap-2 px-6 py-5 text-left md:flex-row md:items-center md:justify-between outline-none"
-      >
-        <div className="flex items-baseline gap-4">
-          <span className="font-mono text-[10px] tracking-[0.25em] text-signal drop-shadow-[0_0_8px_rgba(245,196,0,0.4)]">
-            {c.fileNumber}
-          </span>
-          <h3 className="dossier-heading text-xl text-foreground md:text-2xl uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
-            {c.title}
-          </h3>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground">
-            STATUS: {c.status}
-          </span>
-          <span
-            aria-hidden="true"
-            className={`font-mono text-sm text-signal transition-transform duration-300 ${open ? 'rotate-45' : ''}`}
-          >
-            +
-          </span>
-        </div>
-      </button>
+      <div className="relative">
+        <button
+          ref={tabRef}
+          type="button"
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="relative z-10 flex w-full flex-col gap-2 px-6 py-5 text-left md:flex-row md:items-center md:justify-between outline-none bg-card border border-border shadow-md"
+        >
+          <div className="flex items-baseline gap-4">
+            <span className="font-mono text-[10px] tracking-[0.25em] text-signal drop-shadow-[0_0_8px_rgba(245,196,0,0.4)]">
+              {c.fileNumber}
+            </span>
+            <h3 className="dossier-heading text-xl text-foreground md:text-2xl uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
+              {c.title}
+            </h3>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground">
+              STATUS: {c.status}
+            </span>
+            <span
+              aria-hidden="true"
+              className={`font-mono text-sm text-signal transition-transform duration-300 ${open ? 'rotate-45' : ''}`}
+            >
+              +
+            </span>
+          </div>
+        </button>
 
-      <div
-        id={bodyId}
-        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-          open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
-        }`}
-      >
-        <div className="overflow-hidden">
-          <div className="border-t border-border/50 px-6 py-6 bg-black/40">
+        <div
+          ref={drawerRef}
+          className="relative z-0 hidden opacity-0 border border-border/50 bg-[#0e0e13]/90 backdrop-blur-md"
+        >
+          <div className="px-8 py-8 pt-10 mt-[-8px]">
             <div className="grid gap-8 md:grid-cols-2">
               <div>
                 <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70">
@@ -157,7 +170,7 @@ function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
               </ul>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-6">
+            <div className="mt-8 flex flex-wrap gap-6">
               {c.github && (
                 <a
                   href={c.github}
