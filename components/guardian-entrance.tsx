@@ -16,6 +16,20 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
   const { scene, animations } = useGLTF('/model.glb')
   const { actions } = useAnimations(animations, group)
   
+  // Brighten materials so they don't absorb too much light
+  useEffect(() => {
+    scene.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh
+        if (mesh.material) {
+          const mat = mesh.material as THREE.MeshStandardMaterial
+          if (mat.color) mat.color.multiplyScalar(1.5)
+          if (mat.roughness !== undefined) mat.roughness = Math.min(mat.roughness, 0.6)
+        }
+      }
+    })
+  }, [scene])
+
   useEffect(() => {
     // Play idle animation if it exists, otherwise play the first available animation
     const idleAction = actions['Idle'] || (Object.keys(actions).length > 0 ? actions[Object.keys(actions)[0]] : null)
@@ -31,22 +45,22 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
 
     if (prefersReducedMotion()) {
       onLandingComplete()
-      group.current.position.set(0, -2, -3) // resting position
-      group.current.scale.setScalar(2.5) // Scale up placeholder
+      group.current.position.set(0, -0.5, -3) // higher resting position
+      group.current.scale.setScalar(2.8) // slightly larger
       return
     }
 
     // Initial state high above
     gsap.set(group.current.position, { y: 12, z: 0 })
     gsap.set(group.current.rotation, { x: Math.PI / 8, y: 0 })
-    gsap.set(group.current.scale, { x: 2.5, y: 2.5, z: 2.5 })
+    gsap.set(group.current.scale, { x: 2.8, y: 2.8, z: 2.8 })
 
     // Timeline starting slightly after page load (to sync with Hero's power flicker)
     const tl = gsap.timeline({ delay: 0.6 })
 
     // 1. Fall down
     tl.to(group.current.position, {
-      y: -2.5,
+      y: -1.0,
       duration: 0.35,
       ease: 'power4.in',
     })
@@ -68,7 +82,7 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
     // 3. Settling - push back slightly into the background
     tl.to(group.current.position, {
       z: -3,
-      y: -2,
+      y: -0.5,
       duration: 0.6,
       ease: 'power2.out',
       onComplete: onLandingComplete
@@ -133,13 +147,21 @@ export function GuardianEntrance({ targetId, onLandingComplete, className }: Gua
   return (
     <div ref={containerRef} className={cn("absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center", className)} aria-hidden="true">
       {/* 3D Canvas Layer */}
-      <div className="absolute inset-0 z-10 mix-blend-screen opacity-80">
+      <div className="absolute inset-0 z-10 opacity-95">
         <Canvas camera={{ position: [0, 1, 8], fov: 45 }}>
-          {/* Dramatic lighting matching vengeance #8b1a1a accent */}
-          <ambientLight intensity={0.15} />
-          <directionalLight position={[5, 10, 5]} intensity={3} color="#8b1a1a" />
+          {/* Base ambient lighting */}
+          <ambientLight intensity={0.4} />
+          {/* Key light (dramatic red) */}
+          <directionalLight position={[5, 10, 5]} intensity={4} color="#8b1a1a" />
+          {/* Side fill (signal yellow) */}
           <directionalLight position={[-5, 5, -5]} intensity={1.5} color="#f5c400" />
+          {/* Front lower fill light to reveal surface details */}
+          <directionalLight position={[0, -5, 5]} intensity={0.6} color="#ffffff" />
+          {/* Back/Rim light to separate silhouette from the dark background */}
+          <directionalLight position={[0, 10, -10]} intensity={0.8} color="#e8e8ea" />
+          
           <pointLight position={[0, -1, 3]} intensity={8} color="#8b1a1a" distance={15} />
+          
           <CharacterModel targetId={targetId} onLandingComplete={onLandingComplete} />
         </Canvas>
       </div>
