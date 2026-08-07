@@ -110,7 +110,7 @@ export function Hero() {
         <h1
           ref={nameRef}
           data-hero-item
-          className="dossier-heading mt-6 text-6xl leading-none text-foreground md:text-8xl lg:text-9xl"
+          className="name-heading mt-6 text-4xl leading-none text-foreground md:text-6xl lg:text-7xl xl:text-8xl"
         >
           Pushkar Raj
         </h1>

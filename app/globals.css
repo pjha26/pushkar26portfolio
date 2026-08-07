@@ -74,6 +74,14 @@
   font-weight: 400; /* Bebas Neue is 400 weight */
 }
 
+/* Unique wide cinematic font for the hero name */
+.name-heading {
+  font-family: var(--font-syncopate), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
 /* Background grid at very low opacity */
 .bg-grid {
   background-image:

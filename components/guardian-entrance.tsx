@@ -45,17 +45,17 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
 
     if (prefersReducedMotion()) {
       onLandingComplete()
-      group.current.position.set(0, -0.5, -3) // higher resting position
-      group.current.scale.setScalar(2.8) // slightly larger
+      group.current.position.set(2.5, -0.5, -2) // higher resting position, shifted right
+      group.current.scale.setScalar(2.8) 
       return
     }
 
-    // Initial state high above
-    gsap.set(group.current.position, { y: 12, z: 0 })
-    gsap.set(group.current.rotation, { x: Math.PI / 8, y: 0 })
+    // Initial state high above and to the right
+    gsap.set(group.current.position, { x: 2.5, y: 12, z: -1 })
+    gsap.set(group.current.rotation, { x: Math.PI / 8, y: -Math.PI / 6 }) // rotated slightly towards center
     gsap.set(group.current.scale, { x: 2.8, y: 2.8, z: 2.8 })
 
-    // Timeline starting slightly after page load (to sync with Hero's power flicker)
+    // Timeline starting slightly after page load
     const tl = gsap.timeline({ delay: 0.6 })
 
     // 1. Fall down
@@ -74,15 +74,14 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
     tl.add(() => {
       section.classList.add('shake-active')
       setTimeout(() => section.classList.remove('shake-active'), 200)
-      
-      // Dispatch event to trigger 2D DOM particles
       window.dispatchEvent(new CustomEvent('guardian-landed'))
     })
 
     // 3. Settling - push back slightly into the background
     tl.to(group.current.position, {
-      z: -3,
+      z: -2,
       y: -0.5,
+      x: 2.5, // remain on the right
       duration: 0.6,
       ease: 'power2.out',
       onComplete: onLandingComplete

@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Bebas_Neue, Rajdhani, Space_Mono } from 'next/font/google'
+import { Bebas_Neue, Rajdhani, Space_Mono, Syncopate } from 'next/font/google'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -21,6 +21,13 @@ const spaceMono = Space_Mono({
   weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-space-mono',
+  display: 'swap',
+})
+
+const syncopate = Syncopate({
+  weight: ['700'],
+  subsets: ['latin'],
+  variable: '--font-syncopate',
   display: 'swap',
 })
 
@@ -61,7 +68,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background ${rajdhani.variable} ${bebasNeue.variable} ${spaceMono.variable}`}
+      className={`bg-background ${rajdhani.variable} ${bebasNeue.variable} ${spaceMono.variable} ${syncopate.variable}`}
     >
       <body className="antialiased font-sans">
         {children}
