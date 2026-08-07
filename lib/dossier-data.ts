@@ -1,8 +1,8 @@
 export const LINKS = {
   github: 'https://github.com/pjha26',
-  linkedin: 'https://www.linkedin.com/in/pushkar-raj',
-  leetcode: 'https://leetcode.com/pushkar-raj',
-  email: 'mailto:pushkarraj@example.com',
+  linkedin: 'https://www.linkedin.com/in/pushkar-raj-339988313/',
+  leetcode: 'https://leetcode.com/u/pjha2608/',
+  email: 'mailto:pushkarraj88313@gmail.com',
 }
 
 export type CaseFile = {

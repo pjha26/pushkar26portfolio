@@ -68,10 +68,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background ${rajdhani.variable} ${bebasNeue.variable} ${spaceMono.variable} ${syncopate.variable}`}
+      className={`bg-[#0a0a0d] text-foreground ${rajdhani.variable} ${bebasNeue.variable} ${spaceMono.variable} ${syncopate.variable} dark`}
       suppressHydrationWarning
     >
-      <body className="antialiased font-sans" suppressHydrationWarning>
+      <body className="antialiased font-sans bg-[#0a0a0d] text-foreground" suppressHydrationWarning>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
