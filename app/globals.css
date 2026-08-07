@@ -45,6 +45,8 @@
   --destructive: #b3453f;
   --signal: #f5c400;
   --signal-foreground: #0a0a0d;
+  --vengeance: #8b1a1a;
+  --vengeance-foreground: #e8e8ea;
   --radius: 0rem;
 }
 
@@ -320,4 +322,32 @@
   .section-divider {
     transform: scaleX(1);
   }
+}
+
+/* Vengeance theme overrides */
+.theme-vengeance {
+  --signal: var(--vengeance);
+  --signal-foreground: var(--vengeance-foreground);
+}
+.theme-vengeance ::selection {
+  background: var(--vengeance);
+  color: var(--vengeance-foreground);
+}
+.theme-vengeance .glow-hover:hover,
+.theme-vengeance .glow-hover:focus-visible,
+.theme-vengeance .glow-hover:focus-within {
+  box-shadow:
+    0 0 0 1px rgba(139, 26, 26, 0.35),
+    0 0 28px rgba(139, 26, 26, 0.07);
+  border-color: rgba(139, 26, 26, 0.5);
+}
+
+/* Screen shake animation */
+@keyframes shake-y {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-4px); }
+  75% { transform: translateY(4px); }
+}
+.shake-active {
+  animation: shake-y 200ms ease-in-out;
 }

@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useSectionReveal, prefersReducedMotion } from '@/lib/use-reveal'
+import { cn } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -12,10 +13,12 @@ type SectionProps = {
   fileLabel: string
   title: string
   children: ReactNode
+  className?: string
+  disableReveal?: boolean
 }
 
-export function Section({ id, fileLabel, title, children }: SectionProps) {
-  const ref = useSectionReveal<HTMLElement>()
+export function Section({ id, fileLabel, title, children, className, disableReveal }: SectionProps) {
+  const ref = useSectionReveal<HTMLElement>({ disable: disableReveal })
   const dividerRef = useRef<HTMLDivElement>(null)
 
   // Signal-yellow divider draws itself across the screen when scrolled into view
@@ -43,7 +46,7 @@ export function Section({ id, fileLabel, title, children }: SectionProps) {
     <section
       id={id}
       ref={ref}
-      className="relative scroll-mt-12 px-6 py-20 md:px-12 md:py-28 lg:px-20"
+      className={cn("relative scroll-mt-12 px-6 py-20 md:px-12 md:py-28 lg:px-20", className)}
     >
       <div
         ref={dividerRef}

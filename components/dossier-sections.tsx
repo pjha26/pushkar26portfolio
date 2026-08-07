@@ -1,8 +1,11 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import gsap from 'gsap'
 import { Section } from '@/components/section'
 import { MagneticLink } from '@/components/magnetic-link'
 import { LINKS, SKILL_GROUPS } from '@/lib/dossier-data'
+import { GuardianEntrance } from '@/components/guardian-entrance'
 
 export function Skills() {
   return (
@@ -31,37 +34,66 @@ export function Skills() {
 }
 
 export function Experience() {
+  const [isLanded, setIsLanded] = useState(false)
+
+  // Hide elements initially to avoid flash
+  useEffect(() => {
+    const section = document.getElementById('resume')
+    if (!section) return
+    const targets = section.querySelectorAll('[data-reveal]')
+    gsap.set(targets, { autoAlpha: 0, y: 20 })
+  }, [])
+
+  useEffect(() => {
+    if (!isLanded) return
+    const section = document.getElementById('resume')
+    if (!section) return
+    const targets = section.querySelectorAll('[data-reveal]')
+    
+    gsap.to(targets, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.55,
+      ease: 'power3.out',
+      stagger: 0.09
+    })
+  }, [isLanded])
+
   return (
-    <Section
-      id="resume"
-      fileLabel="SECTION 05 // SERVICE RECORD"
-      title="Experience"
-    >
-      <ol className="relative border-l border-border pl-8">
-        <li data-reveal className="relative">
-          <span
-            aria-hidden="true"
-            className="absolute -left-[37px] top-1.5 h-2 w-2 bg-signal"
-          />
-          <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground">
-            SEP 2023 — PRESENT · BENGALURU
-          </p>
-          <h3 className="dossier-heading mt-2 text-lg text-foreground">
-            Full-Stack Developer &amp; Open Source Contributor
-          </h3>
-          <p className="mt-1 font-mono text-xs text-muted-foreground">
-            Independent Technical Projects
-          </p>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/85">
-            Designing, shipping, and operating production systems end-to-end:
-            multi-agent AI platforms, real-time booking infrastructure, voice
-            interview tooling, and edge-deployed bot analytics — with CI/CD,
-            observability, and failure-tolerant architecture as defaults, not
-            afterthoughts.
-          </p>
-        </li>
-      </ol>
-    </Section>
+    <div className="theme-vengeance relative">
+      <GuardianEntrance targetId="resume" onLandingComplete={() => setIsLanded(true)} />
+      <Section
+        id="resume"
+        fileLabel="SECTION 05 // SERVICE RECORD"
+        title="Experience"
+        disableReveal={true}
+      >
+        <ol className="relative border-l border-border pl-8">
+          <li data-reveal className="relative">
+            <span
+              aria-hidden="true"
+              className="absolute -left-[37px] top-1.5 h-2 w-2 bg-signal"
+            />
+            <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground">
+              SEP 2023 — PRESENT · BENGALURU
+            </p>
+            <h3 className="dossier-heading mt-2 text-lg text-foreground">
+              Full-Stack Developer &amp; Open Source Contributor
+            </h3>
+            <p className="mt-1 font-mono text-xs text-muted-foreground">
+              Independent Technical Projects
+            </p>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/85">
+              Designing, shipping, and operating production systems end-to-end:
+              multi-agent AI platforms, real-time booking infrastructure, voice
+              interview tooling, and edge-deployed bot analytics — with CI/CD,
+              observability, and failure-tolerant architecture as defaults, not
+              afterthoughts.
+            </p>
+          </li>
+        </ol>
+      </Section>
+    </div>
   )
 }
 

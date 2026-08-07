@@ -18,10 +18,11 @@ export function prefersReducedMotion() {
  * when it scrolls into view. Falls back to a simple fade when the user
  * prefers reduced motion.
  */
-export function useSectionReveal<T extends HTMLElement>() {
+export function useSectionReveal<T extends HTMLElement>(options?: { disable?: boolean }) {
   const ref = useRef<T>(null)
 
   useEffect(() => {
+    if (options?.disable) return
     const el = ref.current
     if (!el) return
 
