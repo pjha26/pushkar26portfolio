@@ -1,7 +1,11 @@
 'use client'
 
-import type { ReactNode } from 'react'
-import { useSectionReveal } from '@/lib/use-reveal'
+import { useEffect, useRef, type ReactNode } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useSectionReveal, prefersReducedMotion } from '@/lib/use-reveal'
+
+gsap.registerPlugin(ScrollTrigger)
 
 type SectionProps = {
   id: string
@@ -12,13 +16,40 @@ type SectionProps = {
 
 export function Section({ id, fileLabel, title, children }: SectionProps) {
   const ref = useSectionReveal<HTMLElement>()
+  const dividerRef = useRef<HTMLDivElement>(null)
+
+  // Signal-yellow divider draws itself across the screen when scrolled into view
+  useEffect(() => {
+    const divider = dividerRef.current
+    if (!divider || prefersReducedMotion()) return
+
+    const tween = gsap.fromTo(
+      divider,
+      { scaleX: 0 },
+      {
+        scaleX: 1,
+        duration: 0.6,
+        ease: 'power2.inOut',
+        scrollTrigger: { trigger: divider, start: 'top 90%', once: true },
+      },
+    )
+    return () => {
+      tween.scrollTrigger?.kill()
+      tween.kill()
+    }
+  }, [])
 
   return (
     <section
       id={id}
       ref={ref}
-      className="scroll-mt-12 border-t border-border px-6 py-20 md:px-12 md:py-28 lg:px-20"
+      className="relative scroll-mt-12 px-6 py-20 md:px-12 md:py-28 lg:px-20"
     >
+      <div
+        ref={dividerRef}
+        aria-hidden="true"
+        className="section-divider absolute left-0 top-0"
+      />
       <div className="mx-auto w-full max-w-4xl">
         <div data-reveal className="flex items-baseline gap-4">
           <span className="font-mono text-[10px] tracking-[0.25em] text-signal">

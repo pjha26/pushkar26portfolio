@@ -5,26 +5,46 @@ import gsap from 'gsap'
 import { prefersReducedMotion } from '@/lib/use-reveal'
 import { scrollToSection } from '@/components/smooth-scroll'
 import { MagneticLink } from '@/components/magnetic-link'
+import { HeroRain, HeroSpotlight } from '@/components/gotham-atmosphere'
 import { LINKS, SECTION_IDS } from '@/lib/dossier-data'
 
 const VALID_SECTIONS = new Set<string>(SECTION_IDS)
 
 export function Hero() {
   const rootRef = useRef<HTMLElement>(null)
+  const blackoutRef = useRef<HTMLDivElement>(null)
+  const nameRef = useRef<HTMLHeadingElement>(null)
 
-  // Entrance sequence: staggered fade + upward slide
+  // Cinematic entrance: power-outage flicker → staggered reveal → name glow pulse
   useEffect(() => {
     const el = rootRef.current
     if (!el) return
     const items = el.querySelectorAll('[data-hero-item]')
+    const blackout = blackoutRef.current
+    const name = nameRef.current
     const reduced = prefersReducedMotion()
 
     const ctx = gsap.context(() => {
       if (reduced) {
+        if (blackout) gsap.set(blackout, { autoAlpha: 0 })
         gsap.fromTo(items, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, stagger: 0.05 })
         return
       }
-      gsap.fromTo(
+
+      const tl = gsap.timeline()
+
+      // Power outage: black overlay flickers off at decreasing intervals
+      if (blackout) {
+        tl.set(blackout, { autoAlpha: 1 })
+          .to(blackout, { autoAlpha: 0, duration: 0.05 }, 0.15)
+          .to(blackout, { autoAlpha: 1, duration: 0.04 }, 0.24)
+          .to(blackout, { autoAlpha: 0, duration: 0.04 }, 0.34)
+          .to(blackout, { autoAlpha: 0.85, duration: 0.03 }, 0.42)
+          .to(blackout, { autoAlpha: 0, duration: 0.08 }, 0.48)
+      }
+
+      // Staggered text reveal after the lights stabilize
+      tl.fromTo(
         items,
         { autoAlpha: 0, y: 14 },
         {
@@ -34,7 +54,26 @@ export function Hero() {
           ease: 'power2.out',
           stagger: 0.08,
         },
+        0.55,
       )
+
+      // Searchlight glow pulse over the name: glow in, settle to none
+      if (name) {
+        tl.fromTo(
+          name,
+          { textShadow: '0 0 0px rgba(245, 196, 0, 0)' },
+          {
+            textShadow: '0 0 32px rgba(245, 196, 0, 0.45)',
+            duration: 0.5,
+            ease: 'power2.in',
+          },
+          0.85,
+        ).to(name, {
+          textShadow: '0 0 0px rgba(245, 196, 0, 0)',
+          duration: 0.9,
+          ease: 'power2.out',
+        })
+      }
     }, el)
 
     return () => ctx.revert()
@@ -43,9 +82,19 @@ export function Hero() {
   return (
     <header
       ref={rootRef}
-      className="relative flex min-h-svh flex-col justify-center px-6 py-24 md:px-12 lg:px-20"
+      className="relative flex min-h-svh flex-col justify-center overflow-hidden px-6 py-24 md:px-12 lg:px-20"
     >
-      <div className="mx-auto w-full max-w-4xl">
+      <HeroSpotlight />
+      <HeroRain heroRef={rootRef} />
+
+      {/* Power-outage blackout overlay */}
+      <div
+        ref={blackoutRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-20 bg-black opacity-0"
+      />
+
+      <div className="relative z-10 mx-auto w-full max-w-4xl">
         <p
           data-hero-item
           className="font-mono text-xs tracking-[0.2em] text-muted-foreground"
@@ -55,6 +104,7 @@ export function Hero() {
         </p>
 
         <h1
+          ref={nameRef}
           data-hero-item
           className="dossier-heading mt-6 text-6xl leading-none text-foreground md:text-8xl lg:text-9xl"
         >

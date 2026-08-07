@@ -140,6 +140,151 @@
   animation: blink 1s step-end infinite;
 }
 
+/* ---------- Gotham atmosphere ---------- */
+
+/* Drifting fog: large blurred radial blobs translating on long loops */
+.fog-layer {
+  position: absolute;
+  bottom: 0;
+  width: 160%;
+  height: 100%;
+  filter: blur(40px);
+  will-change: transform;
+}
+.fog-a {
+  background: radial-gradient(
+    ellipse 40% 55% at 30% 80%,
+    rgba(160, 170, 190, 0.05),
+    transparent 70%
+  );
+  animation: fog-drift-a 75s linear infinite;
+}
+.fog-b {
+  background: radial-gradient(
+    ellipse 35% 45% at 65% 90%,
+    rgba(140, 150, 175, 0.04),
+    transparent 70%
+  );
+  animation: fog-drift-b 90s linear infinite;
+}
+.fog-c {
+  background: radial-gradient(
+    ellipse 50% 40% at 50% 100%,
+    rgba(180, 185, 200, 0.03),
+    transparent 70%
+  );
+  animation: fog-drift-a 62s linear infinite reverse;
+}
+@keyframes fog-drift-a {
+  0% {
+    transform: translateX(-20%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-20%);
+  }
+}
+@keyframes fog-drift-b {
+  0% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(-18%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* Rain streaks — thin light-gray lines falling fast */
+.rain-streak {
+  position: absolute;
+  top: -100px;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(200, 205, 215, 0.9));
+  animation-name: rain-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+@keyframes rain-fall {
+  to {
+    transform: translateY(calc(100vh + 200px));
+  }
+}
+
+/* Searchlight sweep: soft yellow radial gliding diagonally on a slow loop */
+.spotlight-sweep {
+  position: absolute;
+  top: -30%;
+  left: -30%;
+  width: 90vmax;
+  height: 90vmax;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(245, 196, 0, 0.04) 0%,
+    rgba(245, 196, 0, 0.015) 40%,
+    transparent 70%
+  );
+  animation: spotlight-sweep 26s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes spotlight-sweep {
+  0% {
+    transform: translate(-25%, 10%);
+  }
+  50% {
+    transform: translate(85%, 45%);
+  }
+  100% {
+    transform: translate(-25%, 10%);
+  }
+}
+
+/* Film grain: SVG feTurbulence noise, faint, slow-shifting */
+.grain-overlay {
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 9s steps(6) infinite;
+}
+@keyframes grain-shift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 240px 240px;
+  }
+}
+
+/* Section divider line — drawn to full width by GSAP; starts collapsed */
+.section-divider {
+  height: 1px;
+  width: 100%;
+  background: var(--signal);
+  opacity: 0.55;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* Single-pulse background flicker on case-card hover */
+@keyframes card-flicker {
+  0% {
+    background-color: var(--card);
+  }
+  40% {
+    background-color: rgba(245, 196, 0, 0.05);
+  }
+  100% {
+    background-color: var(--card);
+  }
+}
+[data-case-card]:hover {
+  animation: card-flicker 150ms ease-out 1;
+}
+
 /* Hide native cursor when custom cursor is active (fine pointers only) */
 @media (pointer: fine) {
   html.custom-cursor-active,
@@ -159,5 +304,20 @@
   .link-underline::after,
   .glow-hover {
     transition: none;
+  }
+  .fog-layer,
+  .rain-streak,
+  .spotlight-sweep,
+  .grain-overlay,
+  [data-case-card]:hover {
+    animation: none;
+  }
+  .rain-streak,
+  .grain-overlay,
+  .spotlight-sweep {
+    display: none;
+  }
+  .section-divider {
+    transform: scaleX(1);
   }
 }
