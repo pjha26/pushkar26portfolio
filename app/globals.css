@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@theme inline {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--foreground);
+  --color-primary: var(--signal);
+  --color-primary-foreground: var(--signal-foreground);
+  --color-secondary: var(--muted);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--signal);
+  --color-accent-foreground: var(--signal-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--signal);
+  --color-signal: var(--signal);
+  --color-signal-foreground: var(--signal-foreground);
+
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
+}
+
+:root {
+  color-scheme: dark;
+  /* Gotham: cold blue-black, off-white, grays, signal yellow */
+  --background: #0a0a0d;
+  --foreground: #e8e8ea;
+  --card: #0e0e13;
+  --muted: #14141a;
+  --muted-foreground: #8b8b95;
+  --border: #26262e;
+  --destructive: #b3453f;
+  --signal: #f5c400;
+  --signal-foreground: #0a0a0d;
+  --radius: 0rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    background-color: var(--background);
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background: var(--signal);
+    color: var(--signal-foreground);
+  }
+}
+
+/* Condensed institutional headings */
+.dossier-heading {
+  font-family: var(--font-oswald), var(--font-inter), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+
+/* Background grid at very low opacity */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(232, 232, 234, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(232, 232, 234, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Soft vignette — darker toward edges */
+.bg-vignette {
+  background: radial-gradient(
+    ellipse 85% 65% at 50% 38%,
+    transparent 0%,
+    rgba(3, 3, 5, 0.6) 100%
+  );
+}
+
+/* Yellow glow strictly on hover/focus */
+.glow-hover {
+  transition:
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+.glow-hover:hover,
+.glow-hover:focus-visible,
+.glow-hover:focus-within {
+  box-shadow:
+    0 0 0 1px rgba(245, 196, 0, 0.35),
+    0 0 28px rgba(245, 196, 0, 0.07);
+  border-color: rgba(245, 196, 0, 0.5);
+}
+
+/* Signal-yellow underline draw-in */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: var(--signal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 250ms ease;
+}
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Blinking cursor for command line */
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Hide native cursor when custom cursor is active (fine pointers only) */
+@media (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active a,
+  html.custom-cursor-active button,
+  html.custom-cursor-active input,
+  html.custom-cursor-active [role='button'] {
+    cursor: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink {
+    animation: none;
+    opacity: 1;
+  }
+  .link-underline::after,
+  .glow-hover {
+    transition: none;
+  }
+}
