@@ -154,11 +154,11 @@ export function HeroRain({ heroRef }: { heroRef: React.RefObject<HTMLElement | n
       className="pointer-events-none absolute inset-0 z-0 overflow-hidden motion-reduce:hidden"
     >
       {Array.from({ length: RAIN_COUNT }, (_, i) => {
-        const left = prand(i) * 100
-        const duration = 0.55 + prand(i + 100) * 0.6
-        const delay = -prand(i + 200) * 2
-        const height = 40 + prand(i + 300) * 50
-        const opacity = 0.08 + prand(i + 400) * 0.07
+        const left = (prand(i) * 100).toFixed(4)
+        const duration = (0.55 + prand(i + 100) * 0.6).toFixed(4)
+        const delay = (-prand(i + 200) * 2).toFixed(4)
+        const height = (40 + prand(i + 300) * 50).toFixed(4)
+        const opacity = Number((0.08 + prand(i + 400) * 0.07).toFixed(4))
         return (
           <span
             key={i}
