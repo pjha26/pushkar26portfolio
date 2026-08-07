@@ -47,6 +47,8 @@ export function About() {
   )
 }
 
+import { TiltCard } from '@/components/ui/tilt-card'
+
 export function HowIBuild() {
   return (
     <Section
@@ -54,19 +56,19 @@ export function HowIBuild() {
       fileLabel="SECTION 02 // FIELD NOTES"
       title="How I Build"
     >
-      <div className="grid gap-px border border-border bg-border md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-3" style={{ perspective: 1200 }}>
         {PRINCIPLES.map((p) => (
-          <article key={p.code} data-reveal className="glow-hover bg-card p-6">
+          <TiltCard key={p.code} className="group p-6 h-full flex flex-col">
             <p className="font-mono text-[10px] tracking-[0.25em] text-signal">
               {p.code}
             </p>
-            <h3 className="dossier-heading mt-3 text-lg text-foreground">
+            <h3 className="dossier-heading mt-3 text-lg text-foreground uppercase tracking-widest drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]">
               {p.title}
             </h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground flex-grow">
               {p.body}
             </p>
-          </article>
+          </TiltCard>
         ))}
       </div>
     </Section>

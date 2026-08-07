@@ -64,28 +64,30 @@ export function Projects() {
   )
 }
 
+import { TiltCard } from '@/components/ui/tilt-card'
+
 function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
   const [open, setOpen] = useState(false)
   const bodyId = `${c.fileNumber.replace(/\s/g, '-').toLowerCase()}-body`
 
   return (
-    <article
+    <TiltCard
       data-case-card
       data-cursor-card="OPEN"
-      className="glow-hover border border-border bg-card"
+      className="group p-0 mb-6"
     >
       <button
         type="button"
         aria-expanded={open}
         aria-controls={bodyId}
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full flex-col gap-2 px-6 py-5 text-left md:flex-row md:items-center md:justify-between"
+        className="flex w-full flex-col gap-2 px-6 py-5 text-left md:flex-row md:items-center md:justify-between outline-none"
       >
         <div className="flex items-baseline gap-4">
-          <span className="font-mono text-[10px] tracking-[0.25em] text-signal">
+          <span className="font-mono text-[10px] tracking-[0.25em] text-signal drop-shadow-[0_0_8px_rgba(245,196,0,0.4)]">
             {c.fileNumber}
           </span>
-          <h3 className="dossier-heading text-xl text-foreground md:text-2xl">
+          <h3 className="dossier-heading text-xl text-foreground md:text-2xl uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
             {c.title}
           </h3>
         </div>
@@ -109,10 +111,10 @@ function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
         }`}
       >
         <div className="overflow-hidden">
-          <div className="border-t border-border px-6 py-6">
+          <div className="border-t border-border/50 px-6 py-6 bg-black/40">
             <div className="grid gap-8 md:grid-cols-2">
               <div>
-                <h4 className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground">
+                <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70">
                   PROBLEM
                 </h4>
                 <p className="mt-2 text-sm leading-relaxed text-foreground/85">
@@ -120,7 +122,7 @@ function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
                 </p>
               </div>
               <div>
-                <h4 className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground">
+                <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70">
                   APPROACH
                 </h4>
                 <ul className="mt-2 space-y-2">
@@ -140,14 +142,14 @@ function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
             </div>
 
             <div className="mt-6">
-              <h4 className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground">
+              <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70">
                 STACK
               </h4>
               <ul className="mt-2 flex flex-wrap gap-2">
                 {c.stack.map((tag) => (
                   <li
                     key={tag}
-                    className="border border-border bg-muted px-2 py-1 font-mono text-xs text-foreground/80"
+                    className="border border-signal/20 bg-signal/5 px-2 py-1 font-mono text-xs text-signal drop-shadow-[0_0_8px_rgba(245,196,0,0.1)]"
                   >
                     {tag}
                   </li>
@@ -180,6 +182,6 @@ function CaseCard({ caseFile: c }: { caseFile: CaseFile }) {
           </div>
         </div>
       </div>
-    </article>
+    </TiltCard>
   )
 }
