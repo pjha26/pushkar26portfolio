@@ -1,23 +1,26 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Oswald, JetBrains_Mono } from 'next/font/google'
+import { Bebas_Neue, Rajdhani, Space_Mono } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({
+const bebasNeue = Bebas_Neue({
+  weight: '400',
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-bebas-neue',
   display: 'swap',
 })
 
-const oswald = Oswald({
+const rajdhani = Rajdhani({
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-oswald',
+  variable: '--font-rajdhani',
   display: 'swap',
 })
 
-const jetbrainsMono = JetBrains_Mono({
+const spaceMono = Space_Mono({
+  weight: ['400', '700'],
   subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
+  variable: '--font-space-mono',
   display: 'swap',
 })
 
@@ -58,7 +61,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background ${inter.variable} ${oswald.variable} ${jetbrainsMono.variable}`}
+      className={`bg-background ${rajdhani.variable} ${bebasNeue.variable} ${spaceMono.variable}`}
     >
       <body className="antialiased font-sans">
         {children}

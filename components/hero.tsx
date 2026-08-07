@@ -6,6 +6,7 @@ import { prefersReducedMotion } from '@/lib/use-reveal'
 import { scrollToSection } from '@/components/smooth-scroll'
 import { MagneticLink } from '@/components/magnetic-link'
 import { HeroRain, HeroSpotlight } from '@/components/gotham-atmosphere'
+import { GuardianEntrance } from '@/components/guardian-entrance'
 import { LINKS, SECTION_IDS } from '@/lib/dossier-data'
 
 const VALID_SECTIONS = new Set<string>(SECTION_IDS)
@@ -14,6 +15,7 @@ export function Hero() {
   const rootRef = useRef<HTMLElement>(null)
   const blackoutRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLHeadingElement>(null)
+  const [isLanded, setIsLanded] = useState(false)
 
   // Cinematic entrance: power-outage flicker → staggered reveal → name glow pulse
   useEffect(() => {
@@ -81,9 +83,11 @@ export function Hero() {
 
   return (
     <header
+      id="hero-section"
       ref={rootRef}
       className="relative flex min-h-svh flex-col justify-center overflow-hidden px-6 py-24 md:px-12 lg:px-20"
     >
+      <GuardianEntrance targetId="hero-section" onLandingComplete={() => setIsLanded(true)} />
       <HeroSpotlight />
       <HeroRain heroRef={rootRef} />
 

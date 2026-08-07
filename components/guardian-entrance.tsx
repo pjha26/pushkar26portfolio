@@ -41,19 +41,8 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
     gsap.set(group.current.rotation, { x: Math.PI / 8, y: 0 })
     gsap.set(group.current.scale, { x: 2.5, y: 2.5, z: 2.5 })
 
-    let hasTriggered = false
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 60%',
-        once: true,
-        onEnter: () => {
-          if (hasTriggered) return
-          hasTriggered = true
-        }
-      }
-    })
+    // Timeline starting slightly after page load (to sync with Hero's power flicker)
+    const tl = gsap.timeline({ delay: 0.6 })
 
     // 1. Fall down
     tl.to(group.current.position, {
@@ -87,7 +76,6 @@ function CharacterModel({ targetId, onLandingComplete }: { targetId: string, onL
 
     return () => {
       tl.kill()
-      tl.scrollTrigger?.kill()
     }
   }, [targetId, onLandingComplete])
 
