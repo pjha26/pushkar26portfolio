@@ -2,18 +2,21 @@
 
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Edges, useScroll } from '@react-three/drei'
+import { Edges } from '@react-three/drei'
 import * as THREE from 'three'
 
 export function Batcomputer() {
   const group = useRef<THREE.Group>(null)
-  const scroll = useScroll()
 
   // Fade out the desk as we scroll down
   useFrame(() => {
     if (group.current) {
-      const opacity = 1 - Math.min(scroll.offset * 8, 1)
-      group.current.position.y = -scroll.offset * 20
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      const scrollOffset = window.scrollY / maxScroll
+      const r = Math.max(0, Math.min(scrollOffset, 1))
+
+      const opacity = Math.max(0, 1 - (r * 8))
+      group.current.position.y = -(r * 20) - 1
       
       group.current.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
