@@ -117,7 +117,7 @@ function SkylineNear() {
  * Rain overlay — hero only. Thin light-gray streaks at low opacity, capped
  * particle count. The whole layer fades out as the hero exits the viewport.
  */
-const RAIN_COUNT = 80
+const RAIN_COUNT = 60
 
 export function HeroRain({ heroRef }: { heroRef: React.RefObject<HTMLElement | null> }) {
   const rainRef = useRef<HTMLDivElement>(null)
@@ -155,10 +155,10 @@ export function HeroRain({ heroRef }: { heroRef: React.RefObject<HTMLElement | n
     >
       {Array.from({ length: RAIN_COUNT }, (_, i) => {
         const left = (prand(i) * 100).toFixed(4)
-        const duration = (0.55 + prand(i + 100) * 0.6).toFixed(4)
-        const delay = (-prand(i + 200) * 2).toFixed(4)
-        const height = (40 + prand(i + 300) * 50).toFixed(4)
-        const opacity = Number((0.08 + prand(i + 400) * 0.07).toFixed(4))
+        const duration = (0.3 + prand(i + 100) * 1.2).toFixed(4) // More varied fall speed
+        const delay = (-prand(i + 200) * 3).toFixed(4) // Wider delay distribution
+        const height = (20 + prand(i + 300) * 70).toFixed(4) // More varied heights
+        const opacity = Number((0.02 + prand(i + 400) * 0.04).toFixed(4)) // Much lower opacity
         return (
           <span
             key={i}

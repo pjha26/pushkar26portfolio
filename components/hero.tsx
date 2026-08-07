@@ -98,7 +98,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 z-20 bg-black opacity-0"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-4xl">
+      <div className="relative z-20 mx-auto w-full max-w-4xl">
         <p
           data-hero-item
           className="font-mono text-xs tracking-[0.2em] text-muted-foreground"

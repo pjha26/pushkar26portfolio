@@ -1,6 +1,6 @@
-import { Scene } from '@/components/scene'
 import { CustomCursor } from '@/components/custom-cursor'
 import { SmoothScroll } from '@/components/smooth-scroll'
+import { GridBackground } from '@/components/grid-background'
 import { Hero } from '@/components/hero'
 import { About, HowIBuild } from '@/components/about'
 import { Projects } from '@/components/projects'
@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <>
       <CustomCursor />
-      <Scene />
+      <GridBackground />
       <SmoothScroll>
         <main className="relative z-10 text-foreground">
           <Hero />
