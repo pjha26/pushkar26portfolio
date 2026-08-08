@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Bebas_Neue, Rajdhani, Space_Mono, Syncopate, Michroma } from 'next/font/google'
+import { Preloader } from '@/components/preloader'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -39,7 +40,7 @@ const michroma = Michroma({
 })
 
 export const metadata: Metadata = {
-  title: 'Pushkar Raj — Full-Stack Developer & AI/ML Engineer',
+  title: 'PUSHKAR RAJ — FILE PR-2027',
   description:
     'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems — multi-agent AI platforms, real-time infrastructure, and ML pipelines that survive contact with production.',
   generator: 'v0.app',
@@ -79,6 +80,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="antialiased font-sans bg-[#0a0a0d] text-foreground" suppressHydrationWarning>
+        <Preloader />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

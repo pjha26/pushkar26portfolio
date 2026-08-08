@@ -35,6 +35,8 @@
 
 :root {
   color-scheme: dark;
+  scrollbar-color: rgba(245, 196, 0, 0.5) rgba(10, 10, 13, 0.8);
+  scrollbar-width: thin;
   /* Gotham: cold blue-black, off-white, grays, signal yellow */
   --background: #0a0a0d;
   --foreground: #e8e8ea;
@@ -48,6 +50,24 @@
   --vengeance: #8b1a1a;
   --vengeance-foreground: #e8e8ea;
   --radius: 0rem;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 10, 13, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(245, 196, 0, 0.4);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 196, 0, 1);
 }
 
 @layer base {

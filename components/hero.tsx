@@ -30,6 +30,7 @@ export function Hero() {
     const blackout = blackoutRef.current
     const name = nameRef.current
     const reduced = prefersReducedMotion()
+    const hasRun = sessionStorage.getItem('hero_has_run')
 
     const ctx = gsap.context(() => {
       if (reduced) {
@@ -38,7 +39,8 @@ export function Hero() {
         return
       }
 
-      const tl = gsap.timeline()
+      sessionStorage.setItem('hero_has_run', 'true')
+      const tl = gsap.timeline({ delay: hasRun ? 0 : 1.25 })
 
       // Power outage: black overlay flickers off at decreasing intervals
       if (blackout) {
@@ -103,7 +105,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 z-20 bg-black opacity-0"
       />
 
-      <div className="relative z-20 mx-auto w-full max-w-4xl">
+      <div className="relative z-20 w-full max-w-3xl">
         <p
           data-hero-item
           className="font-mono text-xs tracking-[0.2em] text-muted-foreground"
