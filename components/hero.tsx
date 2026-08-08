@@ -2,12 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
+import { TextPlugin } from 'gsap/TextPlugin'
 import { prefersReducedMotion } from '@/lib/use-reveal'
 import { scrollToSection } from '@/components/smooth-scroll'
 import { MagneticLink } from '@/components/magnetic-link'
 import { HeroRain, HeroSpotlight } from '@/components/gotham-atmosphere'
 import { LINKS, SECTION_IDS } from '@/lib/dossier-data'
 import dynamic from 'next/dynamic'
+
+gsap.registerPlugin(TextPlugin)
 
 const GuardianEntrance = dynamic(
   () => import('@/components/guardian-entrance').then((mod) => mod.GuardianEntrance),
@@ -111,7 +114,7 @@ export function Hero() {
           className="font-mono text-xs tracking-[0.2em] text-muted-foreground"
         >
           FILE REF: PR-2027 {'//'} STATUS:{' '}
-          <span className="text-signal">ACTIVE</span>
+          <span className="text-signal glow-signal">ACTIVE</span>
         </p>
 
         <h1
@@ -131,7 +134,7 @@ export function Hero() {
 
         <p
           data-hero-item
-          className="mt-8 max-w-2xl text-base leading-relaxed text-foreground/85 text-pretty md:text-lg"
+          className="mt-8 max-w-2xl text-base leading-relaxed text-foreground text-pretty md:text-lg"
         >
           I build resilient, data-driven systems — multi-agent AI platforms,
           real-time infrastructure, and ML pipelines that survive contact with

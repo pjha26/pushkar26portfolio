@@ -3,20 +3,21 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { TextPlugin } from 'gsap/TextPlugin'
 import { Section } from '@/components/section'
 import { MagneticLink } from '@/components/magnetic-link'
 import { LINKS, SKILL_GROUPS } from '@/lib/dossier-data'
 import { prefersReducedMotion } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, TextPlugin)
 
 export function Skills() {
   return (
     <Section id="skills" fileLabel="SECTION 04 // EQUIPMENT" title="Tactical Loadout">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {SKILL_GROUPS.map((group) => (
-          <div key={group.label} className="group relative overflow-hidden border border-border bg-card p-5">
+          <div key={group.label} className="group relative overflow-hidden border border-white/5 bg-card hover:bg-[var(--card-hover)] transition-colors p-5">
             {/* Hover scanning line */}
             <div className="absolute top-0 left-0 w-full h-[2px] bg-signal -translate-x-full group-hover:animate-[scan_150ms_ease-in-out_forwards]" />
             <h3 className="font-mono text-[10px] tracking-[0.25em] text-signal/70 mb-4">
@@ -89,7 +90,7 @@ export function Experience() {
   return (
     <div className="theme-vengeance">
       <Section
-        id="resume"
+        id="experience"
         fileLabel="SECTION 05 // SURVEILLANCE LOG"
         title="Experience"
       >
@@ -151,7 +152,7 @@ function PlaqueCard({ label, title, subtitle }: { label: string, title: string, 
   }, [])
   
   return (
-    <article ref={cardRef} className="relative border border-border bg-card p-6 overflow-hidden">
+    <article ref={cardRef} className="relative border border-white/5 bg-card hover:bg-[var(--card-hover)] transition-colors p-6 overflow-hidden">
       <p className="font-mono text-[10px] tracking-[0.25em] text-signal mb-3">
         {label}
       </p>
@@ -189,6 +190,67 @@ export function Achievements() {
           title="THINK2IMPACT Ideathon 2.0" 
           subtitle="AICTE IC-AISMART, JSSATE Bengaluru" 
         />
+      </div>
+    </Section>
+  )
+}
+
+export function Resume() {
+  return (
+    <Section
+      id="resume"
+      fileLabel="SECTION 07 // FULL FILE"
+      title="Resume"
+    >
+      <div className="flex flex-col items-start gap-6">
+        <p className="font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">
+          Complete record available for download
+        </p>
+        <a
+          href="/resume.pdf"
+          download="Pushkar_Raj_Resume.pdf"
+          data-cursor-card="OPEN"
+          className="group relative flex items-center gap-5 border border-white/5 bg-card hover:bg-[var(--card-hover)] hover:border-signal/40 hover:shadow-[0_0_20px_rgba(245,196,0,0.1)] transition-all duration-300 px-8 py-6 w-full max-w-md"
+        >
+          {/* File icon */}
+          <svg
+            className="shrink-0 w-10 h-12 text-signal/70 group-hover:text-signal transition-colors"
+            viewBox="0 0 40 48"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M4 4h22l10 10v30H4V4z" />
+            <path d="M26 4v10h10" />
+            <line x1="12" y1="24" x2="28" y2="24" />
+            <line x1="12" y1="30" x2="28" y2="30" />
+            <line x1="12" y1="36" x2="22" y2="36" />
+          </svg>
+          <div className="flex flex-col gap-1">
+            <span className="dossier-heading text-lg text-[#f5f5f5] group-hover:text-signal transition-colors">
+              Download Dossier — PDF
+            </span>
+            <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground">
+              PDF · RÉSUMÉ · 1 PAGE
+            </span>
+          </div>
+          {/* Download arrow */}
+          <svg
+            className="ml-auto shrink-0 w-5 h-5 text-muted-foreground group-hover:text-signal group-hover:translate-y-0.5 transition-all"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="10" y1="3" x2="10" y2="14" />
+            <polyline points="5 10 10 15 15 10" />
+            <line x1="4" y1="17" x2="16" y2="17" />
+          </svg>
+        </a>
       </div>
     </Section>
   )

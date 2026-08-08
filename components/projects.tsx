@@ -157,7 +157,7 @@ function CaseCard({
             e.stopPropagation()
             onToggle()
           }}
-          className="relative z-10 flex w-full flex-col gap-2 px-6 py-5 text-left md:flex-row md:items-center md:justify-between outline-none bg-card border border-border shadow-md"
+          className="relative z-10 flex w-full flex-col gap-2 px-6 py-5 text-left md:flex-row md:items-center md:justify-between outline-none bg-card hover:bg-[var(--card-hover)] transition-colors border border-white/5 shadow-md"
         >
           <div className="flex items-baseline gap-4">
             <span className="font-mono text-[10px] tracking-[0.25em] text-signal drop-shadow-[0_0_8px_rgba(245,196,0,0.4)]">
@@ -168,8 +168,8 @@ function CaseCard({
             </h3>
           </div>
           <div className="flex items-center gap-4">
-            <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground">
-              STATUS: {c.status}
+            <span className="font-mono text-[10px] font-bold tracking-[0.2em] bg-signal text-signal-foreground px-2 py-1 rounded-sm uppercase">
+              {c.status}
             </span>
             <span
               aria-hidden="true"

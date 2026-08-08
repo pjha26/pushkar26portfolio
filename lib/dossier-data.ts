@@ -166,4 +166,4 @@ export const PRINCIPLES: { code: string; title: string; body: string }[] = [
   },
 ]
 
-export const SECTION_IDS = ['about', 'projects', 'skills', 'resume', 'contact'] as const
+export const SECTION_IDS = ['about', 'projects', 'skills', 'experience', 'achievements', 'resume', 'contact'] as const

@@ -48,7 +48,7 @@ function StatCounter({ target, label, sublabel }: { target: number, label: strin
       <dt className="text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
         {label}
       </dt>
-      <dd className="mt-1 text-3xl font-bold text-foreground font-mono">
+      <dd className="mt-1 text-4xl font-bold text-signal font-mono">
         <span ref={nodeRef}>0</span>+ <span className="text-xs font-sans font-normal text-muted-foreground">{sublabel}</span>
       </dd>
     </div>
@@ -117,7 +117,7 @@ export function About() {
           Computer Science (AI &amp; ML) student at JSS Academy of Technical Education, Bengaluru (2023–2027). Working at the intersection of full-stack engineering and applied machine learning, with a bias toward systems that hold up in production.
         </RedactedText>
         
-        <dl className="grid shrink-0 grid-cols-1 gap-6 border border-border bg-card p-6 md:w-64">
+        <dl className="grid shrink-0 grid-cols-1 gap-6 border border-white/5 bg-card hover:bg-card-hover transition-colors p-6 md:w-64">
           <StatCounter target={200} label="DSA Problems Solved" sublabel="LeetCode" />
           <StatCounter target={15} label="Repositories Maintained" sublabel="GitHub" />
           <StatCounter target={50} label="Students Mentored" sublabel="MERN workshops" />
@@ -193,7 +193,7 @@ function EvidenceBoard() {
           return (
             <div key={p.code} className={cn("evidence-card relative transition-all duration-200 hover:rotate-0 hover:scale-[1.02]", rotation)}>
               <Pushpin />
-              <TiltCard className="p-6 h-full flex flex-col bg-[#14141a]/95 border-border shadow-xl backdrop-blur-sm">
+              <TiltCard className="p-6 h-full flex flex-col bg-card hover:bg-[var(--card-hover)] transition-colors border-white/5 shadow-xl backdrop-blur-sm">
                 <p className="font-mono text-[10px] tracking-[0.25em] text-signal">
                   {p.code}
                 </p>

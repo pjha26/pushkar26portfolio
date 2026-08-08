@@ -8,6 +8,7 @@ import {
   Skills,
   Experience,
   Achievements,
+  Resume,
   Contact,
 } from '@/components/dossier-sections'
 
@@ -25,6 +26,7 @@ export default function Page() {
           <Skills />
           <Experience />
           <Achievements />
+          <Resume />
           <Contact />
         </main>
       </SmoothScroll>

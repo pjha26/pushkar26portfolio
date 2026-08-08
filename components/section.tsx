@@ -62,8 +62,9 @@ export function Section({ id, fileLabel, title, children, className, disableReve
         </div>
         <h2
           data-reveal
-          className="dossier-heading mt-4 text-3xl text-foreground md:text-4xl"
+          className="dossier-heading mt-4 text-3xl text-[#f5f5f5] md:text-4xl"
         >
+          <span className="inline-block w-3 h-[3px] bg-signal mr-3 align-middle" />
           {title}
         </h2>
         <div className="mt-10">{children}</div>
