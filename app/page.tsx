@@ -12,23 +12,32 @@ import {
   Contact,
 } from '@/components/dossier-sections'
 
+import { BootManager } from '@/components/boot-manager'
+import { TelemetryHUD } from '@/components/telemetry-hud'
+import { RedactProvider } from '@/components/redact-context'
+
 export default function Page() {
   return (
     <>
       <CustomCursor />
       <GridBackground />
       <SmoothScroll>
-        <main className="relative z-10 text-foreground">
-          <Hero />
-          <About />
-          <HowIBuild />
-          <Projects />
-          <Skills />
-          <Experience />
-          <Achievements />
-          <Resume />
-          <Contact />
-        </main>
+        <RedactProvider>
+          <BootManager>
+            <TelemetryHUD />
+            <main className="relative z-10 text-foreground">
+            <Hero />
+            <About />
+            <HowIBuild />
+            <Projects />
+            <Skills />
+            <Experience />
+            <Achievements />
+            <Resume />
+            <Contact />
+          </main>
+          </BootManager>
+        </RedactProvider>
       </SmoothScroll>
     </>
   )

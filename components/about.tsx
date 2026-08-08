@@ -60,6 +60,8 @@ function StatCounter({ target, label, sublabel }: { target: number, label: strin
   )
 }
 
+import { Redact } from '@/components/redact-context'
+
 function RedactedText({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null)
   
@@ -95,19 +97,19 @@ function RedactedText({ children }: { children: React.ReactNode }) {
     <div ref={containerRef} className="space-y-4 text-base leading-relaxed text-foreground/85">
       {/* We fake "lines" by splitting the paragraph into blocks and overlaying black bars */}
       <div className="relative inline-block w-full">
-        Computer Science (AI &amp; ML) student at JSS Academy of Technical
+        Computer Science (<Redact>AI &amp; ML</Redact>) student at <Redact>JSS Academy of Technical</Redact>
         <div className="redact-bar absolute inset-0 bg-black scale-x-100 origin-right pointer-events-none" />
       </div>
       <div className="relative inline-block w-full">
-        Education, Bengaluru (2023–2027). Working at the intersection of
+        <Redact>Education, Bengaluru</Redact> (2023–2027). Working at the intersection of
         <div className="redact-bar absolute inset-0 bg-black scale-x-100 origin-right pointer-events-none" />
       </div>
       <div className="relative inline-block w-full">
-        full-stack engineering and applied machine learning, with a bias
+        full-stack engineering and <Redact>applied machine learning</Redact>, with a bias
         <div className="redact-bar absolute inset-0 bg-black scale-x-100 origin-right pointer-events-none" />
       </div>
       <div className="relative inline-block w-full">
-        toward systems that hold up in production.
+        toward systems that hold up in <Redact>production</Redact>.
         <div className="redact-bar absolute inset-0 bg-black scale-x-100 origin-right pointer-events-none" />
       </div>
     </div>
