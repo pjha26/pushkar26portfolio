@@ -20,6 +20,7 @@ type SectionProps = {
 export function Section({ id, fileLabel, title, children, className, disableReveal }: SectionProps) {
   const ref = useSectionReveal<HTMLElement>({ disable: disableReveal })
   const dividerRef = useRef<HTMLDivElement>(null)
+  const labelRef = useRef<HTMLSpanElement>(null)
 
   // Signal-yellow divider draws itself across the screen when scrolled into view
   useEffect(() => {
@@ -42,6 +43,44 @@ export function Section({ id, fileLabel, title, children, className, disableReve
     return () => ctx.revert()
   }, [])
 
+  // Cryptographic scramble text effect for fileLabel
+  useEffect(() => {
+    const label = labelRef.current
+    if (!label || prefersReducedMotion() || disableReveal) return
+
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>/-_+=|\\'
+    const originalText = fileLabel
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: label,
+        start: 'top 90%',
+        once: true,
+        onEnter: () => {
+          let iter = 0
+          const interval = setInterval(() => {
+            label.innerText = originalText
+              .split('')
+              .map((char, index) => {
+                if (char === ' ') return ' '
+                if (index < iter) return originalText[index]
+                return chars[Math.floor(Math.random() * chars.length)]
+              })
+              .join('')
+            
+            if (iter >= originalText.length) {
+              clearInterval(interval)
+              label.innerText = originalText
+            }
+            iter += 1/2
+          }, 30)
+        }
+      })
+    }, label)
+
+    return () => ctx.revert()
+  }, [fileLabel, disableReveal])
+
   return (
     <section
       id={id}
@@ -55,7 +94,7 @@ export function Section({ id, fileLabel, title, children, className, disableReve
       />
       <div className="mx-auto w-full max-w-4xl">
         <div data-reveal className="flex items-baseline gap-4">
-          <span className="font-mono text-[10px] tracking-[0.25em] text-signal">
+          <span ref={labelRef} className="font-mono text-[10px] tracking-[0.25em] text-signal min-h-[14px]">
             {fileLabel}
           </span>
           <span className="h-px flex-1 bg-border" aria-hidden="true" />

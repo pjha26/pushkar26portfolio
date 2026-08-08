@@ -168,9 +168,9 @@ export function GuardianEntrance({ targetId, onLandingComplete, className }: Gua
       {/* 3D Canvas Layer - Visible on all screens */}
       <div className="absolute inset-0 z-0">
         <Canvas shadows camera={{ position: [-2, 4, 10], fov: 40 }}>
-          <fogExp2 attach="fog" args={["#0a0a0d", 0.04]} />
+          <fogExp2 attach="fog" args={["#0a0a0d", 0.03]} />
           
-          <ambientLight intensity={0.1} />
+          <ambientLight intensity={0.15} />
           {/* Cool moonlight */}
           <directionalLight position={[-10, 15, 10]} intensity={0.5} color="#8aa2bd" castShadow shadow-mapSize={[1024, 1024]} />
           {/* Signal yellow spot/point light raking across scene */}

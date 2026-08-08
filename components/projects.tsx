@@ -139,12 +139,21 @@ function CaseCard({
     return () => ctx.revert()
   }, [isOpen])
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!tabRef.current) return
+    const rect = tabRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    tabRef.current.style.setProperty('--mouse-x', `${x}px`)
+    tabRef.current.style.setProperty('--mouse-y', `${y}px`)
+  }
+
   return (
     <div
       ref={cardRef}
       data-case-card
       className={cn(
-        "group mb-6 transition-opacity duration-300",
+        "group/card mb-6 transition-opacity duration-300",
         isOtherOpen ? "opacity-50" : "opacity-100"
       )}
       style={{ transformStyle: 'preserve-3d' }}
@@ -161,9 +170,18 @@ function CaseCard({
             e.stopPropagation()
             onToggle()
           }}
-          className="relative z-10 flex w-full flex-col gap-2 px-6 py-5 text-left md:flex-row md:items-center md:justify-between outline-none bg-card hover:bg-[var(--card-hover)] transition-colors border border-white/5 shadow-md"
+          onMouseMove={handleMouseMove}
+          className="relative z-10 flex w-full flex-col gap-2 px-6 py-5 text-left md:flex-row md:items-center md:justify-between outline-none bg-card hover:bg-[var(--card-hover)] transition-colors border border-white/5 shadow-md overflow-hidden"
         >
-          <div className="flex items-baseline gap-4">
+          {/* Spotlight Hover Layer */}
+          <div 
+            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover/card:opacity-100" 
+            style={{ 
+              background: 'radial-gradient(600px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(245, 196, 0, 0.08), transparent 40%)'
+            }} 
+          />
+
+          <div className="relative z-10 flex items-baseline gap-4">
             <span className="font-mono text-[10px] tracking-[0.25em] text-signal drop-shadow-[0_0_8px_rgba(245,196,0,0.4)]">
               {c.fileNumber}
             </span>
@@ -171,7 +189,7 @@ function CaseCard({
               {c.title}
             </h3>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="relative z-10 flex items-center gap-4">
             <span className="font-mono text-[10px] font-bold tracking-[0.2em] bg-signal text-signal-foreground px-2 py-1 rounded-sm uppercase">
               {c.status}
             </span>
@@ -236,6 +254,17 @@ function CaseCard({
               </ul>
             </div>
           </div>
+
+          {c.challenge && (
+            <div className="mt-6 border-l-4 border-signal bg-white/5 p-4 shadow-sm opacity-0">
+              <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal uppercase">
+                TECHNICAL CHALLENGE
+              </h4>
+              <p className="mt-2 text-sm leading-relaxed text-foreground/90">
+                {c.challenge}
+              </p>
+            </div>
+          )}
 
           <div className="mt-6 opacity-0">
             <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70">

@@ -35,13 +35,23 @@ export function CustomCursor() {
         yTo(e.clientY)
       }
 
-      const setState = (mode: 'default' | 'link' | 'card', text = '') => {
+      const setState = (mode: 'default' | 'link' | 'card' | 'text', text = '') => {
         label.textContent = text
         if (mode === 'default') {
           gsap.to(cursor, {
             width: 20,
             height: 20,
             backgroundColor: 'transparent',
+            borderRadius: '50%',
+            duration: 0.2,
+            ease: 'power2.out',
+          })
+        } else if (mode === 'text') {
+          gsap.to(cursor, {
+            width: 4,
+            height: 28,
+            backgroundColor: '#f5c400',
+            borderRadius: '2px',
             duration: 0.2,
             ease: 'power2.out',
           })
@@ -50,6 +60,7 @@ export function CustomCursor() {
             width: mode === 'card' ? 56 : 40,
             height: mode === 'card' ? 56 : 40,
             backgroundColor: '#f5c400',
+            borderRadius: '50%',
             duration: 0.2,
             ease: 'power2.out',
           })
@@ -63,7 +74,11 @@ export function CustomCursor() {
           setState('card', card.getAttribute('data-cursor-card') || 'OPEN')
           return
         }
-        if (target.closest('a, button, input, [role="button"]')) {
+        if (target.closest('input, textarea')) {
+          setState('text')
+          return
+        }
+        if (target.closest('a, button, [role="button"]')) {
           setState('link')
           return
         }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Section } from '@/components/section'
@@ -8,7 +8,12 @@ import { PRINCIPLES } from '@/lib/dossier-data'
 import { TiltCard } from '@/components/ui/tilt-card'
 import { prefersReducedMotion } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
+import dynamic from 'next/dynamic'
 
+const GitHubCalendar = dynamic(
+  () => import('react-github-calendar').then((mod) => mod.GitHubCalendar),
+  { ssr: false }
+)
 gsap.registerPlugin(ScrollTrigger)
 
 function StatCounter({ target, label, sublabel }: { target: number, label: string, sublabel: string }) {
@@ -109,6 +114,48 @@ function RedactedText({ children }: { children: React.ReactNode }) {
   )
 }
 
+function LiveGitHubStats() {
+  const [data, setData] = useState<{ repos: number; commits: number; live: boolean } | null>(null)
+
+  useEffect(() => {
+    fetch('/api/github-stats')
+      .then(res => {
+        if (!res.ok) throw new Error('API error')
+        return res.json()
+      })
+      .then(setData)
+      .catch(() => setData({ repos: 15, commits: 150, live: false }))
+  }, [])
+
+  if (!data) {
+    return <StatCounter target={15} label="Repositories Maintained" sublabel="GitHub" />
+  }
+
+  return (
+    <>
+      <div className="relative">
+        {data.live && (
+          <div className="absolute -top-5 right-0 flex items-center gap-1.5">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-signal"></span>
+            </span>
+            <span className="font-mono text-[9px] tracking-widest text-signal">LIVE</span>
+          </div>
+        )}
+        <StatCounter 
+          target={data.repos} 
+          label={data.live ? "REPOSITORIES" : "Repositories Maintained"} 
+          sublabel="GitHub" 
+        />
+      </div>
+      {data.live && (
+        <StatCounter target={data.commits} label="COMMITS TRACKED" sublabel="GitHub" />
+      )}
+    </>
+  )
+}
+
 export function About() {
   return (
     <Section id="about" fileLabel="SECTION 01 // SUBJECT PROFILE" title="About">
@@ -119,9 +166,30 @@ export function About() {
         
         <dl className="grid shrink-0 grid-cols-1 gap-6 border border-white/5 bg-card hover:bg-card-hover transition-colors p-6 md:w-64">
           <StatCounter target={200} label="DSA Problems Solved" sublabel="LeetCode" />
-          <StatCounter target={15} label="Repositories Maintained" sublabel="GitHub" />
+          <LiveGitHubStats />
           <StatCounter target={50} label="Students Mentored" sublabel="MERN workshops" />
         </dl>
+      </div>
+
+      <div className="mt-8 border border-white/5 bg-card hover:bg-card-hover transition-colors p-6 overflow-hidden">
+        <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70 mb-6 uppercase">
+          GITHUB ACTIVITY MATRIX
+        </h4>
+        <div className="overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-signal/50 scrollbar-track-transparent">
+          <div className="min-w-fit">
+            <GitHubCalendar 
+              username="pjha26" 
+              colorScheme="dark"
+              theme={{
+                dark: ['#1c1c20', '#5c4a00', '#997a00', '#d6ab00', '#f5c400']
+              }}
+              fontSize={12}
+              blockSize={12}
+              blockMargin={4}
+              blockRadius={1}
+            />
+          </div>
+        </div>
       </div>
     </Section>
   )

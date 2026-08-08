@@ -10,6 +10,7 @@ export type CaseFile = {
   title: string
   status: string
   problem: string
+  challenge?: string
   approach: string[]
   stack: string[]
   github?: string
@@ -23,6 +24,7 @@ export const CASES: CaseFile[] = [
     status: 'DEPLOYED · 2026',
     problem:
       'Developers, students, and hackathon builders need professional technical specs but writing them from scratch is slow and inconsistent.',
+    challenge: 'Regenerating specs on every GitHub push without spamming users or wasting API calls. Solved with an HMAC-SHA256-verified webhook that only triggers regeneration on verified pushes, paired with a manual sync fallback for control.',
     approach: [
       'AI-powered spec generator — GitHub URL or plain-text input, streams structured specs via Server-Sent Events, auto-generated Mermaid diagrams, AI complexity scoring.',
       'Multi-model generation (GPT-5, Gemini 2.5 Pro/Flash). GitHub sync with HMAC-SHA256-verified webhook auto-regeneration.',
@@ -48,6 +50,7 @@ export const CASES: CaseFile[] = [
     status: 'DEPLOYED · 2026',
     problem:
       'Candidates need realistic, adaptive interview practice across Behavioral, Technical, System Design, and HR/Culture Fit formats.',
+    challenge: 'Browsers can\'t reliably fire cleanup events when a tab closes, and sendBeacon can\'t set auth headers. Solved with a short-lived, HMAC-signed beacon token passed in the request body instead of headers, backed by a 30-minute staleness sweep as a fail-safe.',
     approach: [
       'Voice-based AI mock interview platform — live spoken interviews via Vapi WebRTC (STT/TTS).',
       'LangGraph state machine (not a single prompt) — separate nodes evaluate answers, decide strategy, generate questions, preventing repetition/hallucination.',
@@ -63,6 +66,7 @@ export const CASES: CaseFile[] = [
     title: 'ARTHAI',
     status: 'DEPLOYED · 2026',
     problem: 'Audit teams lose hours manually reviewing financial documents.',
+    challenge: 'A single LLM provider outage shouldn\'t take down report generation. Solved with a Gemini-primary, Groq/Llama-3.3-70B-fallback architecture, so agent orchestration keeps running even if one provider fails.',
     approach: [
       'Multi-agent SaaS platform orchestrating Gemini API agents, Groq/Llama 3.3 70B fallback, auto-generates AI audit reports.',
       'FastAPI microservices under 500ms response times, three-stage BullMQ email pipeline, RAG chat-with-report using pgvector + text-embedding-004.',
@@ -78,6 +82,7 @@ export const CASES: CaseFile[] = [
     status: 'LIVE · 2026',
     problem:
       'Booking platforms need real-time reliability with zero double-booking across multiple user roles.',
+    challenge: 'Preventing double-bookings under concurrent requests. Solved with MongoDB transactions that roll back automatically on conflict, rather than relying on application-level locking.',
     approach: [
       'React.js dashboards, Socket.io real-time updates under 100ms latency, role-based access (User/Expert).',
       'MongoDB transactions for concurrency-safe reservations with rollback.',
@@ -93,6 +98,7 @@ export const CASES: CaseFile[] = [
     status: 'LIVE (ACTIVE DEVELOPMENT) · 2026',
     problem:
       'AI bots (GPTBot, ClaudeBot, PerplexityBot) crawl websites with zero owner visibility or control.',
+    challenge: 'Bot detection has to happen before a request reaches a page, or it\'s too late to be useful. Solved by running detection logic in Edge Middleware rather than standard server-side code, intercepting every request pre-render.',
     approach: [
       'Edge Middleware intercepts every request pre-page-load, checks User-Agent against known bot signatures, logs hits in real time to Upstash Redis (keyed by bot + date).',
       'Dashboard reads Redis counters via Supabase-authenticated API routes, showing live non-synthetic traffic.',

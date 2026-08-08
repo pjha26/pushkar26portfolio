@@ -65,6 +65,7 @@ export function Hero() {
           duration: 0.45,
           ease: 'power2.out',
           stagger: 0.08,
+          clearProps: 'all',
         },
         0.55,
       )
@@ -96,6 +97,7 @@ export function Hero() {
       id="hero-section"
       ref={rootRef}
       className="relative flex min-h-svh flex-col justify-center overflow-hidden px-6 py-24 md:px-12 lg:px-20"
+      style={{ background: 'radial-gradient(circle at 40% 50%, #101014 0%, #08080a 70%)' }}
     >
       <GuardianEntrance targetId="hero-section" onLandingComplete={() => setIsLanded(true)} />
       <HeroSpotlight />
@@ -120,14 +122,14 @@ export function Hero() {
         <h1
           ref={nameRef}
           data-hero-item
-          className="name-heading mt-6 text-4xl leading-none text-foreground md:text-6xl lg:text-7xl xl:text-8xl"
+          className="name-heading mt-6 text-4xl leading-none text-[#f5f5f5] font-bold md:text-6xl lg:text-7xl xl:text-8xl"
         >
           Pushkar Raj
         </h1>
 
         <p
           data-hero-item
-          className="dossier-heading mt-4 text-sm text-muted-foreground md:text-base"
+          className="dossier-heading mt-4 text-sm text-[#f5f5f5] tracking-widest md:text-base"
         >
           Case Designation: Full-Stack Developer &amp; AI/ML Engineer
         </p>
@@ -178,8 +180,17 @@ const PLACEHOLDER = 'projects / skills / about / resume / contact'
 function CommandLine() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState('')
-  const [feedback, setFeedback] = useState<string | null>(null)
+  type HistoryEntry = { command: string; output: string | null }
+  const [history, setHistory] = useState<HistoryEntry[]>([])
   const [focused, setFocused] = useState(false)
+  const historyRef = useRef<HTMLDivElement>(null)
+
+  // Auto-scroll to bottom of history
+  useEffect(() => {
+    if (historyRef.current) {
+      historyRef.current.scrollTop = historyRef.current.scrollHeight
+    }
+  }, [history])
 
   // GSAP character-by-character typing animation for the placeholder hint
   const hintRef = useRef<HTMLSpanElement>(null)
@@ -213,73 +224,93 @@ function CommandLine() {
   const submit = () => {
     const query = value.trim().toLowerCase()
     if (!query) return
+    let response: string | null = null
+    
     if (VALID_SECTIONS.has(query)) {
-      setFeedback(null)
+      response = `ACCESSING FILE: [${query.toUpperCase()}]...`
       scrollToSection(query)
+    } else if (query === 'clear') {
+      setHistory([])
       setValue('')
+      return
+    } else if (query === 'whoami') {
+      response = "Pushkar Raj — Full-Stack Developer & AI/ML Engineer"
+    } else if (query === 'help') {
+      response = "AVAILABLE COMMANDS: PROJECTS, SKILLS, ABOUT, RESUME, CONTACT, WHOAMI, CLEAR"
+    } else if (query.startsWith('sudo')) {
+      response = "CRITICAL: Unauthorized access logged. Dispatching trace."
     } else {
-      setFeedback(`UNKNOWN SECTION: "${query.toUpperCase()}" — TRY: PROJECTS, SKILLS, ABOUT, RESUME, CONTACT`)
+      response = `UNKNOWN COMMAND: "${query}" — TYPE "help" FOR AVAILABLE COMMANDS`
     }
+
+    setHistory(prev => [...prev, { command: value.trim(), output: response }])
+    setValue('')
   }
 
   return (
     <div>
-      <p className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground">
-        COMMAND LINE — TYPE A SECTION NAME AND PRESS ENTER
+      <p className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground mb-3">
+        COMMAND LINE — TYPE A SECTION NAME OR COMMAND
       </p>
+      
       <div
-        className="glow-hover mt-3 flex items-center gap-3 border border-border bg-card px-4 py-3"
+        className="glow-hover flex flex-col border border-border bg-card px-4 py-3"
         onClick={() => inputRef.current?.focus()}
       >
-        <span className="font-mono text-sm text-signal" aria-hidden="true">
-          {'>'}
-        </span>
-        <div className="relative flex-1">
-          {value === '' && !focused && (
-            <span
-              ref={hintRef}
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-0 flex items-center font-mono text-sm text-muted-foreground"
+        {history.length > 0 && (
+          <div ref={historyRef} className="max-h-32 overflow-y-auto scrollbar-none flex flex-col gap-2 mb-2 pb-2 border-b border-white/5">
+            {history.map((h, i) => (
+              <div key={i} className="font-mono text-sm">
+                <div className="text-muted-foreground">
+                  <span className="text-signal mr-3">{'>'}</span>{h.command}
+                </div>
+                {h.output && <div className="text-signal text-[11px] mt-1 ml-5 tracking-wide">{h.output}</div>}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-sm text-signal" aria-hidden="true">
+            {'>'}
+          </span>
+          <div className="relative flex-1">
+            {value === '' && !focused && history.length === 0 && (
+              <span
+                ref={hintRef}
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 left-0 flex items-center font-mono text-sm text-muted-foreground/60"
+              />
+            )}
+            <input
+              ref={inputRef}
+              type="text"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              onKeyDown={(e) => {
+                if (
+                  e.key === 'Enter' &&
+                  !e.nativeEvent.isComposing &&
+                  e.keyCode !== 229
+                ) {
+                  submit()
+                }
+              }}
+              aria-label="Command line: type a section name or command"
+              autoComplete="off"
+              autoCapitalize="off"
+              spellCheck={false}
+              className="w-full bg-transparent font-mono text-sm text-foreground outline-none"
             />
-          )}
-          <input
-            ref={inputRef}
-            type="text"
-            value={value}
-            onChange={(e) => {
-              setValue(e.target.value)
-              setFeedback(null)
-            }}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            onKeyDown={(e) => {
-              if (
-                e.key === 'Enter' &&
-                !e.nativeEvent.isComposing &&
-                e.keyCode !== 229
-              ) {
-                submit()
-              }
-            }}
-            aria-label="Command line: type a section name and press Enter to navigate"
-            autoComplete="off"
-            autoCapitalize="off"
-            spellCheck={false}
-            className="w-full bg-transparent font-mono text-sm text-foreground outline-none"
+          </div>
+          <span
+            aria-hidden="true"
+            className="cursor-blink h-4 w-2 bg-signal"
           />
         </div>
-        <span
-          aria-hidden="true"
-          className="cursor-blink h-4 w-2 bg-signal"
-        />
       </div>
-      <p
-        role="status"
-        aria-live="polite"
-        className="mt-2 min-h-4 font-mono text-[10px] tracking-widest text-signal"
-      >
-        {feedback}
-      </p>
     </div>
   )
 }
