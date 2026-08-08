@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Bebas_Neue, Rajdhani, Space_Mono, Syncopate } from 'next/font/google'
+import { Bebas_Neue, Rajdhani, Space_Mono, Syncopate, Michroma } from 'next/font/google'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -28,6 +28,13 @@ const syncopate = Syncopate({
   weight: ['700'],
   subsets: ['latin'],
   variable: '--font-syncopate',
+  display: 'swap',
+})
+
+const michroma = Michroma({
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-michroma',
   display: 'swap',
 })
 
@@ -68,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-[#0a0a0d] text-foreground ${rajdhani.variable} ${bebasNeue.variable} ${spaceMono.variable} ${syncopate.variable} dark`}
+      className={`bg-[#0a0a0d] text-foreground ${rajdhani.variable} ${bebasNeue.variable} ${spaceMono.variable} ${syncopate.variable} ${michroma.variable} dark`}
       suppressHydrationWarning
     >
       <body className="antialiased font-sans bg-[#0a0a0d] text-foreground" suppressHydrationWarning>

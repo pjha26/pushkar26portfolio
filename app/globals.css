@@ -76,10 +76,10 @@
 
 /* Unique wide cinematic font for the hero name */
 .name-heading {
-  font-family: var(--font-syncopate), sans-serif;
+  font-family: var(--font-michroma), sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 /* Background grid at very low opacity */
