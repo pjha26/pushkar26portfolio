@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Bebas_Neue, Rajdhani, Space_Mono, Syncopate, Michroma } from 'next/font/google'
 import { Preloader } from '@/components/preloader'
+import { InterrogationTerminal } from '@/components/interrogation-terminal'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -82,6 +83,7 @@ export default function RootLayout({
       <body className="antialiased font-sans bg-[#0a0a0d] text-foreground" suppressHydrationWarning>
         <Preloader />
         {children}
+        <InterrogationTerminal />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

@@ -26,20 +26,20 @@ export function Section({ id, fileLabel, title, children, className, disableReve
     const divider = dividerRef.current
     if (!divider || prefersReducedMotion()) return
 
-    const tween = gsap.fromTo(
-      divider,
-      { scaleX: 0 },
-      {
-        scaleX: 1,
-        duration: 0.6,
-        ease: 'power2.inOut',
-        scrollTrigger: { trigger: divider, start: 'top 90%', once: true },
-      },
-    )
-    return () => {
-      tween.scrollTrigger?.kill()
-      tween.kill()
-    }
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        divider,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 0.6,
+          ease: 'power2.inOut',
+          scrollTrigger: { trigger: divider, start: 'top 90%', once: true },
+        },
+      )
+    }, divider)
+    
+    return () => ctx.revert()
   }, [])
 
   return (

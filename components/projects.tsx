@@ -46,93 +46,97 @@ function CaseCard({
   }, [isOpen, onClose])
 
   useEffect(() => {
-    if (prefersReducedMotion()) {
+    const ctx = gsap.context(() => {
+      if (prefersReducedMotion()) {
+        if (isOpen) {
+          gsap.to(drawerRef.current, { autoAlpha: 1, height: 'auto', duration: 0.2, display: 'block' })
+        } else {
+          gsap.to(drawerRef.current, { autoAlpha: 0, height: 0, duration: 0.2, display: 'none' })
+        }
+        return
+      }
+      
+      // Kill any ongoing tweens on our elements to prevent conflicts
+      gsap.killTweensOf([drawerRef.current, scanlineRef.current, innerContentRef.current?.children])
+      if (bracketsRef.current) gsap.killTweensOf(bracketsRef.current.querySelectorAll('path'))
+      
       if (isOpen) {
-        gsap.to(drawerRef.current, { autoAlpha: 1, height: 'auto', duration: 0.2, display: 'block' })
-      } else {
-        gsap.to(drawerRef.current, { autoAlpha: 0, height: 0, duration: 0.2, display: 'none' })
-      }
-      return
-    }
-    
-    // Kill any ongoing tweens on our elements to prevent conflicts
-    gsap.killTweensOf([drawerRef.current, scanlineRef.current, innerContentRef.current?.children])
-    if (bracketsRef.current) gsap.killTweensOf(bracketsRef.current.querySelectorAll('path'))
-    
-    if (isOpen) {
-      const tl = gsap.timeline()
-      
-      // Setup initial states before animation
-      tl.set(drawerRef.current, { display: 'block' })
-      if (innerContentRef.current) tl.set(innerContentRef.current.children, { autoAlpha: 0, y: 10 })
-      
-      // 1. Panel unfolds (400-500ms, power3.out)
-      tl.fromTo(drawerRef.current,
-        { rotateX: 90, z: -20, autoAlpha: 0, transformOrigin: 'top center' },
-        { rotateX: 0, z: 20, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
-        0
-      )
-      
-      // 2. Corner brackets materialize (200-250ms), starts slightly before panel finishes
-      if (bracketsRef.current) {
-        const paths = bracketsRef.current.querySelectorAll('path')
-        tl.fromTo(paths,
-          { strokeDasharray: 40, strokeDashoffset: 40 },
-          { strokeDashoffset: 0, duration: 0.25, ease: 'power2.out' },
-          0.3
-        )
-      }
-      
-      // 3. Scanline sweeps (300ms)
-      tl.fromTo(scanlineRef.current,
-        { top: '0%', autoAlpha: 0.8 },
-        { top: '100%', autoAlpha: 0, duration: 0.3, ease: 'none' },
-        0.4
-      )
-      
-      // 4. Content fades/staggers in AFTER rotation and scan-line
-      if (innerContentRef.current) {
-        tl.to(innerContentRef.current.children,
-          { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' },
-          0.6
-        )
-      }
-      
-    } else {
-      // Close sequence (~300ms total)
-      const tl = gsap.timeline()
-      
-      // 1. Content fades out first
-      if (innerContentRef.current) {
-        tl.to(innerContentRef.current.children,
-          { autoAlpha: 0, y: -5, duration: 0.1, stagger: 0 },
+        const tl = gsap.timeline()
+        
+        // Setup initial states before animation
+        tl.set(drawerRef.current, { display: 'block' })
+        if (innerContentRef.current) tl.set(innerContentRef.current.children, { autoAlpha: 0, y: 10 })
+        
+        // 1. Panel unfolds (400-500ms, power3.out)
+        tl.fromTo(drawerRef.current,
+          { rotateX: 90, z: -20, autoAlpha: 0, transformOrigin: 'top center' },
+          { rotateX: 0, z: 20, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
           0
         )
-      }
-      
-      // 2. Scanline sweeps up and brackets retract
-      tl.fromTo(scanlineRef.current,
-        { top: '100%', autoAlpha: 0.8 },
-        { top: '0%', autoAlpha: 0, duration: 0.15, ease: 'none' },
-        0.05
-      )
-      
-      if (bracketsRef.current) {
-        const paths = bracketsRef.current.querySelectorAll('path')
-        tl.to(paths,
-          { strokeDashoffset: 40, duration: 0.15, ease: 'power2.in' },
+        
+        // 2. Corner brackets materialize (200-250ms), starts slightly before panel finishes
+        if (bracketsRef.current) {
+          const paths = bracketsRef.current.querySelectorAll('path')
+          tl.fromTo(paths,
+            { strokeDasharray: 40, strokeDashoffset: 40 },
+            { strokeDashoffset: 0, duration: 0.25, ease: 'power2.out' },
+            0.3
+          )
+        }
+        
+        // 3. Scanline sweeps (300ms)
+        tl.fromTo(scanlineRef.current,
+          { top: '0%', autoAlpha: 0.8 },
+          { top: '100%', autoAlpha: 0, duration: 0.3, ease: 'none' },
+          0.4
+        )
+        
+        // 4. Content fades/staggers in AFTER rotation and scan-line
+        if (innerContentRef.current) {
+          tl.to(innerContentRef.current.children,
+            { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' },
+            0.6
+          )
+        }
+        
+      } else {
+        // Close sequence (~300ms total)
+        const tl = gsap.timeline()
+        
+        // 1. Content fades out first
+        if (innerContentRef.current) {
+          tl.to(innerContentRef.current.children,
+            { autoAlpha: 0, y: -5, duration: 0.1, stagger: 0 },
+            0
+          )
+        }
+        
+        // 2. Scanline sweeps up and brackets retract
+        tl.fromTo(scanlineRef.current,
+          { top: '100%', autoAlpha: 0.8 },
+          { top: '0%', autoAlpha: 0, duration: 0.15, ease: 'none' },
           0.05
         )
+        
+        if (bracketsRef.current) {
+          const paths = bracketsRef.current.querySelectorAll('path')
+          tl.to(paths,
+            { strokeDashoffset: 40, duration: 0.15, ease: 'power2.in' },
+            0.05
+          )
+        }
+        
+        // 3. Panel rotates back to 90deg
+        tl.to(drawerRef.current,
+          { rotateX: 90, z: -20, autoAlpha: 0, duration: 0.2, ease: 'power2.in' },
+          0.1
+        )
+        
+        tl.set(drawerRef.current, { display: 'none' })
       }
-      
-      // 3. Panel rotates back to 90deg
-      tl.to(drawerRef.current,
-        { rotateX: 90, z: -20, autoAlpha: 0, duration: 0.2, ease: 'power2.in' },
-        0.1
-      )
-      
-      tl.set(drawerRef.current, { display: 'none' })
-    }
+    }, cardRef)
+
+    return () => ctx.revert()
   }, [isOpen])
 
   return (

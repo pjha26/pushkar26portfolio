@@ -193,19 +193,21 @@ function CommandLine() {
 
     const chars = PLACEHOLDER.split('')
     hint.textContent = ''
-    const state = { i: 0 }
-    const tween = gsap.to(state, {
-      i: chars.length,
-      duration: chars.length * 0.035,
-      ease: 'none',
-      delay: 1.1,
-      onUpdate: () => {
-        hint.textContent = chars.slice(0, Math.round(state.i)).join('')
-      },
-    })
-    return () => {
-      tween.kill()
-    }
+    
+    const ctx = gsap.context(() => {
+      const state = { i: 0 }
+      gsap.to(state, {
+        i: chars.length,
+        duration: chars.length * 0.035,
+        ease: 'none',
+        delay: 1.1,
+        onUpdate: () => {
+          hint.textContent = chars.slice(0, Math.round(state.i)).join('')
+        },
+      })
+    }, hint)
+    
+    return () => ctx.revert()
   }, [])
 
   const submit = () => {

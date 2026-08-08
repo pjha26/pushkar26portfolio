@@ -47,7 +47,6 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         cleanupTicker()
         lenis?.destroy()
         window.__lenis = undefined
-        ScrollTrigger.getAll().forEach((st) => st.kill())
       }
     }
 
@@ -55,7 +54,6 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('resize', onResize)
-      ScrollTrigger.getAll().forEach((st) => st.kill())
     }
   }, [])
 

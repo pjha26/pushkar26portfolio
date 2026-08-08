@@ -26,56 +26,60 @@ export function CustomCursor() {
     const label = labelRef.current
     if (!cursor || !label) return
 
-    const xTo = gsap.quickTo(cursor, 'x', { duration: 0.18, ease: 'power3.out' })
-    const yTo = gsap.quickTo(cursor, 'y', { duration: 0.18, ease: 'power3.out' })
+    const ctx = gsap.context(() => {
+      const xTo = gsap.quickTo(cursor, 'x', { duration: 0.18, ease: 'power3.out' })
+      const yTo = gsap.quickTo(cursor, 'y', { duration: 0.18, ease: 'power3.out' })
 
-    const onMove = (e: MouseEvent) => {
-      xTo(e.clientX)
-      yTo(e.clientY)
-    }
-
-    const setState = (mode: 'default' | 'link' | 'card', text = '') => {
-      label.textContent = text
-      if (mode === 'default') {
-        gsap.to(cursor, {
-          width: 20,
-          height: 20,
-          backgroundColor: 'transparent',
-          duration: 0.2,
-          ease: 'power2.out',
-        })
-      } else {
-        gsap.to(cursor, {
-          width: mode === 'card' ? 56 : 40,
-          height: mode === 'card' ? 56 : 40,
-          backgroundColor: '#f5c400',
-          duration: 0.2,
-          ease: 'power2.out',
-        })
+      const onMove = (e: MouseEvent) => {
+        xTo(e.clientX)
+        yTo(e.clientY)
       }
-    }
 
-    const onOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      const card = target.closest('[data-cursor-card]')
-      if (card) {
-        setState('card', card.getAttribute('data-cursor-card') || 'OPEN')
-        return
+      const setState = (mode: 'default' | 'link' | 'card', text = '') => {
+        label.textContent = text
+        if (mode === 'default') {
+          gsap.to(cursor, {
+            width: 20,
+            height: 20,
+            backgroundColor: 'transparent',
+            duration: 0.2,
+            ease: 'power2.out',
+          })
+        } else {
+          gsap.to(cursor, {
+            width: mode === 'card' ? 56 : 40,
+            height: mode === 'card' ? 56 : 40,
+            backgroundColor: '#f5c400',
+            duration: 0.2,
+            ease: 'power2.out',
+          })
+        }
       }
-      if (target.closest('a, button, input, [role="button"]')) {
-        setState('link')
-        return
+
+      const onOver = (e: MouseEvent) => {
+        const target = e.target as HTMLElement
+        const card = target.closest('[data-cursor-card]')
+        if (card) {
+          setState('card', card.getAttribute('data-cursor-card') || 'OPEN')
+          return
+        }
+        if (target.closest('a, button, input, [role="button"]')) {
+          setState('link')
+          return
+        }
+        setState('default')
       }
-      setState('default')
-    }
 
-    window.addEventListener('mousemove', onMove, { passive: true })
-    window.addEventListener('mouseover', onOver, { passive: true })
+      window.addEventListener('mousemove', onMove, { passive: true })
+      window.addEventListener('mouseover', onOver, { passive: true })
 
-    return () => {
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseover', onOver)
-    }
+      return () => {
+        window.removeEventListener('mousemove', onMove)
+        window.removeEventListener('mouseover', onOver)
+      }
+    }, cursorRef)
+
+    return () => ctx.revert()
   }, [enabled])
 
   if (!enabled) return null

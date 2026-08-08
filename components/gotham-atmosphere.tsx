@@ -27,7 +27,7 @@ export function CityAtmosphere() {
     const fog = fogRef.current
     if (!skyline || !fog) return
 
-    const tweens = [
+    const ctx = gsap.context(() => {
       gsap.to(skyline, {
         y: () => -(document.documentElement.scrollHeight - window.innerHeight) * 0.06,
         ease: 'none',
@@ -38,7 +38,7 @@ export function CityAtmosphere() {
           scrub: true,
           invalidateOnRefresh: true,
         },
-      }),
+      })
       gsap.to(fog, {
         y: () => -(document.documentElement.scrollHeight - window.innerHeight) * 0.03,
         ease: 'none',
@@ -49,15 +49,10 @@ export function CityAtmosphere() {
           scrub: true,
           invalidateOnRefresh: true,
         },
-      }),
-    ]
-
-    return () => {
-      tweens.forEach((t) => {
-        t.scrollTrigger?.kill()
-        t.kill()
       })
-    }
+    })
+
+    return () => ctx.revert()
   }, [])
 
   return (
@@ -129,20 +124,20 @@ export function HeroRain({ heroRef }: { heroRef: React.RefObject<HTMLElement | n
     const hero = heroRef.current
     if (!rain || !hero) return
 
-    const tween = gsap.to(rain, {
-      autoAlpha: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: hero,
-        start: 'bottom 80%',
-        end: 'bottom 30%',
-        scrub: true,
-      },
-    })
-    return () => {
-      tween.scrollTrigger?.kill()
-      tween.kill()
-    }
+    const ctx = gsap.context(() => {
+      gsap.to(rain, {
+        autoAlpha: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: hero,
+          start: 'bottom 80%',
+          end: 'bottom 30%',
+          scrub: true,
+        },
+      })
+    }, rainRef)
+    
+    return () => ctx.revert()
   }, [heroRef])
 
   if (reduced) return null
