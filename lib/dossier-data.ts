@@ -6,6 +6,7 @@ export const LINKS = {
 }
 
 export type CaseFile = {
+  id: string
   fileNumber: string
   title: string
   status: string
@@ -19,6 +20,7 @@ export type CaseFile = {
 
 export const CASES: CaseFile[] = [
   {
+    id: 'specforge',
     fileNumber: 'CASE 00',
     title: 'SPECFORGE',
     status: 'DEPLOYED · 2026',
@@ -45,6 +47,7 @@ export const CASES: CaseFile[] = [
     github: 'https://github.com/pjha26/Spec-Forge',
   },
   {
+    id: 'mockmind',
     fileNumber: 'CASE 01',
     title: 'MOCKMIND',
     status: 'DEPLOYED · 2026',
@@ -62,6 +65,7 @@ export const CASES: CaseFile[] = [
     live: 'https://mock-mind-silk.vercel.app',
   },
   {
+    id: 'arthai',
     fileNumber: 'CASE 02',
     title: 'ARTHAI',
     status: 'DEPLOYED · 2026',
@@ -77,6 +81,7 @@ export const CASES: CaseFile[] = [
     live: 'https://arth-ai-nu.vercel.app',
   },
   {
+    id: 'expertbook',
     fileNumber: 'CASE 03',
     title: 'EXPERTBOOK',
     status: 'LIVE · 2026',
@@ -93,6 +98,7 @@ export const CASES: CaseFile[] = [
     live: 'https://real-time-rho.vercel.app',
   },
   {
+    id: 'promptwatch',
     fileNumber: 'CASE 04',
     title: 'PROMPTWATCH',
     status: 'LIVE (ACTIVE DEVELOPMENT) · 2026',

@@ -279,7 +279,7 @@ function CommandLine() {
               <span
                 ref={hintRef}
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-y-0 left-0 flex items-center font-mono text-sm text-muted-foreground/60"
+                className="pointer-events-none absolute inset-y-0 left-0 flex items-center font-mono text-base md:text-sm text-muted-foreground/60"
               />
             )}
             <input
@@ -302,7 +302,7 @@ function CommandLine() {
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              className="w-full bg-transparent font-mono text-sm text-foreground outline-none"
+              className="w-full bg-transparent font-mono text-base md:text-sm text-foreground outline-none"
             />
           </div>
           <span

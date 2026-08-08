@@ -167,7 +167,7 @@ export function GuardianEntrance({ targetId, onLandingComplete, className }: Gua
     <div ref={containerRef} className={cn("absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center", className)} aria-hidden="true">
       {/* 3D Canvas Layer - Visible on all screens */}
       <div className="absolute inset-0 z-0">
-        <Canvas shadows camera={{ position: [-2, 4, 10], fov: 40 }}>
+        <Canvas shadows dpr={[1, 2]} camera={{ position: [-2, 4, 10], fov: 40 }}>
           <fogExp2 attach="fog" args={["#0a0a0d", 0.03]} />
           
           <ambientLight intensity={0.15} />

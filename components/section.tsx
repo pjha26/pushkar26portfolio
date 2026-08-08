@@ -94,9 +94,10 @@ export function Section({ id, fileLabel, title, children, className, disableReve
       />
       <div className="mx-auto w-full max-w-4xl">
         <div data-reveal className="flex items-baseline gap-4">
-          <span ref={labelRef} className="font-mono text-[10px] tracking-[0.25em] text-signal min-h-[14px]">
+          <span ref={labelRef} aria-hidden="true" className="font-mono text-[10px] tracking-[0.25em] text-signal min-h-[14px]">
             {fileLabel}
           </span>
+          <span className="sr-only">{fileLabel}</span>
           <span className="h-px flex-1 bg-border" aria-hidden="true" />
         </div>
         <h2
