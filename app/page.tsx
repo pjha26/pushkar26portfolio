@@ -6,11 +6,10 @@ import { About, HowIBuild } from '@/components/about'
 import { Projects } from '@/components/projects'
 import {
   Skills,
-  Experience,
-  Achievements,
-  Resume,
-  Contact,
 } from '@/components/dossier-sections'
+import { EvidenceBoard } from '@/components/evidence-board'
+import { FieldReports } from '@/components/field-reports'
+import { SecureComm } from '@/components/secure-comm'
 
 import { BootManager } from '@/components/boot-manager'
 import { TelemetryHUD } from '@/components/telemetry-hud'
@@ -31,10 +30,9 @@ export default function Page() {
             <HowIBuild />
             <Projects />
             <Skills />
-            <Experience />
-            <Achievements />
-            <Resume />
-            <Contact />
+            <EvidenceBoard />
+            <FieldReports />
+            <SecureComm />
           </main>
           </BootManager>
         </RedactProvider>

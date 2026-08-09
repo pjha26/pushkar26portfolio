@@ -178,4 +178,54 @@ export const PRINCIPLES: { code: string; title: string; body: string }[] = [
   },
 ]
 
-export const SECTION_IDS = ['about', 'projects', 'skills', 'experience', 'achievements', 'resume', 'contact'] as const
+export const EXPERIENCE = [
+  {
+    id: 'EXP-01',
+    role: 'Architected SPECFORGE',
+    company: 'Personal Project',
+    date: '2026',
+    details: [
+      'Built an AI-powered spec generator streaming structured specs via Server-Sent Events.',
+      'Implemented an HMAC-SHA256-verified webhook for zero-downtime GitHub sync.',
+      'Integrated Multi-model generation (GPT-5, Gemini 2.5 Pro/Flash).',
+    ],
+  },
+  {
+    id: 'EXP-02',
+    role: 'Deployed MOCKMIND',
+    company: 'Personal Project',
+    date: '2026',
+    details: [
+      'Developed a voice-based AI mock interview platform via Vapi WebRTC.',
+      'Engineered a LangGraph state machine to prevent LLM hallucination and repetition.',
+      'Implemented robust tab-close authentication using short-lived beacon tokens.',
+    ],
+  },
+  {
+    id: 'EDU-01',
+    role: 'B.Tech in Computer Science',
+    company: 'University',
+    date: '2021 - 2025',
+    details: [
+      'Specialized heavily in AI, Machine Learning, and Full-Stack Engineering.',
+      'Continuously built and shipped production-ready scalable applications.',
+    ],
+  }
+]
+
+export const TESTIMONIALS = [
+  {
+    id: 'T-01',
+    author: 'Classified Informant',
+    title: 'Senior Engineer',
+    quote: 'Pushkar is exceptionally driven. His ability to navigate complex backend architectures and deliver performant code is a rare asset.',
+  },
+  {
+    id: 'T-02',
+    author: 'Project Lead',
+    title: 'BlueYonder',
+    quote: 'A problem solver at heart. When we faced a critical database bottleneck, his optimization cut our latency nearly in half.',
+  }
+]
+
+export const SECTION_IDS = ['about', 'projects', 'skills', 'experience', 'testimonials', 'contact'] as const
