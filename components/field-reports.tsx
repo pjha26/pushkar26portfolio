@@ -39,6 +39,7 @@ export function FieldReports() {
         {TESTIMONIALS.map((t, i) => (
           <div 
             key={t.id} 
+            data-cursor-text="[ DECRYPT ]"
             className="field-report-card relative p-8 border border-white/10 bg-[#0a0a0d] shadow-lg group hover:border-signal/50 transition-colors"
           >
             {/* Top right "stamp" */}

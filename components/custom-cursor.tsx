@@ -37,6 +37,10 @@ export function CustomCursor() {
 
       const setState = (mode: 'default' | 'link' | 'card' | 'text', text = '') => {
         label.textContent = text
+        
+        // Ensure span doesn't wrap
+        label.style.whiteSpace = 'nowrap'
+
         if (mode === 'default') {
           gsap.to(cursor, {
             width: 20,
@@ -56,11 +60,13 @@ export function CustomCursor() {
             ease: 'power2.out',
           })
         } else {
+          // If we have text, make it a pill shape, otherwise a circle
+          const hasText = text.length > 0
           gsap.to(cursor, {
-            width: mode === 'card' ? 56 : 40,
-            height: mode === 'card' ? 56 : 40,
+            width: hasText ? 96 : (mode === 'card' ? 56 : 40),
+            height: hasText ? 28 : (mode === 'card' ? 56 : 40),
             backgroundColor: '#f5c400',
-            borderRadius: '50%',
+            borderRadius: hasText ? '14px' : '50%',
             duration: 0.2,
             ease: 'power2.out',
           })
@@ -72,6 +78,11 @@ export function CustomCursor() {
         const card = target.closest('[data-cursor-card]')
         if (card) {
           setState('card', card.getAttribute('data-cursor-card') || 'OPEN')
+          return
+        }
+        const customText = target.closest('[data-cursor-text]')
+        if (customText) {
+          setState('card', customText.getAttribute('data-cursor-text') || 'VIEW')
           return
         }
         if (target.closest('input, textarea')) {

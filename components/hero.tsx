@@ -6,8 +6,11 @@ import { TextPlugin } from 'gsap/TextPlugin'
 import { prefersReducedMotion } from '@/lib/use-reveal'
 import { scrollToSection } from '@/components/smooth-scroll'
 import { MagneticLink } from '@/components/magnetic-link'
-import { HeroRain, HeroSpotlight } from '@/components/gotham-atmosphere'
+import { HeroSpotlight } from '@/components/gotham-atmosphere'
+import { NeuralNetworkBackground } from '@/components/particle-network'
 import { LINKS, SECTION_IDS } from '@/lib/dossier-data'
+import { useScramble } from '@/lib/use-scramble'
+import { sound } from '@/lib/audio-engine'
 import dynamic from 'next/dynamic'
 
 gsap.registerPlugin(TextPlugin)
@@ -18,6 +21,15 @@ const GuardianEntrance = dynamic(
 )
 
 const VALID_SECTIONS = new Set<string>(SECTION_IDS)
+
+function ScrambleText({ text, as: Component = 'span', className, delay = 0 }: { text: string, as?: any, className?: string, delay?: number }) {
+  const { displayText, trigger } = useScramble(text, 800, delay)
+  return (
+    <Component className={className} onMouseEnter={trigger}>
+      {displayText}
+    </Component>
+  )
+}
 
 export function Hero() {
   const rootRef = useRef<HTMLElement>(null)
@@ -96,12 +108,11 @@ export function Hero() {
     <header
       id="hero-section"
       ref={rootRef}
-      className="relative flex min-h-svh flex-col justify-center overflow-hidden px-6 py-24 md:px-12 lg:px-20"
-      style={{ background: 'radial-gradient(circle at 40% 50%, #101014 0%, #08080a 70%)' }}
+      className="relative flex min-h-svh flex-col justify-center overflow-hidden px-6 py-24 md:px-12 lg:px-20 bg-[#0a0a0d]"
     >
+      <NeuralNetworkBackground />
       <GuardianEntrance targetId="hero-section" onLandingComplete={() => setIsLanded(true)} />
       <HeroSpotlight />
-      <HeroRain heroRef={rootRef} />
 
       {/* Power-outage blackout overlay */}
       <div
@@ -119,20 +130,19 @@ export function Hero() {
           <span className="text-signal glow-signal">ACTIVE</span>
         </p>
 
-        <h1
-          ref={nameRef}
-          data-hero-item
-          className="name-heading mt-6 text-4xl leading-none text-[#f5f5f5] font-bold md:text-6xl lg:text-7xl xl:text-8xl"
-        >
-          Pushkar Raj
-        </h1>
+        <ScrambleText
+          as="h1"
+          text="Pushkar Raj"
+          delay={1500}
+          className="name-heading mt-6 text-4xl leading-none text-[#f5f5f5] font-bold md:text-6xl lg:text-7xl xl:text-8xl cursor-default"
+        />
 
-        <p
-          data-hero-item
-          className="dossier-heading mt-4 text-sm text-[#f5f5f5] tracking-widest md:text-base"
-        >
-          Case Designation: Full-Stack Developer &amp; AI/ML Engineer
-        </p>
+        <ScrambleText
+          as="p"
+          text="Case Designation: Full-Stack Developer & AI/ML Engineer"
+          delay={2000}
+          className="dossier-heading mt-4 text-sm text-[#f5f5f5] tracking-widest md:text-base cursor-default"
+        />
 
         <p
           data-hero-item
@@ -233,81 +243,83 @@ function CommandLine() {
       setHistory([])
       setValue('')
       return
-    } else if (query === 'whoami') {
-      response = "Pushkar Raj — Full-Stack Developer & AI/ML Engineer"
-    } else if (query === 'help') {
-      response = "AVAILABLE COMMANDS: PROJECTS, SKILLS, ABOUT, RESUME, CONTACT, WHOAMI, CLEAR"
+    } else if (query === 'sudo override') {
+      response = "CRITICAL: OVERRIDE ACCEPTED. ROOT ACCESS GRANTED."
+      sound.playAccessGranted()
+      triggerGlitch()
     } else if (query.startsWith('sudo')) {
       response = "CRITICAL: Unauthorized access logged. Dispatching trace."
+      sound.playGlitch()
     } else {
-      response = `UNKNOWN COMMAND: "${query}" — TYPE "help" FOR AVAILABLE COMMANDS`
+      response = `Command not found: ${query}`
     }
 
-    setHistory(prev => [...prev, { command: value.trim(), output: response }])
+    setHistory((prev) => [...prev, { command: value, output: response }])
     setValue('')
   }
 
-  return (
-    <div>
-      <p className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground mb-3">
-        COMMAND LINE — TYPE A SECTION NAME OR COMMAND
-      </p>
-      
-      <div
-        className="glow-hover flex flex-col border border-border bg-card px-4 py-3"
-        onClick={() => inputRef.current?.focus()}
-      >
-        {history.length > 0 && (
-          <div ref={historyRef} className="max-h-32 overflow-y-auto scrollbar-none flex flex-col gap-2 mb-2 pb-2 border-b border-white/5">
-            {history.map((h, i) => (
-              <div key={i} className="font-mono text-sm">
-                <div className="text-muted-foreground">
-                  <span className="text-signal mr-3">{'>'}</span>{h.command}
-                </div>
-                {h.output && <div className="text-signal text-[11px] mt-1 ml-5 tracking-wide">{h.output}</div>}
-              </div>
-            ))}
-          </div>
-        )}
+  const triggerGlitch = () => {
+    // Add global glitch class to body for 2 seconds
+    document.body.classList.add('global-glitch')
+    setTimeout(() => {
+      document.body.classList.remove('global-glitch')
+    }, 2000)
+  }
 
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-sm text-signal" aria-hidden="true">
-            {'>'}
-          </span>
-          <div className="relative flex-1">
-            {value === '' && !focused && history.length === 0 && (
-              <span
-                ref={hintRef}
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-y-0 left-0 flex items-center font-mono text-base md:text-sm text-muted-foreground/60"
-              />
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      submit()
+    } else {
+      sound.playType()
+    }
+  }
+
+  return (
+    <div
+      data-cursor-text="[ EXECUTE ]"
+      className="glow-hover relative flex w-full max-w-lg flex-col overflow-hidden border border-border bg-card px-4 py-3 font-mono text-sm sm:text-base"
+      onClick={() => inputRef.current?.focus()}
+    >
+      <div 
+        ref={historyRef}
+        className="max-h-32 overflow-y-auto scrollbar-hide flex flex-col gap-1 mb-2"
+      >
+        {history.map((entry, i) => (
+          <div key={i} className="flex flex-col">
+            <div className="flex text-muted-foreground">
+              <span className="mr-2 text-signal">❯</span>
+              <span>{entry.command}</span>
+            </div>
+            {entry.output && (
+              <div className="text-foreground pl-4 mt-1 opacity-90">{entry.output}</div>
             )}
-            <input
-              ref={inputRef}
-              type="text"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-              onKeyDown={(e) => {
-                if (
-                  e.key === 'Enter' &&
-                  !e.nativeEvent.isComposing &&
-                  e.keyCode !== 229
-                ) {
-                  submit()
-                }
-              }}
-              aria-label="Command line: type a section name or command"
-              autoComplete="off"
-              autoCapitalize="off"
-              spellCheck={false}
-              className="w-full bg-transparent font-mono text-base md:text-sm text-foreground outline-none"
-            />
           </div>
-          <span
-            aria-hidden="true"
-            className="cursor-blink h-4 w-2 bg-signal"
+        ))}
+      </div>
+      <div className="flex items-center text-foreground">
+        <span className="mr-3 text-signal" aria-hidden="true">
+          ❯
+        </span>
+        <div className="relative flex-1">
+          {!value && !focused && history.length === 0 && (
+            <span
+              ref={hintRef}
+              className="pointer-events-none absolute left-0 top-0 text-muted-foreground opacity-50"
+              aria-hidden="true"
+            ></span>
+          )}
+          <input
+            ref={inputRef}
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            aria-label="Command line input"
+            className="w-full bg-transparent outline-none placeholder:text-transparent"
+            spellCheck="false"
+            autoComplete="off"
           />
         </div>
       </div>

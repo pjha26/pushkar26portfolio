@@ -254,8 +254,8 @@ function EvidenceBoard() {
 
   return (
     <div ref={containerRef} className="relative mt-12 pt-4">
-      <svg className="absolute top-12 left-[16%] w-[68%] h-24 pointer-events-none hidden md:block z-0" viewBox="0 0 100 20" preserveAspectRatio="none">
-        <path className="red-string-path" d="M0,0 Q25,25 50,0 T100,0" fill="none" stroke="#8b1a1a" strokeWidth="1.5" strokeLinecap="round" />
+      <svg className="absolute top-12 left-[16%] w-[68%] h-24 pointer-events-none hidden md:block z-0 overflow-visible" viewBox="0 0 100 20" preserveAspectRatio="none">
+        <path className="red-string-path" d="M0,0 Q25,20 50,0 Q75,20 100,0" fill="none" stroke="#8b1a1a" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
       <div className="grid gap-8 md:grid-cols-3 relative z-10">
         {PRINCIPLES.map((p, i) => {
@@ -263,7 +263,10 @@ function EvidenceBoard() {
           return (
             <div key={p.code} className={cn("evidence-card relative transition-all duration-200 hover:rotate-0 hover:scale-[1.02]", rotation)}>
               <Pushpin />
-              <TiltCard className="p-6 h-full flex flex-col bg-card hover:bg-[var(--card-hover)] transition-colors border-white/5 shadow-xl backdrop-blur-sm">
+              <TiltCard 
+                data-cursor-text="[ EXAMINE ]"
+                className="p-6 h-full flex flex-col bg-card hover:bg-[var(--card-hover)] transition-colors border-white/5 shadow-xl backdrop-blur-sm"
+              >
                 <p className="font-mono text-[10px] tracking-[0.25em] text-signal">
                   {p.code}
                 </p>
