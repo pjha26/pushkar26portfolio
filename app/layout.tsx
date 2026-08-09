@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Bebas_Neue, Rajdhani, Space_Mono, Syncopate, Michroma } from 'next/font/google'
+import { Bebas_Neue, Inter, IBM_Plex_Mono, Syncopate, Michroma } from 'next/font/google'
 import { Preloader } from '@/components/preloader'
 import { InterrogationTerminal } from '@/components/interrogation-terminal'
 import './globals.css'
@@ -12,17 +12,16 @@ const bebasNeue = Bebas_Neue({
   display: 'swap',
 })
 
-const rajdhani = Rajdhani({
-  weight: ['400', '500', '600', '700'],
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-rajdhani',
+  variable: '--font-inter',
   display: 'swap',
 })
 
-const spaceMono = Space_Mono({
-  weight: ['400', '700'],
+const plexMono = IBM_Plex_Mono({
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-space-mono',
+  variable: '--font-plex-mono',
   display: 'swap',
 })
 
@@ -44,21 +43,35 @@ export const metadata: Metadata = {
   title: 'PUSHKAR RAJ — FILE PR-2027',
   description:
     'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems — multi-agent AI platforms, real-time infrastructure, and ML pipelines that survive contact with production.',
-  generator: 'v0.app',
+  generator: 'Next.js',
+  keywords: ['Pushkar Raj', 'Software Engineer', 'Full-stack Developer', 'AI/ML', 'Next.js', 'React', 'TypeScript', 'PostgreSQL'],
+  authors: [{ name: 'Pushkar Raj' }],
+  creator: 'Pushkar Raj',
+  openGraph: {
+    title: 'PUSHKAR RAJ — FILE PR-2027',
+    description: 'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems.',
+    url: 'https://pushkarraj.dev',
+    siteName: 'Pushkar Raj Portfolio',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Pushkar Raj — Dossier File PR-2027',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PUSHKAR RAJ — FILE PR-2027',
+    description: 'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems.',
+    images: ['/og-image.jpg'],
+  },
   icons: {
     icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+      { url: '/favicon.ico' }
     ],
     apple: '/apple-icon.png',
   },
@@ -77,7 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-[#0a0a0d] text-foreground ${rajdhani.variable} ${bebasNeue.variable} ${spaceMono.variable} ${syncopate.variable} ${michroma.variable} dark`}
+      className={`bg-[#0a0a0d] text-foreground ${inter.variable} ${bebasNeue.variable} ${plexMono.variable} ${syncopate.variable} ${michroma.variable} dark`}
       suppressHydrationWarning
     >
       <body className="antialiased font-sans bg-[#0a0a0d] text-foreground" suppressHydrationWarning>
