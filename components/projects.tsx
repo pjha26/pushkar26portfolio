@@ -11,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 import { TiltCard } from '@/components/ui/tilt-card'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
 
 function CaseCard({ 
   caseFile: c, 
@@ -306,13 +305,13 @@ function CaseCard({
                 Live ↗
               </a>
             )}
-            <Link
+            <a
               href={`/projects/${c.id}`}
               onClick={(e) => e.stopPropagation()}
               className="link-underline font-mono text-xs uppercase tracking-widest text-signal transition-colors hover:text-white"
             >
               Case Study ↗
-            </Link>
+            </a>
           </div>
         </div>
       </div>

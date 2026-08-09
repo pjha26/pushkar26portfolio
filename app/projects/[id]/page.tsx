@@ -1,6 +1,5 @@
 import { CASES } from '@/lib/dossier-data'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import { CustomCursor } from '@/components/custom-cursor'
 import { GridBackground } from '@/components/grid-background'
 import { SmoothScroll } from '@/components/smooth-scroll'
@@ -26,9 +25,9 @@ export default async function CaseStudy({ params }: { params: Promise<{ id: stri
       <SmoothScroll>
         <main className="relative z-10 min-h-screen text-foreground px-6 py-24 md:px-12 lg:px-20 max-w-5xl mx-auto selection:bg-signal selection:text-black">
           {/* Back button */}
-          <Link href="/#projects" className="group inline-flex items-center gap-2 font-mono text-xs tracking-widest text-muted-foreground hover:text-signal transition-colors mb-16">
+          <a href="/#projects" className="group inline-flex items-center gap-2 font-mono text-xs tracking-widest text-muted-foreground hover:text-signal transition-colors mb-16">
             <span className="transition-transform group-hover:-translate-x-1">←</span> RETURN TO HQ
-          </Link>
+          </a>
 
           {/* Header */}
           <header className="mb-16 border-b border-signal/20 pb-12">

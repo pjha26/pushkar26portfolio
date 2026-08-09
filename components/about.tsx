@@ -8,6 +8,7 @@ import { PRINCIPLES } from '@/lib/dossier-data'
 import { TiltCard } from '@/components/ui/tilt-card'
 import { prefersReducedMotion } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
+import { sound } from '@/lib/audio-engine'
 import dynamic from 'next/dynamic'
 
 const GitHubCalendar = dynamic(
@@ -265,9 +266,16 @@ function EvidenceBoard() {
               <Pushpin />
               <TiltCard 
                 data-cursor-text="[ EXAMINE ]"
-                className="p-6 h-full flex flex-col bg-card hover:bg-[var(--card-hover)] transition-colors border-white/5 shadow-xl backdrop-blur-sm"
+                onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                  sound.playAccessGranted()
+                  gsap.fromTo(e.currentTarget, 
+                    { filter: 'brightness(2) contrast(1.5)', scale: 0.95 },
+                    { filter: 'brightness(1) contrast(1)', scale: 1, duration: 0.5, ease: 'back.out(2)' }
+                  )
+                }}
+                className="p-6 h-full flex flex-col glass-panel hover:bg-[var(--card-hover)] transition-colors border-white/5 shadow-xl cursor-none"
               >
-                <p className="font-mono text-[10px] tracking-[0.25em] text-signal">
+                <p className="font-mono text-[10px] tracking-[0.25em] text-signal text-glow">
                   {p.code}
                 </p>
                 <h3 className="dossier-heading mt-3 text-lg text-foreground uppercase tracking-widest">
