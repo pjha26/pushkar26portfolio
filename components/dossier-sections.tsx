@@ -9,13 +9,36 @@ import { MagneticLink } from '@/components/magnetic-link'
 import { LINKS, SKILL_GROUPS } from '@/lib/dossier-data'
 import { prefersReducedMotion } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
+import { AnimatedSkillBadge } from '@/components/animated-skill-badge'
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin)
 
 export function Skills() {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+
+    const ctx = gsap.context(() => {
+      gsap.to('.skill-badge', {
+        opacity: 1,
+        y: 0,
+        stagger: 0.05,
+        duration: 0.5,
+        ease: 'back.out(1.5)',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 80%',
+        }
+      })
+    }, containerRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <Section id="skills" fileLabel="SECTION 04 // EQUIPMENT" title="Tactical Loadout">
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div ref={containerRef} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {SKILL_GROUPS.map((group) => (
           <div key={group.label} className="group relative overflow-hidden border border-white/5 bg-card hover:bg-[var(--card-hover)] transition-colors p-5">
             {/* Hover scanning line */}
@@ -25,12 +48,7 @@ export function Skills() {
             </h3>
             <ul className="flex flex-wrap gap-2">
               {group.items.map((item) => (
-                <li
-                  key={item}
-                  className="bg-background px-2 py-1 font-mono text-[11px] text-foreground/85 border border-border/50"
-                >
-                  {item}
-                </li>
+                <AnimatedSkillBadge key={item} skill={item} />
               ))}
             </ul>
           </div>
