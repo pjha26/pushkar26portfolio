@@ -94,8 +94,18 @@ export default function RootLayout({
       lang="en"
       className={`bg-[#0a0a0d] text-foreground ${inter.variable} ${bebasNeue.variable} ${plexMono.variable} ${syncopate.variable} ${michroma.variable} dark`}
       suppressHydrationWarning
+      style={{ backgroundColor: '#0a0a0d' }}
     >
-      <body className="antialiased font-sans bg-[#0a0a0d] text-foreground" suppressHydrationWarning>
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: `
+          html, body { background-color: #08080a !important; color: #a8a8ad; }
+        `}} />
+      </head>
+      <body 
+        className="antialiased font-sans bg-[#0a0a0d] text-foreground" 
+        suppressHydrationWarning
+        style={{ backgroundColor: '#08080a', color: '#a8a8ad' }}
+      >
         <SoundToggle />
         <Preloader />
         <InterrogationTerminal />

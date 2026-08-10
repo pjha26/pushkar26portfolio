@@ -61,6 +61,66 @@ function StatCounter({ target, label, sublabel }: { target: number, label: strin
   )
 }
 
+function InvestigatorMiniGame() {
+  const [decrypted, setDecrypted] = useState(false)
+  const textRef = useRef<HTMLDivElement>(null)
+  
+  const handleDecrypt = () => {
+    if (decrypted || !textRef.current) return
+    setDecrypted(true)
+    sound.playHover()
+    
+    const originalText = "CLASSIFIED SKILL: Advanced Cyber Threat Intelligence & Reverse Engineering"
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>/-_+=|\\'
+    
+    let iter = 0
+    const interval = setInterval(() => {
+      textRef.current!.innerText = originalText
+        .split('')
+        .map((char, index) => {
+          if (char === ' ') return ' '
+          if (index < iter) return originalText[index]
+          return chars[Math.floor(Math.random() * chars.length)]
+        })
+        .join('')
+      
+      if (iter >= originalText.length) {
+        clearInterval(interval)
+        sound.playAccessGranted()
+      }
+      iter += 1/2
+    }, 20)
+  }
+
+  return (
+    <div 
+      className="mt-6 border-l-2 border-signal/50 pl-4 py-2 cursor-pointer group relative overflow-hidden"
+      onClick={handleDecrypt}
+      data-cursor-text="[ DECRYPT ]"
+    >
+      <div className="font-mono text-[10px] tracking-[0.2em] text-signal/50 uppercase mb-2">
+        ATTACHMENT // FILE PR-99
+      </div>
+      <div 
+        ref={textRef} 
+        className={cn(
+          "font-mono text-sm sm:text-base leading-relaxed break-words",
+          decrypted ? "text-signal" : "bg-black text-black select-none"
+        )}
+      >
+        CLASSIFIED SKILL: Advanced Cyber Threat Intelligence & Reverse Engineering
+      </div>
+      {!decrypted && (
+        <div className="absolute inset-0 bg-black/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="font-mono text-xs tracking-widest text-signal animate-pulse">
+            DECRYPT_PAYLOAD
+          </span>
+        </div>
+      )}
+    </div>
+  )
+}
+
 import { Redact } from '@/components/redact-context'
 
 function RedactedText({ children }: { children: React.ReactNode }) {
@@ -163,9 +223,12 @@ export function About() {
   return (
     <Section id="about" fileLabel="SECTION 01 // SUBJECT PROFILE" title="About">
       <div className="grid gap-8 md:grid-cols-[1fr_auto]">
-        <RedactedText>
-          Computer Science (AI &amp; ML) student at JSS Academy of Technical Education, Bengaluru (2023–2027). Working at the intersection of full-stack engineering and applied machine learning, with a bias toward systems that hold up in production.
-        </RedactedText>
+        <div className="flex flex-col">
+          <RedactedText>
+            Computer Science (AI &amp; ML) student at JSS Academy of Technical Education, Bengaluru (2023–2027). Working at the intersection of full-stack engineering and applied machine learning, with a bias toward systems that hold up in production.
+          </RedactedText>
+          <InvestigatorMiniGame />
+        </div>
         
         <dl className="grid shrink-0 grid-cols-1 gap-6 border border-white/5 bg-card hover:bg-card-hover transition-colors p-6 md:w-64">
           <StatCounter target={200} label="DSA Problems Solved" sublabel="LeetCode" />

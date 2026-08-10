@@ -6,8 +6,7 @@ import { prefersReducedMotion } from '@/lib/use-reveal'
 
 export function Preloader() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const textRef = useRef<HTMLParagraphElement>(null)
-  const statusRef = useRef<HTMLSpanElement>(null)
+  const logRef = useRef<HTMLDivElement>(null)
   const [shouldRender, setShouldRender] = useState(true)
 
   useEffect(() => {
@@ -22,10 +21,18 @@ export function Preloader() {
     sessionStorage.setItem('preloader_shown', 'true')
 
     const el = containerRef.current
-    const textEl = textRef.current
-    const statusEl = statusRef.current
+    const logEl = logRef.current
     
-    if (!el || !textEl || !statusEl) return
+    if (!el || !logEl) return
+
+    const logs = [
+      "WAKING SYSTEM KERNEL...",
+      "LOADING NEURAL NETWORKS [||||||||||] 100%",
+      "DECRYPTING CLASSIFIED ASSETS... OK",
+      "ESTABLISHING SECURE UPLINK WITH SERVER PR-2027...",
+      "BYPASSING MAINFRAME FIREWALL... DONE",
+      "ACCESS GRANTED."
+    ]
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -34,34 +41,37 @@ export function Preloader() {
         }
       })
 
-      const initText = "INITIALIZING FILE PR-2027..."
-      tl.to(textEl, {
-        duration: 0.4,
-        ease: "none",
-        onUpdate: function() {
-          const progress = this.progress()
-          const chars = Math.floor(progress * initText.length)
-          textEl.innerText = initText.substring(0, chars)
-        }
+      let delay = 0
+      logs.forEach((logText, i) => {
+        const line = document.createElement('div')
+        logEl.appendChild(line)
+        
+        tl.to(line, {
+          duration: logText.length * 0.015,
+          ease: "none",
+          onUpdate: function() {
+            const progress = this.progress()
+            const chars = Math.floor(progress * logText.length)
+            line.innerText = logText.substring(0, chars)
+          }
+        }, delay)
+        
+        delay += logText.length * 0.015 + (i === logs.length - 1 ? 0.6 : 0.1)
       })
       
-      tl.to({}, { duration: 0.15 })
-      
-      tl.set(statusEl, { innerText: "ACCESS GRANTED", autoAlpha: 1 })
-      
-      tl.to({}, { duration: 0.25 })
-      
-      // Flicker effect before fade out
-      tl.set(el, { backgroundColor: '#000000' })
-      tl.to({}, { duration: 0.05 })
+      tl.set(el, { backgroundColor: '#000000' }, delay)
+      tl.to({}, { duration: 0.05 }, delay)
       tl.set(el, { backgroundColor: '#0a0a0d' })
       tl.to({}, { duration: 0.04 })
       tl.set(el, { backgroundColor: '#000000' })
       tl.to({}, { duration: 0.04 })
       
-      tl.to(el, { autoAlpha: 0, duration: 0.3, ease: 'power2.inOut' })
-
-    }, el)
+      tl.to(el, {
+        yPercent: -100,
+        duration: 0.8,
+        ease: 'power3.inOut',
+      })
+    })
 
     return () => ctx.revert()
   }, [])
@@ -69,14 +79,11 @@ export function Preloader() {
   if (!shouldRender) return null
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0a0d] text-muted-foreground font-mono"
+      className="fixed inset-0 z-[100] flex flex-col justify-end bg-black p-4 sm:p-8 font-mono text-xs sm:text-sm text-signal select-none"
     >
-      <div className="flex flex-col items-center justify-center h-full">
-        <p ref={textRef} className="text-xs md:text-sm tracking-[0.2em] h-5"></p>
-        <span ref={statusRef} className="text-signal font-bold tracking-widest opacity-0 mt-2 text-xs md:text-sm h-5"></span>
-      </div>
+      <div ref={logRef} className="flex flex-col space-y-1 sm:space-y-2 opacity-80" />
     </div>
   )
 }

@@ -20,11 +20,14 @@ export function EvidenceBoard() {
     
     // Draw SVG Line path
     const drawLine = () => {
-      if (nodes.length < 2) return
+      const container = containerRef.current
+      const line = lineRef.current
+      if (!container || !line || nodes.length < 2) return
+      
       let d = ''
       nodes.forEach((node, i) => {
         const rect = node.getBoundingClientRect()
-        const containerRect = containerRef.current!.getBoundingClientRect()
+        const containerRect = container.getBoundingClientRect()
         // Connect the left side of each node (the glowing dot)
         const x = rect.left - containerRect.left + 16 // roughly center of the pin
         const y = rect.top - containerRect.top + 24
@@ -40,7 +43,7 @@ export function EvidenceBoard() {
           d += ` C ${prevX} ${cpY}, ${x} ${cpY}, ${x} ${y}`
         }
       })
-      lineRef.current!.setAttribute('d', d)
+      line.setAttribute('d', d)
     }
 
     // Delay drawing to ensure fonts and layout are fully painted
@@ -83,6 +86,7 @@ export function EvidenceBoard() {
     return () => {
       window.removeEventListener('resize', drawLine)
       ScrollTrigger.getAll().forEach(t => t.kill())
+      tl.kill()
     }
   }, [])
 

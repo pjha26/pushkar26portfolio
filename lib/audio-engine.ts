@@ -3,6 +3,9 @@
 class AudioEngine {
   private ctx: AudioContext | null = null
   private enabled = false
+  private droneOsc: OscillatorType | null = null
+  private droneGain: GainNode | null = null
+  private droneActive = false
 
   init() {
     if (!this.ctx) {
@@ -13,13 +16,62 @@ class AudioEngine {
     }
   }
 
+  private startDrone() {
+    if (!this.ctx || !this.enabled || this.droneActive) return
+
+    const osc = this.ctx.createOscillator()
+    const gain = this.ctx.createGain()
+
+    osc.type = 'sine'
+    // Low frequency drone
+    osc.frequency.setValueAtTime(45, this.ctx.currentTime)
+    
+    // Add some slow LFO modulation to frequency for an eerie breathing effect
+    const lfo = this.ctx.createOscillator()
+    lfo.type = 'sine'
+    lfo.frequency.setValueAtTime(0.1, this.ctx.currentTime) // Very slow
+    const lfoGain = this.ctx.createGain()
+    lfoGain.gain.setValueAtTime(5, this.ctx.currentTime) // Modulate frequency by +/- 5Hz
+    
+    lfo.connect(lfoGain)
+    lfoGain.connect(osc.frequency)
+    lfo.start()
+
+    gain.gain.setValueAtTime(0, this.ctx.currentTime)
+    // Very quiet, ambient hum
+    gain.gain.linearRampToValueAtTime(0.02, this.ctx.currentTime + 2)
+
+    osc.connect(gain)
+    gain.connect(this.ctx.destination)
+
+    osc.start()
+    this.droneGain = gain
+    // Store as any since typescript might complain about the custom prop, or just keep it active
+    ;(osc as any).lfo = lfo
+    ;(osc as any).lfoGain = lfoGain
+    
+    this.droneActive = true
+  }
+
+  private stopDrone() {
+    if (!this.ctx || !this.droneGain || !this.droneActive) return
+    
+    // Fade out
+    this.droneGain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 1)
+    setTimeout(() => {
+      this.droneActive = false
+    }, 1000)
+  }
+
   enable() {
     this.enabled = true
     this.init()
+    this.startDrone()
   }
 
   disable() {
     this.enabled = false
+    this.stopDrone()
   }
 
   toggle() {

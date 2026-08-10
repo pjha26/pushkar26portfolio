@@ -243,6 +243,18 @@ function CommandLine() {
       setHistory([])
       setValue('')
       return
+    } else if (query === 'whoami') {
+      response = "IDENTITY: PUSHKAR RAJ // STATUS: FULL-STACK DEVELOPER & ML ENGINEER // THREAT LEVEL: HIGH"
+      sound.playAccessGranted()
+    } else if (query === 'sudo rm -rf /') {
+      response = "CRITICAL: INITIATING SYSTEM WIPEOUT... JUST KIDDING. YOU DON'T HAVE ROOT."
+      sound.playGlitch()
+      triggerGlitch()
+    } else if (query === 'matrix') {
+      response = "WAKING UP IN THE MATRIX..."
+      document.body.style.color = '#00ff00'
+      document.documentElement.style.setProperty('--signal', '#00ff00')
+      sound.playGlitch()
     } else if (query === 'sudo override') {
       response = "CRITICAL: OVERRIDE ACCEPTED. ROOT ACCESS GRANTED."
       sound.playAccessGranted()
