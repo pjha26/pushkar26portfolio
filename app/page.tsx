@@ -14,6 +14,7 @@ import { SecureComm } from '@/components/secure-comm'
 import { BootManager } from '@/components/boot-manager'
 import { TelemetryHUD } from '@/components/telemetry-hud'
 import { RedactProvider } from '@/components/redact-context'
+import { InterrogationTerminal } from '@/components/interrogation-terminal'
 
 export default function Page() {
   return (
@@ -34,6 +35,7 @@ export default function Page() {
             <FieldReports />
             <SecureComm />
           </main>
+          <InterrogationTerminal />
           </BootManager>
         </RedactProvider>
       </SmoothScroll>
