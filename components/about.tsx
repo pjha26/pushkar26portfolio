@@ -10,6 +10,7 @@ import { prefersReducedMotion } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
 import { sound } from '@/lib/audio-engine'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 
 const GitHubCalendar = dynamic(
   () => import('react-github-calendar').then((mod) => mod.GitHubCalendar),
@@ -222,7 +223,41 @@ function LiveGitHubStats() {
 export function About() {
   return (
     <Section id="about" fileLabel="SECTION 01 // SUBJECT PROFILE" title="About">
-      <div className="grid gap-8 md:grid-cols-[1fr_auto]">
+      <div className="grid gap-8 md:grid-cols-[auto_1fr_auto]">
+        {/* Profile Image Column */}
+        <div className="flex-shrink-0 mx-auto md:mx-0">
+          <div className="relative group p-2 border border-white/10 bg-card hover:bg-card-hover transition-colors overflow-hidden">
+            {/* Scanner line effect */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-signal/20 to-transparent h-4 w-full -translate-y-full group-hover:animate-scan pointer-events-none z-20" />
+            
+            <div className="relative w-48 h-64 overflow-hidden rounded-sm bg-black">
+              {/* Cool-tone color grade via CSS filters */}
+              <div className="absolute inset-0 saturate-[0.85] contrast-[1.05] brightness-90 hue-rotate-[5deg] transition-all duration-700">
+                <Image 
+                  src="/profile-v5.png" 
+                  alt="Subject Photo" 
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 192px, 192px"
+                  priority
+                />
+              </div>
+              
+              {/* Subtle dark overlay/gradient at the bottom */}
+              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#0a0a0d] via-[#0a0a0d]/60 to-transparent z-10 pointer-events-none" />
+              
+              {/* Subtle tech grid/scanlines overlay */}
+              <div className="absolute inset-0 bg-signal/5 mix-blend-overlay z-10 pointer-events-none group-hover:bg-transparent transition-colors" />
+            </div>
+            
+            <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-2">
+              <span className="font-mono text-[9px] tracking-widest text-signal animate-pulse">● LIVE_FEED</span>
+              <span className="font-mono text-[9px] tracking-widest text-muted-foreground">ID: PR-2027</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Details Column */}
         <div className="flex flex-col">
           <RedactedText>
             Computer Science (AI &amp; ML) student at JSS Academy of Technical Education, Bengaluru (2023–2027). Working at the intersection of full-stack engineering and applied machine learning, with a bias toward systems that hold up in production.

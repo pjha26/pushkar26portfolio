@@ -134,7 +134,7 @@ export function Hero() {
           as="h1"
           text="Pushkar Raj"
           delay={1500}
-          className="name-heading mt-6 text-4xl leading-none text-[#f5f5f5] font-bold md:text-6xl lg:text-7xl xl:text-8xl cursor-default"
+          className="name-heading mt-6 text-4xl leading-none text-[#f5f5f5] font-bold md:text-6xl lg:text-7xl xl:text-8xl cursor-default text-balance"
         />
 
         <ScrambleText

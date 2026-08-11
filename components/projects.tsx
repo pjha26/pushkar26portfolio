@@ -181,11 +181,11 @@ function CaseCard({
             }} 
           />
 
-          <div className="relative z-10 flex items-baseline gap-4">
+          <div className="relative z-10 flex flex-wrap items-baseline gap-3 md:gap-4">
             <span className="font-mono text-[10px] tracking-[0.25em] text-signal drop-shadow-[0_0_8px_rgba(245,196,0,0.4)]">
               {c.fileNumber}
             </span>
-            <h3 className="dossier-heading text-xl text-foreground md:text-2xl uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
+            <h3 className="dossier-heading text-lg text-foreground md:text-2xl uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
               {c.title}
             </h3>
           </div>
@@ -225,8 +225,8 @@ function CaseCard({
         <div ref={scanlineRef} className="absolute left-0 w-full h-[2px] bg-signal/60 shadow-[0_0_8px_rgba(245,196,0,0.8)] pointer-events-none opacity-0" style={{ zIndex: 2 }} />
 
         {/* Inner Content */}
-        <div ref={innerContentRef} className="px-8 py-8 relative" style={{ zIndex: 3 }}>
-          <div className="grid gap-8 md:grid-cols-2 opacity-0">
+        <div ref={innerContentRef} className="px-4 py-6 md:px-8 md:py-8 relative" style={{ zIndex: 3 }}>
+          <div className="grid gap-6 md:gap-8 md:grid-cols-2 opacity-0">
             <div>
               <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70">
                 PROBLEM
