@@ -2,7 +2,6 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Bebas_Neue, Inter, IBM_Plex_Mono, Syncopate, Michroma } from 'next/font/google'
 import { Preloader } from '@/components/preloader'
-import { InterrogationTerminal } from '@/components/interrogation-terminal'
 import { SoundToggle } from '@/components/sound-toggle'
 import './globals.css'
 
@@ -108,7 +107,6 @@ export default function RootLayout({
       >
         <SoundToggle />
         <Preloader />
-        <InterrogationTerminal />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

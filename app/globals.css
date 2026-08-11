@@ -107,42 +107,73 @@
   font-weight: 400; /* Bebas Neue is 400 weight */
 }
 
-/* Unique wide cinematic font for the hero name */
+/* Modern, impactful font for the hero name */
 .name-heading {
-  font-family: var(--font-michroma), sans-serif;
+  font-family: var(--font-sans), sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
-/* Background grid at very low opacity */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, rgba(232, 232, 234, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(232, 232, 234, 0.045) 1px, transparent 1px);
-  background-size: 64px 64px;
+/* ---- Innovative AI Core Background ---- */
+.ai-core-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-/* Global Glitch Easter Egg */
-.global-glitch {
-  animation: globalGlitchAnim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-  color: var(--vengeance) !important;
+/* 1. Precision Dot Matrix */
+.ai-core-grid {
+  position: absolute;
+  inset: -50%;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at center, black 10%, transparent 60%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 60%);
 }
-.global-glitch * {
-  color: var(--vengeance) !important;
-  border-color: var(--vengeance) !important;
+
+/* 2. Slow Rotating Conic Energy */
+.ai-core-energy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120vw;
+  height: 120vw;
+  max-width: 1200px;
+  max-height: 1200px;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    transparent 0deg,
+    var(--signal) 180deg,
+    transparent 360deg
+  );
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  animation: core-spin 20s linear infinite;
+  transform-origin: center center;
 }
-.global-glitch .bg-card, .global-glitch .bg-background, .global-glitch body {
-  background-color: #1a0505 !important;
+
+/* 3. Static Center Glow */
+.ai-core-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 400px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, var(--signal) 0%, transparent 70%);
+  filter: blur(100px);
+  opacity: 0.08;
+  border-radius: 50%;
 }
-@keyframes globalGlitchAnim {
-  0% { transform: translate(0) }
-  20% { transform: translate(-5px, 5px) }
-  40% { transform: translate(-5px, -5px) }
-  60% { transform: translate(5px, 5px) }
-  80% { transform: translate(5px, -5px) }
-  100% { transform: translate(0) }
+
+@keyframes core-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
 
 /* Soft vignette — darker toward edges */
 .bg-vignette {
@@ -404,15 +435,6 @@
   border-color: rgba(139, 26, 26, 0.5);
 }
 
-/* Screen shake animation */
-@keyframes shake-y {
-  0%, 100% { transform: translateY(0); }
-  25% { transform: translateY(-4px); }
-  75% { transform: translateY(4px); }
-}
-.shake-active {
-  animation: shake-y 200ms ease-in-out;
-}
 
 @layer utilities {
   .text-balance {
