@@ -234,7 +234,7 @@ export function About() {
               {/* Cool-tone color grade via CSS filters */}
               <div className="absolute inset-0 saturate-[0.85] contrast-[1.05] brightness-90 hue-rotate-[5deg] transition-all duration-700">
                 <Image 
-                  src="/profile-v5.png" 
+                  src="/profile-v7.png" 
                   alt="Subject Photo" 
                   fill
                   className="object-cover object-center"
