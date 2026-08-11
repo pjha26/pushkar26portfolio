@@ -282,7 +282,7 @@ function CommandLine() {
     if (e.key === 'Enter') {
       submit()
     } else {
-      sound.playType()
+      sound.playKeystroke()
     }
   }
 

@@ -109,7 +109,7 @@ class AudioEngine {
     setTimeout(() => this.createOscillator('sine', 1800, 0.05, 0.03), 20)
   }
 
-  playType() {
+  playKeystroke() {
     // Mechanical click
     this.createOscillator('square', 300, 0.02, 0.02)
   }
