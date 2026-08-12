@@ -10,6 +10,9 @@ import { useScramble } from '@/lib/use-scramble'
 import { sound } from '@/lib/audio-engine'
 import { scrollToSection } from '@/components/smooth-scroll'
 import { TiltCard } from '@/components/ui/tilt-card'
+import { SiGithub, SiLeetcode } from 'react-icons/si'
+import { FaLinkedin } from 'react-icons/fa'
+import { MdEmail } from 'react-icons/md'
 
 const VALID_SECTIONS = new Set<string>(SECTION_IDS)
 
@@ -135,22 +138,18 @@ export function Hero() {
           </TiltCard>
 
           {/* Bento 3: Social Links Stack */}
-          <TiltCard data-hero-item className="col-span-2 sm:col-span-1 glass-panel flex flex-col rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden hover:border-signal/30 transition-colors duration-300 group">
-            <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-black/40 hover:bg-white/5 border-b border-white/5 transition-colors px-2 py-3 overflow-hidden group/link">
-              <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-white group-hover/link:to-white/50 transition-all uppercase tracking-wider">GitHub</span>
-              <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-white transition-colors">↗</span>
+          <TiltCard data-hero-item className="col-span-2 sm:col-span-1 glass-panel flex flex-row rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden hover:border-signal/30 transition-colors duration-300 group">
+            <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors p-4 sm:p-6 group/link">
+              <SiGithub className="w-6 h-6 sm:w-8 sm:h-8 text-white/40 group-hover/link:text-white transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(255,255,255,0.6)]" />
             </MagneticLink>
-            <MagneticLink href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-black/40 hover:bg-white/5 border-b border-white/5 transition-colors px-2 py-3 overflow-hidden group/link">
-              <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-[#0A66C2] group-hover/link:to-[#4bb2ff] transition-all uppercase tracking-wider">LinkedIn</span>
-              <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-[#0A66C2] transition-colors">↗</span>
+            <MagneticLink href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors p-4 sm:p-6 group/link">
+              <FaLinkedin className="w-6 h-6 sm:w-8 sm:h-8 text-[#0A66C2]/40 group-hover/link:text-[#0A66C2] transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(10,102,194,0.6)]" />
             </MagneticLink>
-            <MagneticLink href={LINKS.leetcode} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-black/40 hover:bg-white/5 border-b border-white/5 transition-colors px-2 py-3 overflow-hidden group/link">
-              <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-[#FFA116] group-hover/link:to-[#ffc875] transition-all uppercase tracking-wider">LeetCode</span>
-              <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-[#FFA116] transition-colors">↗</span>
+            <MagneticLink href={LINKS.leetcode} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors p-4 sm:p-6 group/link">
+              <SiLeetcode className="w-6 h-6 sm:w-8 sm:h-8 text-[#FFA116]/40 group-hover/link:text-[#FFA116] transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(255,161,22,0.6)]" />
             </MagneticLink>
-            <MagneticLink href={LINKS.email} className="flex-1 flex items-center justify-center gap-2 bg-black/40 hover:bg-white/5 transition-colors px-2 py-3 overflow-hidden group/link">
-              <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-signal group-hover/link:to-yellow-200 transition-all uppercase tracking-wider">Email</span>
-              <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-signal transition-colors">↗</span>
+            <MagneticLink href={LINKS.email} className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] transition-colors p-4 sm:p-6 group/link">
+              <MdEmail className="w-6 h-6 sm:w-8 sm:h-8 text-signal/40 group-hover/link:text-signal transition-all duration-300 group-hover/link:scale-110 glow-signal" />
             </MagneticLink>
           </TiltCard>
 

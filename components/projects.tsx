@@ -26,7 +26,7 @@ function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }
       >
         {/* FRONT SIDE (IMAGE COVER) */}
         <div 
-          className="absolute inset-0 rounded-2xl overflow-hidden border border-white/10 bg-[#121214]"
+          className="absolute inset-0 rounded-2xl overflow-hidden border border-white/15 bg-[#121214] group-hover:border-signal/30 transition-colors duration-500"
           style={{ backfaceVisibility: 'hidden' }}
         >
           {c.image ? (
@@ -35,7 +35,9 @@ function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }
                 src={c.image} 
                 alt={c.title} 
                 fill 
-                className="object-cover object-center opacity-70 group-hover:opacity-100 transition-all duration-700 saturate-50 group-hover:saturate-125 group-hover:scale-110" 
+                quality={75}
+                priority={index < 4}
+                className="object-cover object-top opacity-90 group-hover:opacity-100 transition-all duration-700 group-hover:scale-[1.05]" 
                 sizes="(max-width: 768px) 300px, 350px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
@@ -67,7 +69,7 @@ function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }
 
         {/* BACK SIDE (DETAILS) */}
         <div 
-          className="absolute inset-0 rounded-2xl border-2 border-signal/40 bg-[#0a0a0d]/95 backdrop-blur-xl p-6 sm:p-8 flex flex-col overflow-y-auto scrollbar-hide rotate-y-180"
+          className="absolute inset-0 rounded-2xl border-2 border-signal/40 bg-[#0a0a0d] p-6 sm:p-8 flex flex-col overflow-y-auto scrollbar-hide rotate-y-180"
           style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
           <div className="flex justify-between items-start mb-6 shrink-0">
@@ -145,9 +147,10 @@ export function Projects() {
         <div 
           ref={containerRef}
           className="flex w-max animate-marquee hover:[animation-play-state:paused] items-center pt-8 pb-12"
+          style={{ willChange: 'transform' }}
         >
           {/* We duplicate the cases array multiple times to ensure the marquee is long enough to loop seamlessly */}
-          {[...CASES, ...CASES, ...CASES, ...CASES].map((c, i) => (
+          {[...CASES, ...CASES, ...CASES].map((c, i) => (
             <Flashcard key={`${c.id}-${i}`} caseFile={c} index={i} />
           ))}
         </div>
