@@ -15,6 +15,7 @@ import { BootManager } from '@/components/boot-manager'
 import { TelemetryHUD } from '@/components/telemetry-hud'
 import { RedactProvider } from '@/components/redact-context'
 import { InterrogationTerminal } from '@/components/interrogation-terminal'
+import { ThemeSwitcher } from '@/components/theme-switcher'
 
 export default function Page() {
   return (
@@ -25,6 +26,7 @@ export default function Page() {
         <RedactProvider>
           <BootManager>
             <TelemetryHUD />
+            <ThemeSwitcher />
             <main className="relative z-10 text-foreground">
             <Hero />
             <About />

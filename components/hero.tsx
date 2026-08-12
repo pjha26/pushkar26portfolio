@@ -9,6 +9,7 @@ import { LINKS, SECTION_IDS } from '@/lib/dossier-data'
 import { useScramble } from '@/lib/use-scramble'
 import { sound } from '@/lib/audio-engine'
 import { scrollToSection } from '@/components/smooth-scroll'
+import { TiltCard } from '@/components/ui/tilt-card'
 
 const VALID_SECTIONS = new Set<string>(SECTION_IDS)
 
@@ -111,12 +112,12 @@ export function Hero() {
         <div className="lg:col-span-5 grid grid-cols-2 gap-4 lg:gap-6 mt-12 lg:mt-0 perspective-1000 lg:pr-16 xl:pr-32">
           
           {/* Bento 1: Command Line (Spans full width of right column) */}
-          <div data-hero-item className="col-span-2">
+          <TiltCard data-hero-item className="col-span-2 rounded-xl group">
             <CommandLine />
-          </div>
+          </TiltCard>
 
           {/* Bento 2: Live Status */}
-          <div data-hero-item className="col-span-2 sm:col-span-1 glass-panel flex flex-col justify-between rounded-xl border border-white/10 bg-black/20 backdrop-blur-xl p-5 hover:border-signal/30 transition-colors duration-300 group">
+          <TiltCard data-hero-item className="col-span-2 sm:col-span-1 glass-panel flex flex-col justify-between rounded-xl border border-white/10 bg-black/20 backdrop-blur-xl p-5 hover:border-signal/30 transition-colors duration-300 group">
             <div className="flex items-center gap-2 mb-4">
               <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.6)]" />
               <span className="text-xs font-mono tracking-widest text-muted-foreground uppercase">Status</span>
@@ -125,10 +126,10 @@ export function Hero() {
               <p className="text-sm text-foreground/90 font-medium">Available for new opportunities</p>
               <p className="text-xs text-foreground/50 mt-1">Based in India // Remote</p>
             </div>
-          </div>
+          </TiltCard>
 
           {/* Bento 3: Social Links Stack */}
-          <div data-hero-item className="col-span-2 sm:col-span-1 glass-panel flex flex-col rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden hover:border-signal/30 transition-colors duration-300">
+          <TiltCard data-hero-item className="col-span-2 sm:col-span-1 glass-panel flex flex-col rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden hover:border-signal/30 transition-colors duration-300 group">
             <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-black/40 hover:bg-white/5 border-b border-white/5 transition-colors px-2 py-3 overflow-hidden group/link">
               <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-white group-hover/link:to-white/50 transition-all uppercase tracking-wider">GitHub</span>
               <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-white transition-colors">↗</span>
@@ -145,10 +146,30 @@ export function Hero() {
               <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-signal group-hover/link:to-yellow-200 transition-all uppercase tracking-wider">Email</span>
               <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-signal transition-colors">↗</span>
             </MagneticLink>
-          </div>
+          </TiltCard>
 
         </div>
 
+      </div>
+
+      {/* Kinetic Data Stream Marquee */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden border-t border-white/5 bg-black/40 backdrop-blur-sm py-3 z-30">
+        <div className="flex w-max animate-marquee font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-muted-foreground/50">
+          {Array(4).fill(0).map((_, i) => (
+            <div key={i} className="flex gap-8 px-4 items-center">
+              <span>REACT.JS</span><span className="text-signal/30">/</span>
+              <span>NEXT.JS</span><span className="text-signal/30">/</span>
+              <span>TYPESCRIPT</span><span className="text-signal/30">/</span>
+              <span>NODE.JS</span><span className="text-signal/30">/</span>
+              <span>PYTHON</span><span className="text-signal/30">/</span>
+              <span>PYTORCH</span><span className="text-signal/30">/</span>
+              <span>LLMs</span><span className="text-signal/30">/</span>
+              <span>POSTGRESQL</span><span className="text-signal/30">/</span>
+              <span>AWS</span><span className="text-signal/30">/</span>
+              <span>DOCKER</span><span className="text-signal/30">/</span>
+            </div>
+          ))}
+        </div>
       </div>
     </header>
   )

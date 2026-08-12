@@ -282,7 +282,13 @@ export function About() {
               username="pjha26" 
               colorScheme="dark"
               theme={{
-                dark: ['#1c1c20', '#5c4a00', '#997a00', '#d6ab00', '#f5c400']
+                dark: [
+                  '#1c1c20', 
+                  'color-mix(in srgb, var(--signal) 25%, transparent)', 
+                  'color-mix(in srgb, var(--signal) 50%, transparent)', 
+                  'color-mix(in srgb, var(--signal) 75%, transparent)', 
+                  'var(--signal)'
+                ]
               }}
               fontSize={12}
               blockSize={12}

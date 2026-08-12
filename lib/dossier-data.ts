@@ -24,92 +24,91 @@ export const CASES: CaseFile[] = [
     fileNumber: 'CASE 00',
     title: 'ARTH.AI',
     status: 'DEPLOYED · 2026',
-    problem:
-      'Inbound leads require hours of manual deep-dive research before sales calls, resulting in lost conversions and inefficient resource allocation.',
-    challenge: 'Orchestrating multiple LLMs (Gemini/Groq) reliably without hallucination, while maintaining stateful RAG chat and ML-based intent scoring.',
+    problem: 'Manual audit-report generation is slow and unscalable, requiring automation without sacrificing accuracy.',
+    challenge: 'Orchestrating complex multi-agent workflows and background jobs reliably while achieving under 500ms response times.',
     approach: [
-      'Developed an AI-powered Intelligence CRM that autonomously generates comprehensive research reports for inbound leads.',
-      'Engineered a multi-agent pipeline utilizing Gemini and Groq, drastically reducing research time while improving data accuracy.',
-      'Integrated PGVector and RAG architectures to allow users to dynamically chat with the extracted intelligence.',
-      'Deployed a scalable backend using FastAPI, Prisma, and PostgreSQL, serving a responsive Next.js frontend.',
+      'Architected a multi-agent SaaS platform orchestrating Gemini API agents with Groq/Llama 3.3 70B fallback for automated audit-report generation.',
+      'Designed scalable FastAPI microservices and a three-stage BullMQ background-job pipeline on Redis.',
+      'Built a RAG retrieval pipeline with pgvector/text-embedding-004 for semantic search and engineered PostgreSQL schemas with Prisma ORM compound indexing.',
+      'Automated Puppeteer-based PDF reports with CI/CD on Render.'
     ],
     stack: [
       'Next.js',
-      'TypeScript',
       'FastAPI',
-      'Python',
       'PostgreSQL',
-      'PGVector',
-      'Prisma',
-      'Gemini API',
+      'BullMQ',
+      'Redis',
+      'Gemini API'
     ],
-    github: 'https://github.com/pjha26/arth.ai',
+    github: 'https://github.com/pjha26',
     live: 'https://arth-ai-ruddy.vercel.app',
   },
   {
-    id: 'diagramiq',
+    id: 'mockmind',
     fileNumber: 'CASE 01',
-    title: 'DIAGRAMIQ',
+    title: 'MOCKMIND',
     status: 'DEPLOYED · 2026',
-    problem:
-      'Extracting and classifying engineering symbols from complex PDF diagrams is heavily manual, error-prone, and unscalable.',
-    challenge: 'Processing unstructured, noisy visual data and handling intensive computer vision tasks without blocking the main thread.',
+    problem: 'Candidates lack accessible, realistic voice-based mock interviews for various technical and behavioral formats.',
+    challenge: 'Managing conversational state accurately to prevent AI hallucinations and repetitive questioning during live voice interactions.',
     approach: [
-      'Architected a FastAPI application leveraging OpenCV to automatically detect and classify engineering symbols.',
-      'Implemented an asynchronous background processing queue using Celery to handle heavy PDF extractions seamlessly.',
-      'Engineered robust computer vision pipelines capable of handling varying resolutions, noise levels, and diagram styles.',
-    ],
-    stack: [
-      'Python',
-      'FastAPI',
-      'OpenCV',
-      'Celery',
-      'Computer Vision',
-    ],
-    github: 'https://github.com/pjha26/DiagramiQ',
-  },
-  {
-    id: 'ghumo',
-    fileNumber: 'CASE 02',
-    title: 'GHUMO_PROTOCOL',
-    status: 'DEPLOYED · 2026',
-    problem:
-      'Property rental platforms often suffer from clunky navigation and poor reservation state management.',
-    challenge: 'Building a responsive, full-stack booking architecture that synchronizes property listings with real-time user reservations.',
-    approach: [
-      'Developed a seamless, full-stack property rental application inspired by modern booking interfaces.',
-      'Engineered complete user authentication flows, dynamic property listings, and a secure reservation management system.',
-      'Optimized the React frontend for fluid state transitions and intuitive user experiences across all devices.',
-    ],
-    stack: [
-      'React',
-      'JavaScript',
-      'Tailwind CSS',
-      'Node.js',
-    ],
-    github: 'https://github.com/pjha26/ghumo',
-    live: 'https://airbnb-sigma-gilt.vercel.app/',
-  },
-  {
-    id: 'finance-dashboard',
-    fileNumber: 'CASE 03',
-    title: 'FINANCE_OVERSEER',
-    status: 'DEPLOYED · 2026',
-    problem:
-      'Personal financial data is scattered, making real-time tracking of assets and expenses overly complex.',
-    challenge: 'Aggregating financial data streams into a cohesive, highly responsive, and visually digestible dashboard.',
-    approach: [
-      'Constructed a real-time financial tracking dashboard for precise monitoring of assets, income, and expenses.',
-      'Utilized Next.js and React to build a dynamic, client-side interface with minimal latency.',
-      'Implemented robust charting and data visualization components for instant financial health assessment.',
+      'Built a voice-based AI mock-interview platform delivering live spoken interviews via Vapi WebRTC (STT/TTS) across multiple formats.',
+      'Designed a LangGraph multi-node state-machine with separate nodes for answer evaluation, strategy decisions, and question generation to reduce hallucination.',
+      'Integrated Groq LLaMA 3.3 70B for low-latency inference.',
+      'Implemented HMAC-signed tab-close session authentication for secure state management.'
     ],
     stack: [
       'Next.js',
-      'React',
-      'JavaScript',
+      'PostgreSQL (Neon)',
+      'Prisma',
+      'LangGraph',
+      'Groq',
+      'Vapi',
+      'JWT'
     ],
-    github: 'https://github.com/pjha26/finance-dashboard',
-    live: 'https://finance-dashboard-ba1v0z34m-pjha26s-projects.vercel.app/',
+    github: 'https://github.com/pjha26',
+  },
+  {
+    id: 'expertbook',
+    fileNumber: 'CASE 02',
+    title: 'EXPERTBOOK',
+    status: 'DEPLOYED · 2026',
+    problem: 'Booking systems often struggle with concurrency issues, leading to double-booked reservations and poor user experiences.',
+    challenge: 'Ensuring concurrency-safe reservations and real-time dashboard synchronization with sub-100ms latency.',
+    approach: [
+      'Built responsive booking dashboards in React.js with JWT-based authentication and role-based authorization.',
+      'Implemented real-time WebSocket updates via Socket.io achieving under 100ms latency.',
+      'Applied MongoDB transactions for concurrency-safe reservations with automated rollback on failure.',
+      'Automated Zoom/Google Meet link generation and ICS calendar exports upon booking confirmation.'
+    ],
+    stack: [
+      'React.js',
+      'Node.js',
+      'MongoDB',
+      'Socket.io',
+      'JWT'
+    ],
+    github: 'https://github.com/pjha26',
+  },
+  {
+    id: 'promptwatch',
+    fileNumber: 'CASE 03',
+    title: 'PROMPTWATCH',
+    status: 'DEPLOYED · 2026',
+    problem: 'Websites lack visibility and control over AI crawler traffic (like GPTBot and ClaudeBot) scraping their content.',
+    challenge: 'Intercepting and logging every request pre-page-load without degrading user-facing latency.',
+    approach: [
+      'Engineered an Edge Middleware layer to intercept requests pre-page-load, detecting AI crawler traffic via User-Agent signature matching.',
+      'Implemented high-throughput logging of crawler hits directly to Upstash Redis.',
+      'Built a live traffic visibility dashboard reading Redis counters through Supabase-authenticated REST APIs.',
+      'Extended detection into a policy control panel allowing users to throttle or block specific AI bots.'
+    ],
+    stack: [
+      'Next.js 15 (Edge)',
+      'Upstash Redis',
+      'Supabase',
+      'Vercel'
+    ],
+    github: 'https://github.com/pjha26',
   },
 ]
 
