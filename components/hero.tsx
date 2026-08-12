@@ -74,10 +74,10 @@ export function Hero() {
         <NeuralNetworkBackground />
       </div>
 
-      <div className="relative z-20 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center pt-10">
+      <div className="relative z-20 w-full max-w-[90rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-20 items-center pt-10 px-4 md:px-0">
         
         {/* ================= LEFT COLUMN: TYPOGRAPHY ================= */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left perspective-1000">
+        <div className="lg:col-span-7 flex flex-col items-start text-left perspective-1000 lg:pl-10 xl:pl-20">
           
           <div data-hero-item className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8 shadow-[0_0_20px_rgba(255,255,255,0.03)]">
             <span className="relative flex h-2.5 w-2.5">
@@ -93,12 +93,12 @@ export function Hero() {
             as="h1"
             text="Pushkar Raj"
             delay={300}
-            className="name-heading text-[5rem] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-br from-white via-neutral-100 to-neutral-600 font-extrabold md:text-[7rem] lg:text-[8.5rem] tracking-tighter cursor-default text-balance drop-shadow-sm pb-2"
+            className="name-heading text-[5rem] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/30 font-extrabold md:text-[6.5rem] lg:text-[7rem] xl:text-[8rem] tracking-tighter cursor-default text-balance drop-shadow-[0_0_30px_rgba(255,255,255,0.1)] pb-2 whitespace-nowrap"
           />
 
           <p
             data-hero-item
-            className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/70 text-pretty md:text-xl font-light border-l-2 border-signal/30 pl-6 py-1"
+            className="mt-8 max-w-xl text-lg leading-relaxed text-transparent bg-clip-text bg-gradient-to-r from-foreground/90 to-foreground/50 text-pretty md:text-xl font-light border-l-2 border-signal/50 pl-6 py-1"
           >
             I build resilient, data-driven systems — multi-agent AI platforms,
             real-time infrastructure, and machine learning pipelines that thrive in
@@ -108,7 +108,7 @@ export function Hero() {
         </div>
 
         {/* ================= RIGHT COLUMN: BENTO GRID ================= */}
-        <div className="lg:col-span-5 grid grid-cols-2 gap-4 lg:gap-6 mt-8 lg:mt-0 perspective-1000">
+        <div className="lg:col-span-5 grid grid-cols-2 gap-4 lg:gap-6 mt-12 lg:mt-0 perspective-1000 lg:pr-16 xl:pr-32">
           
           {/* Bento 1: Command Line (Spans full width of right column) */}
           <div data-hero-item className="col-span-2">
@@ -127,19 +127,23 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Bento 3: Social Links Grid */}
-          <div data-hero-item className="col-span-2 sm:col-span-1 glass-panel grid grid-cols-2 grid-rows-2 gap-px rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden hover:border-signal/30 transition-colors duration-300">
-            <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-black/40 hover:bg-white/5 transition-colors p-4 group/link">
-              <span className="text-sm font-medium text-muted-foreground group-hover/link:text-white transition-colors">GitHub</span>
+          {/* Bento 3: Social Links Stack */}
+          <div data-hero-item className="col-span-2 sm:col-span-1 glass-panel flex flex-col rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden hover:border-signal/30 transition-colors duration-300">
+            <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-black/40 hover:bg-white/5 border-b border-white/5 transition-colors px-2 py-3 overflow-hidden group/link">
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-white group-hover/link:to-white/50 transition-all uppercase tracking-wider">GitHub</span>
+              <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-white transition-colors">↗</span>
             </MagneticLink>
-            <MagneticLink href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-black/40 hover:bg-white/5 transition-colors p-4 group/link">
-              <span className="text-sm font-medium text-muted-foreground group-hover/link:text-white transition-colors">LinkedIn</span>
+            <MagneticLink href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-black/40 hover:bg-white/5 border-b border-white/5 transition-colors px-2 py-3 overflow-hidden group/link">
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-[#0A66C2] group-hover/link:to-[#4bb2ff] transition-all uppercase tracking-wider">LinkedIn</span>
+              <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-[#0A66C2] transition-colors">↗</span>
             </MagneticLink>
-            <MagneticLink href={LINKS.leetcode} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-black/40 hover:bg-white/5 transition-colors p-4 group/link">
-              <span className="text-sm font-medium text-muted-foreground group-hover/link:text-white transition-colors">LeetCode</span>
+            <MagneticLink href={LINKS.leetcode} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-black/40 hover:bg-white/5 border-b border-white/5 transition-colors px-2 py-3 overflow-hidden group/link">
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-[#FFA116] group-hover/link:to-[#ffc875] transition-all uppercase tracking-wider">LeetCode</span>
+              <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-[#FFA116] transition-colors">↗</span>
             </MagneticLink>
-            <MagneticLink href={LINKS.email} className="flex items-center justify-center bg-black/40 hover:bg-white/5 transition-colors p-4 group/link">
-              <span className="text-sm font-medium text-muted-foreground group-hover/link:text-signal transition-colors">Email</span>
+            <MagneticLink href={LINKS.email} className="flex-1 flex items-center justify-center gap-2 bg-black/40 hover:bg-white/5 transition-colors px-2 py-3 overflow-hidden group/link">
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-signal group-hover/link:to-yellow-200 transition-all uppercase tracking-wider">Email</span>
+              <span className="text-[10px] text-muted-foreground/30 group-hover/link:text-signal transition-colors">↗</span>
             </MagneticLink>
           </div>
 
