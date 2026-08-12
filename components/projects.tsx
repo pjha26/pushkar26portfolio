@@ -1,316 +1,130 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { Section } from '@/components/section'
 import { CASES, type CaseFile } from '@/lib/dossier-data'
-import { prefersReducedMotion } from '@/lib/use-reveal'
-
-gsap.registerPlugin(ScrollTrigger)
-
-import { TiltCard } from '@/components/ui/tilt-card'
 import { cn } from '@/lib/utils'
 
-function CaseCard({ 
-  caseFile: c, 
-  isOpen, 
-  isOtherOpen, 
-  onToggle, 
-  onClose 
-}: { 
-  caseFile: CaseFile, 
-  isOpen: boolean, 
-  isOtherOpen: boolean, 
-  onToggle: () => void, 
-  onClose: () => void 
-}) {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const tabRef = useRef<HTMLButtonElement>(null)
-  const drawerRef = useRef<HTMLDivElement>(null)
-  const innerContentRef = useRef<HTMLDivElement>(null)
-  const scanlineRef = useRef<HTMLDivElement>(null)
-  const bracketsRef = useRef<SVGSVGElement>(null)
-  
-  // Handle click outside
-  useEffect(() => {
-    if (!isOpen) return
-    const handleClick = (e: MouseEvent) => {
-      if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
-        onClose()
-      }
-    }
-    // Small delay to prevent immediate trigger on open
-    setTimeout(() => document.addEventListener('click', handleClick), 10)
-    return () => document.removeEventListener('click', handleClick)
-  }, [isOpen, onClose])
+function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }) {
+  const [isFlipped, setIsFlipped] = useState(false)
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (prefersReducedMotion()) {
-        if (isOpen) {
-          gsap.to(drawerRef.current, { autoAlpha: 1, height: 'auto', duration: 0.2, display: 'block' })
-        } else {
-          gsap.to(drawerRef.current, { autoAlpha: 0, height: 0, duration: 0.2, display: 'none' })
-        }
-        return
-      }
-      
-      // Kill any ongoing tweens on our elements to prevent conflicts
-      gsap.killTweensOf([drawerRef.current, scanlineRef.current, innerContentRef.current?.children])
-      if (bracketsRef.current) gsap.killTweensOf(bracketsRef.current.querySelectorAll('path'))
-      
-      if (isOpen) {
-        const tl = gsap.timeline()
-        
-        // Setup initial states before animation
-        tl.set(drawerRef.current, { display: 'block' })
-        if (innerContentRef.current) tl.set(innerContentRef.current.children, { autoAlpha: 0, y: 10 })
-        
-        // 1. Panel unfolds (400-500ms, power3.out)
-        tl.fromTo(drawerRef.current,
-          { rotateX: 90, z: -20, autoAlpha: 0, transformOrigin: 'top center' },
-          { rotateX: 0, z: 20, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
-          0
-        )
-        
-        // 2. Corner brackets materialize (200-250ms), starts slightly before panel finishes
-        if (bracketsRef.current) {
-          const paths = bracketsRef.current.querySelectorAll('path')
-          tl.fromTo(paths,
-            { strokeDasharray: 40, strokeDashoffset: 40 },
-            { strokeDashoffset: 0, duration: 0.25, ease: 'power2.out' },
-            0.3
-          )
-        }
-        
-        // 3. Scanline sweeps (300ms)
-        tl.fromTo(scanlineRef.current,
-          { top: '0%', autoAlpha: 0.8 },
-          { top: '100%', autoAlpha: 0, duration: 0.3, ease: 'none' },
-          0.4
-        )
-        
-        // 4. Content fades/staggers in AFTER rotation and scan-line
-        if (innerContentRef.current) {
-          tl.to(innerContentRef.current.children,
-            { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' },
-            0.6
-          )
-        }
-        
-      } else {
-        // Close sequence (~300ms total)
-        const tl = gsap.timeline()
-        
-        // 1. Content fades out first
-        if (innerContentRef.current) {
-          tl.to(innerContentRef.current.children,
-            { autoAlpha: 0, y: -5, duration: 0.1, stagger: 0 },
-            0
-          )
-        }
-        
-        // 2. Scanline sweeps up and brackets retract
-        tl.fromTo(scanlineRef.current,
-          { top: '100%', autoAlpha: 0.8 },
-          { top: '0%', autoAlpha: 0, duration: 0.15, ease: 'none' },
-          0.05
-        )
-        
-        if (bracketsRef.current) {
-          const paths = bracketsRef.current.querySelectorAll('path')
-          tl.to(paths,
-            { strokeDashoffset: 40, duration: 0.15, ease: 'power2.in' },
-            0.05
-          )
-        }
-        
-        // 3. Panel rotates back to 90deg
-        tl.to(drawerRef.current,
-          { rotateX: 90, z: -20, autoAlpha: 0, duration: 0.2, ease: 'power2.in' },
-          0.1
-        )
-        
-        tl.set(drawerRef.current, { display: 'none' })
-      }
-    }, cardRef)
-
-    return () => ctx.revert()
-  }, [isOpen])
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!tabRef.current) return
-    const rect = tabRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    tabRef.current.style.setProperty('--mouse-x', `${x}px`)
-    tabRef.current.style.setProperty('--mouse-y', `${y}px`)
-  }
+  // Staggered rotations for the fanned out look inspired by the Dribbble shot
+  const rotations = [-4, 3, -2, 5, -3]
+  const yOffsets = [10, -5, 15, -10, 8]
+  const rotateZ = rotations[index % rotations.length]
+  const yOffset = yOffsets[index % yOffsets.length]
 
   return (
-    <div
-      ref={cardRef}
-      data-case-card
-      className={cn(
-        "group/card mb-6 transition-opacity duration-300",
-        isOtherOpen ? "opacity-50" : "opacity-100"
-      )}
-      style={{ transformStyle: 'preserve-3d' }}
+    <div 
+      className="group relative h-[420px] w-[300px] sm:h-[500px] sm:w-[350px] flex-shrink-0 cursor-pointer mx-3 sm:mx-5 transition-transform duration-500 hover:z-20 hover:scale-[1.03]"
+      style={{ 
+        transform: `rotateZ(${rotateZ}deg) translateY(${yOffset}px)`,
+        perspective: '1500px'
+      }}
+      onClick={() => setIsFlipped(!isFlipped)}
+      onMouseLeave={() => setIsFlipped(false)}
     >
-      <TiltCard
-        data-cursor-card="OPEN"
-        className="p-0 bg-transparent border-none shadow-none"
-      >
-        <button
-          ref={tabRef}
-          type="button"
-          aria-expanded={isOpen}
-          onClick={(e) => {
-            e.stopPropagation()
-            onToggle()
-          }}
-          onMouseMove={handleMouseMove}
-          className="relative z-10 flex w-full flex-col gap-2 px-6 py-5 text-left md:flex-row md:items-center md:justify-between outline-none bg-card hover:bg-[var(--card-hover)] transition-colors border border-white/5 shadow-md overflow-hidden"
-        >
-          {/* Spotlight Hover Layer */}
-          <div 
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover/card:opacity-100" 
-            style={{ 
-              background: 'radial-gradient(600px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(245, 196, 0, 0.08), transparent 40%)'
-            }} 
-          />
-
-          <div className="relative z-10 flex flex-wrap items-baseline gap-3 md:gap-4">
-            <span className="font-mono text-[10px] tracking-[0.25em] text-signal drop-shadow-[0_0_8px_rgba(245,196,0,0.4)]">
-              {c.fileNumber}
-            </span>
-            <h3 className="dossier-heading text-lg text-foreground md:text-2xl uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
-              {c.title}
-            </h3>
-          </div>
-          <div className="relative z-10 flex items-center gap-4">
-            <span className="font-mono text-[10px] font-bold tracking-[0.2em] bg-signal text-signal-foreground px-2 py-1 rounded-sm uppercase">
-              {c.status}
-            </span>
-            <span
-              aria-hidden="true"
-              className={`font-mono text-sm text-signal transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
-            >
-              +
-            </span>
-          </div>
-        </button>
-      </TiltCard>
-
-      {/* Holographic Terminal Drawer */}
-      <div
-        ref={drawerRef}
-        className="relative z-20 hidden mt-4 border border-signal/30 bg-[#0a0a0d] shadow-[0_0_15px_rgba(245,196,0,0.15),inset_0_0_10px_rgba(245,196,0,0.05)]"
+      <div 
+        className={cn(
+          "w-full h-full transition-all duration-700 shadow-2xl rounded-2xl",
+          isFlipped ? "rotate-y-180" : ""
+        )}
         style={{ transformStyle: 'preserve-3d' }}
       >
-        {/* Corner Brackets */}
-        <svg ref={bracketsRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
-          {/* Top Left */}
-          <path d="M 0 16 L 0 0 L 16 0" fill="none" stroke="#f5c400" strokeWidth="2" />
-          {/* Top Right */}
-          <path d="M calc(100% - 16px) 0 L 100% 0 L 100% 16" fill="none" stroke="#f5c400" strokeWidth="2" />
-          {/* Bottom Left */}
-          <path d="M 0 calc(100% - 16px) L 0 100% L 16 100%" fill="none" stroke="#f5c400" strokeWidth="2" />
-          {/* Bottom Right */}
-          <path d="M calc(100% - 16px) 100% L 100% 100% L 100% calc(100% - 16px)" fill="none" stroke="#f5c400" strokeWidth="2" />
-        </svg>
-
-        {/* Scanline */}
-        <div ref={scanlineRef} className="absolute left-0 w-full h-[2px] bg-signal/60 shadow-[0_0_8px_rgba(245,196,0,0.8)] pointer-events-none opacity-0" style={{ zIndex: 2 }} />
-
-        {/* Inner Content */}
-        <div ref={innerContentRef} className="px-4 py-6 md:px-8 md:py-8 relative" style={{ zIndex: 3 }}>
-          <div className="grid gap-6 md:gap-8 md:grid-cols-2 opacity-0">
-            <div>
-              <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70">
-                PROBLEM
-              </h4>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/85">
-                {c.problem}
-              </p>
+        {/* FRONT SIDE (IMAGE COVER) */}
+        <div 
+          className="absolute inset-0 rounded-2xl overflow-hidden border border-white/10 bg-[#121214]"
+          style={{ backfaceVisibility: 'hidden' }}
+        >
+          {c.image ? (
+            <div className="absolute inset-0 bg-[#0a0a0d]">
+              <Image 
+                src={c.image} 
+                alt={c.title} 
+                fill 
+                className="object-cover object-top opacity-70 group-hover:opacity-100 transition-opacity duration-500 saturate-50 group-hover:saturate-125" 
+                sizes="(max-width: 768px) 300px, 350px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             </div>
-            <div>
-              <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70">
-                APPROACH
-              </h4>
-              <ul className="mt-2 space-y-2">
-                {c.approach.map((line, i) => (
-                  <li
-                    key={i}
-                    className="flex gap-2 text-sm leading-relaxed text-foreground/85"
-                  >
-                    <span className="text-signal" aria-hidden="true">
-                      ▸
-                    </span>
-                    {line}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {c.challenge && (
-            <div className="mt-6 border-l-4 border-signal bg-white/5 p-4 shadow-sm opacity-0">
-              <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal uppercase">
-                TECHNICAL CHALLENGE
-              </h4>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/90">
-                {c.challenge}
-              </p>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-signal/20 to-black flex flex-col items-center justify-center p-6 text-center">
+              <div className="w-20 h-20 rounded-full border border-signal/30 flex items-center justify-center animate-pulse mb-4 bg-black/50">
+                <span className="font-mono text-signal text-xs tracking-widest">WIP</span>
+              </div>
+              <p className="font-mono text-[10px] text-white/50 tracking-widest uppercase">IMAGE ENCRYPTED</p>
             </div>
           )}
+          
+          <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 z-10 flex flex-col gap-2">
+            <span className="font-mono text-[10px] tracking-widest text-signal drop-shadow-md">
+              {c.fileNumber} // {c.status}
+            </span>
+            <h3 className="font-extrabold text-3xl sm:text-4xl text-white tracking-tighter drop-shadow-lg leading-none">
+              {c.title}
+            </h3>
+            <div className="mt-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 duration-300">
+              <span className="w-6 h-[2px] bg-signal inline-block" />
+              <p className="font-mono text-[10px] text-white tracking-widest uppercase">
+                Click to flip
+              </p>
+            </div>
+          </div>
+        </div>
 
-          <div className="mt-6 opacity-0">
-            <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70">
-              STACK
-            </h4>
-            <ul className="mt-2 flex flex-wrap gap-2">
-              {c.stack.map((tag) => (
-                <li
-                  key={tag}
-                  className="border border-signal/20 bg-signal/5 px-2 py-1 font-mono text-xs text-signal drop-shadow-[0_0_8px_rgba(245,196,0,0.1)]"
-                >
-                  {tag}
-                </li>
-              ))}
-            </ul>
+        {/* BACK SIDE (DETAILS) */}
+        <div 
+          className="absolute inset-0 rounded-2xl border-2 border-signal/40 bg-[#0a0a0d]/95 backdrop-blur-xl p-6 sm:p-8 flex flex-col overflow-y-auto scrollbar-hide rotate-y-180"
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          <div className="flex justify-between items-start mb-6 shrink-0">
+            <h3 className="font-extrabold text-xl sm:text-2xl text-white tracking-tighter">
+              {c.title}
+            </h3>
+            <span className="font-mono text-[9px] bg-signal text-signal-foreground px-2 py-1 rounded-sm uppercase font-bold tracking-wider">
+              {c.status.split('·')[0]}
+            </span>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-6 opacity-0">
+          <div className="space-y-4 flex-1">
+            <div>
+              <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70 mb-2 border-b border-white/10 pb-1">PROBLEM</h4>
+              <p className="text-xs sm:text-sm leading-relaxed text-foreground/80">{c.problem}</p>
+            </div>
+            
+            {c.challenge && (
+              <div>
+                <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70 mb-2 border-b border-white/10 pb-1">CHALLENGE</h4>
+                <p className="text-xs sm:text-sm leading-relaxed text-foreground/80">{c.challenge}</p>
+              </div>
+            )}
+            
+            <div>
+              <h4 className="font-mono text-[10px] tracking-[0.25em] text-signal/70 mb-3">TECH STACK</h4>
+              <div className="flex flex-wrap gap-2">
+                {c.stack.map(tag => (
+                  <span key={tag} className="border border-white/10 bg-white/5 px-2 py-1 font-mono text-[9px] sm:text-[10px] text-white/80 rounded-sm hover:border-signal/50 transition-colors">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center gap-4 pt-4 border-t border-white/10 shrink-0">
             {c.github && (
-              <a
-                href={c.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="link-underline font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:text-signal"
-              >
-                GitHub ↗
+              <a href={c.github} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="font-mono text-[10px] uppercase tracking-widest text-white hover:text-signal transition-colors group/link">
+                GitHub <span className="opacity-50 group-hover/link:opacity-100">↗</span>
               </a>
             )}
             {c.live && (
-              <a
-                href={c.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="link-underline font-mono text-xs uppercase tracking-widest text-signal"
-              >
-                Live ↗
+              <a href={c.live} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="font-mono text-[10px] uppercase tracking-widest text-signal hover:text-white transition-colors group/link">
+                Live <span className="opacity-50 group-hover/link:opacity-100">↗</span>
               </a>
             )}
-            <a
-              href={`/projects/${c.id}`}
-              onClick={(e) => e.stopPropagation()}
-              className="link-underline font-mono text-xs uppercase tracking-widest text-signal transition-colors hover:text-white"
-            >
-              Case Study ↗
+            <a href={`/projects/${c.id}`} onClick={e => e.stopPropagation()} className="font-mono text-[10px] uppercase tracking-widest text-white/50 hover:text-white transition-colors ml-auto group/link">
+              Case Study <span className="opacity-50 group-hover/link:opacity-100">↗</span>
             </a>
           </div>
         </div>
@@ -320,64 +134,35 @@ function CaseCard({
 }
 
 export function Projects() {
-  const listRef = useRef<HTMLDivElement>(null)
-  const [activeId, setActiveId] = useState<string | null>(null)
-
-  // 3D tilt-in reveal for cards
-  useEffect(() => {
-    const list = listRef.current
-    if (!list) return
-    const cards = list.querySelectorAll('[data-case-card]')
-    const reduced = prefersReducedMotion()
-
-    const ctx = gsap.context(() => {
-      if (reduced) {
-        gsap.fromTo(
-          cards,
-          { autoAlpha: 0 },
-          {
-            autoAlpha: 1,
-            duration: 0.4,
-            scrollTrigger: { trigger: list, start: 'top 85%', once: true },
-          },
-        )
-        return
-      }
-
-      cards.forEach((card, i) => {
-        gsap.fromTo(
-          card,
-          { autoAlpha: 0, y: 24, rotateX: 5, transformPerspective: 900 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            rotateX: 0,
-            duration: 0.45,
-            ease: 'power3.out',
-            delay: (i % 3) * 0.1,
-            scrollTrigger: { trigger: card, start: 'top 88%', once: true },
-          },
-        )
-      })
-    }, list)
-
-    return () => ctx.revert()
-  }, [])
-
+  const containerRef = useRef<HTMLDivElement>(null)
+  
   return (
     <Section id="projects" fileLabel="SECTION 03 // CASE FILES" title="Projects">
-      <div ref={listRef} className="flex flex-col gap-6" style={{ perspective: 1200 }}>
-        {CASES.map((c) => (
-          <CaseCard 
-            key={c.fileNumber} 
-            caseFile={c} 
-            isOpen={activeId === c.fileNumber}
-            isOtherOpen={activeId !== null && activeId !== c.fileNumber}
-            onToggle={() => setActiveId(activeId === c.fileNumber ? null : c.fileNumber)}
-            onClose={() => setActiveId(null)}
-          />
-        ))}
+      
+      <div className="w-full relative mt-16 pb-12 overflow-hidden -mx-6 px-6 md:-mx-12 md:px-12 lg:-mx-20 lg:px-20">
+        
+        {/* Vignette gradients for smooth fade in/out on the edges */}
+        <div className="absolute top-0 left-0 bottom-0 w-16 sm:w-40 bg-gradient-to-r from-[#0a0a0d] to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 right-0 bottom-0 w-16 sm:w-40 bg-gradient-to-l from-[#0a0a0d] to-transparent z-10 pointer-events-none" />
+        
+        {/* Marquee Track */}
+        <div 
+          ref={containerRef}
+          className="flex w-max animate-marquee hover:[animation-play-state:paused] items-center pt-8 pb-12"
+        >
+          {/* We duplicate the cases array multiple times to ensure the marquee is long enough to loop seamlessly */}
+          {[...CASES, ...CASES, ...CASES, ...CASES].map((c, i) => (
+            <Flashcard key={`${c.id}-${i}`} caseFile={c} index={i} />
+          ))}
+        </div>
       </div>
+      
+      <div className="mt-2 text-center flex flex-col items-center justify-center gap-2">
+        <p className="font-mono text-[10px] tracking-[0.2em] text-white/40 uppercase">
+          Hover to pause <span className="text-signal mx-2">•</span> Click to flip
+        </p>
+      </div>
+      
     </Section>
   )
 }

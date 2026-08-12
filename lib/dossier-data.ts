@@ -16,6 +16,7 @@ export type CaseFile = {
   stack: string[]
   github?: string
   live?: string
+  image?: string
 }
 
 export const CASES: CaseFile[] = [
@@ -42,6 +43,7 @@ export const CASES: CaseFile[] = [
     ],
     github: 'https://github.com/pjha26',
     live: 'https://arth-ai-ruddy.vercel.app',
+    image: '/arthai.png'
   },
   {
     id: 'mockmind',
@@ -66,6 +68,7 @@ export const CASES: CaseFile[] = [
       'JWT'
     ],
     github: 'https://github.com/pjha26',
+    image: '/interviewai.png'
   },
   {
     id: 'expertbook',
@@ -88,6 +91,7 @@ export const CASES: CaseFile[] = [
       'JWT'
     ],
     github: 'https://github.com/pjha26',
+    image: '/ai-concierge.png'
   },
   {
     id: 'promptwatch',
@@ -109,6 +113,7 @@ export const CASES: CaseFile[] = [
       'Vercel'
     ],
     github: 'https://github.com/pjha26',
+    image: '/promptwatch.png'
   },
 ]
 
@@ -199,9 +204,9 @@ export const EXPERIENCE = [
   },
   {
     id: 'EDU-01',
-    role: 'B.Tech in Computer Science',
-    company: 'University',
-    date: '2021 - 2025',
+    role: 'B.E in Computer Science Engineering (AI & ML)',
+    company: 'VTU',
+    date: '2023 - 2027',
     details: [
       'Specialized heavily in AI, Machine Learning, and Full-Stack Engineering.',
       'Continuously built and shipped production-ready scalable applications.',

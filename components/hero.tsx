@@ -90,12 +90,18 @@ export function Hero() {
             </p>
           </div>
 
-          <ScrambleText
-            as="h1"
-            text="Pushkar Raj"
-            delay={300}
-            className="name-heading text-[5rem] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/30 font-extrabold md:text-[6.5rem] lg:text-[7rem] xl:text-[8rem] tracking-tighter cursor-default text-balance drop-shadow-[0_0_30px_rgba(255,255,255,0.1)] pb-2 whitespace-nowrap"
-          />
+          <h1 className="name-heading flex flex-col gap-2 font-extrabold tracking-tighter cursor-default drop-shadow-[0_0_30px_rgba(255,255,255,0.1)] pb-2 whitespace-nowrap z-10">
+            <ScrambleText
+              text="PUSHKAR"
+              delay={300}
+              className="text-[5rem] md:text-[6.5rem] lg:text-[7rem] xl:text-[8rem] leading-none bg-signal text-signal-foreground px-4 py-2 w-fit"
+            />
+            <ScrambleText
+              text="RAJ"
+              delay={600}
+              className="text-[5rem] md:text-[6.5rem] lg:text-[7rem] xl:text-[8rem] leading-[0.85] text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/30 w-fit pl-2"
+            />
+          </h1>
 
           <p
             data-hero-item

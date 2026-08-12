@@ -95,11 +95,6 @@ export default function RootLayout({
       suppressHydrationWarning
       style={{ backgroundColor: '#0a0a0d' }}
     >
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: `
-          html, body { background-color: #08080a !important; color: #a8a8ad; }
-        `}} />
-      </head>
       <body 
         className="antialiased font-sans bg-[#0a0a0d] text-foreground" 
         suppressHydrationWarning

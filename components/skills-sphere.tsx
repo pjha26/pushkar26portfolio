@@ -9,9 +9,24 @@ import { prefersReducedMotion } from '@/lib/use-reveal'
 
 export function SkillsSphere() {
   const [mounted, setMounted] = useState(false)
-  
+  const [themeColor, setThemeColor] = useState('#f5c400')
+
   useEffect(() => {
     setMounted(true)
+    
+    // Read initial theme color
+    const root = document.documentElement
+    const initialSignal = getComputedStyle(root).getPropertyValue('--signal').trim() || '#f5c400'
+    setThemeColor(initialSignal)
+    
+    // Set up an observer to watch for theme changes on the <html> element
+    const observer = new MutationObserver(() => {
+      const newSignal = getComputedStyle(root).getPropertyValue('--signal').trim()
+      if (newSignal) setThemeColor(newSignal)
+    })
+    
+    observer.observe(root, { attributes: true, attributeFilter: ['style'] })
+    return () => observer.disconnect()
   }, [])
 
   if (!mounted || prefersReducedMotion()) {
@@ -21,22 +36,22 @@ export function SkillsSphere() {
   const allSkills = SKILL_GROUPS.flatMap(g => g.items)
   
   return (
-    <div className="w-full h-[400px] cursor-move relative overflow-hidden bg-card border border-white/5 mt-8 hidden md:block">
+    <div className="w-full h-[500px] cursor-move relative overflow-hidden bg-card border border-white/5 mt-8 hidden md:block">
       <div className="absolute top-4 left-4 font-mono text-[10px] tracking-[0.25em] text-signal/70 z-10 pointer-events-none">
         INTERACTIVE DATA VISUALIZATION // DRAG TO ROTATE
       </div>
-      <Canvas camera={{ position: [0, 0, 15], fov: 40 }}>
-        <fog attach="fog" args={['#141417', 10, 25]} />
+      <Canvas camera={{ position: [0, 0, 32], fov: 50 }}>
+        <fog attach="fog" args={['#141417', 20, 50]} />
         <ambientLight intensity={1} />
-        <WordCloud words={allSkills} />
-        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1.5} />
+        <WordCloud words={allSkills} themeColor={themeColor} />
+        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1.0} />
       </Canvas>
     </div>
   )
 }
 
-function WordCloud({ words }: { words: string[] }) {
-  const radius = 6
+function WordCloud({ words, themeColor }: { words: string[], themeColor: string }) {
+  const radius = 10 // Increased radius to completely prevent word overlap
   
   const wordData = useMemo(() => {
     return words.map((word, i) => {
@@ -57,13 +72,13 @@ function WordCloud({ words }: { words: string[] }) {
   return (
     <group>
       {wordData.map((data, i) => (
-        <Word key={i} position={data.position}>{data.word}</Word>
+        <Word key={i} position={data.position} themeColor={themeColor}>{data.word}</Word>
       ))}
     </group>
   )
 }
 
-function Word({ children, position }: { children: string, position: THREE.Vector3 }) {
+function Word({ children, position, themeColor }: { children: string, position: THREE.Vector3, themeColor: string }) {
   const ref = useRef<THREE.Mesh>(null!)
   const [hovered, setHovered] = useState(false)
 
@@ -77,8 +92,8 @@ function Word({ children, position }: { children: string, position: THREE.Vector
     <Text
       ref={ref as any}
       position={position}
-      color={hovered ? '#f5c400' : '#a8a8ad'}
-      fontSize={hovered ? 0.55 : 0.4}
+      color={hovered ? themeColor : '#a8a8ad'}
+      fontSize={hovered ? 1.1 : 0.85}
       onPointerOver={(e) => { e.stopPropagation(); setHovered(true) }}
       onPointerOut={() => setHovered(false)}
     >
