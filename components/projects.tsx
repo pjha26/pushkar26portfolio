@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Section } from '@/components/section'
 import { CASES, type CaseFile } from '@/lib/dossier-data'
 import { cn } from '@/lib/utils'
@@ -29,15 +30,15 @@ function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }
           style={{ backfaceVisibility: 'hidden' }}
         >
           {c.image ? (
-            <div className="absolute inset-0 bg-[#0a0a0d]">
+            <div className="absolute inset-0 bg-[#0a0a0d] overflow-hidden">
               <Image 
                 src={c.image} 
                 alt={c.title} 
                 fill 
-                className="object-cover object-top opacity-70 group-hover:opacity-100 transition-opacity duration-500 saturate-50 group-hover:saturate-125" 
+                className="object-cover object-center opacity-70 group-hover:opacity-100 transition-all duration-700 saturate-50 group-hover:saturate-125 group-hover:scale-110" 
                 sizes="(max-width: 768px) 300px, 350px"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
             </div>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-signal/20 to-black flex flex-col items-center justify-center p-6 text-center">
@@ -103,20 +104,24 @@ function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }
             </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4 pt-4 border-t border-white/10 shrink-0">
+          <div 
+            className="mt-6 flex flex-wrap items-center gap-4 pt-4 border-t border-white/10 shrink-0 translate-z-10"
+            onClick={e => e.stopPropagation()}
+            onPointerDown={e => e.stopPropagation()}
+          >
             {c.github && (
-              <a href={c.github} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="font-mono text-[10px] uppercase tracking-widest text-white hover:text-signal transition-colors group/link">
+              <a href={c.github} target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] uppercase tracking-widest text-white hover:text-signal transition-colors group/link relative z-50">
                 GitHub <span className="opacity-50 group-hover/link:opacity-100">↗</span>
               </a>
             )}
             {c.live && (
-              <a href={c.live} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="font-mono text-[10px] uppercase tracking-widest text-signal hover:text-white transition-colors group/link">
+              <a href={c.live} target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] uppercase tracking-widest text-signal hover:text-white transition-colors group/link relative z-50">
                 Live <span className="opacity-50 group-hover/link:opacity-100">↗</span>
               </a>
             )}
-            <a href={`/projects/${c.id}`} onClick={e => e.stopPropagation()} className="font-mono text-[10px] uppercase tracking-widest text-white/50 hover:text-white transition-colors ml-auto group/link">
+            <Link href={`/projects/${c.id}`} className="font-mono text-[10px] uppercase tracking-widest text-white/50 hover:text-white transition-colors ml-auto group/link relative z-50">
               Case Study <span className="opacity-50 group-hover/link:opacity-100">↗</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
