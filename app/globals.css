@@ -480,4 +480,7 @@
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
 /* Rebuild trigger */

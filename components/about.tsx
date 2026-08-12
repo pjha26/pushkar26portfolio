@@ -12,8 +12,8 @@ import { sound } from '@/lib/audio-engine'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
-const GitHubCalendar = dynamic(
-  () => import('react-github-calendar').then((mod) => mod.GitHubCalendar),
+const ActivityCalendar = dynamic(
+  () => import('react-activity-calendar').then((mod) => mod.ActivityCalendar),
   { ssr: false }
 )
 gsap.registerPlugin(ScrollTrigger)
@@ -220,6 +220,56 @@ function LiveGitHubStats() {
   )
 }
 
+function LiveActivityCalendar() {
+  const [data, setData] = useState<any[] | null>(null)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    fetch('/api/github-calendar')
+      .then(res => {
+        if (!res.ok) throw new Error('API error')
+        return res.json()
+      })
+      .then(setData)
+      .catch(() => setError(true))
+  }, [])
+
+  if (error) {
+    return <div className="text-muted-foreground text-sm font-mono">Error fetching GitHub calendar data.</div>
+  }
+
+  if (!data) {
+    return (
+      <div className="animate-pulse flex gap-1">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div key={i} className="w-3 h-3 bg-white/5 rounded-sm" />
+        ))}
+      </div>
+    )
+  }
+
+  return (
+    <ActivityCalendar 
+      data={data}
+      colorScheme="dark"
+      theme={{
+        dark: [
+          '#1c1c20', 
+          'color-mix(in srgb, var(--signal) 25%, transparent)', 
+          'color-mix(in srgb, var(--signal) 50%, transparent)', 
+          'color-mix(in srgb, var(--signal) 75%, transparent)', 
+          'var(--signal)'
+        ]
+      }}
+      fontSize={12}
+      blockSize={12}
+      blockMargin={4}
+      blockRadius={1}
+      showWeekdayLabels
+    />
+  )
+}
+
 export function About() {
   return (
     <Section id="about" fileLabel="SECTION 01 // SUBJECT PROFILE" title="About">
@@ -278,23 +328,7 @@ export function About() {
         </h4>
         <div className="overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-signal/50 scrollbar-track-transparent">
           <div className="min-w-fit">
-            <GitHubCalendar 
-              username="pjha26" 
-              colorScheme="dark"
-              theme={{
-                dark: [
-                  '#1c1c20', 
-                  'color-mix(in srgb, var(--signal) 25%, transparent)', 
-                  'color-mix(in srgb, var(--signal) 50%, transparent)', 
-                  'color-mix(in srgb, var(--signal) 75%, transparent)', 
-                  'var(--signal)'
-                ]
-              }}
-              fontSize={12}
-              blockSize={12}
-              blockMargin={4}
-              blockRadius={1}
-            />
+            <LiveActivityCalendar />
           </div>
         </div>
       </div>

@@ -9,19 +9,10 @@ import { cn } from '@/lib/utils'
 function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }) {
   const [isFlipped, setIsFlipped] = useState(false)
 
-  // Staggered rotations for the fanned out look inspired by the Dribbble shot
-  const rotations = [-4, 3, -2, 5, -3]
-  const yOffsets = [10, -5, 15, -10, 8]
-  const rotateZ = rotations[index % rotations.length]
-  const yOffset = yOffsets[index % yOffsets.length]
-
   return (
     <div 
       className="group relative h-[420px] w-[300px] sm:h-[500px] sm:w-[350px] flex-shrink-0 cursor-pointer mx-3 sm:mx-5 transition-transform duration-500 hover:z-20 hover:scale-[1.03]"
-      style={{ 
-        transform: `rotateZ(${rotateZ}deg) translateY(${yOffset}px)`,
-        perspective: '1500px'
-      }}
+      style={{ perspective: '1500px' }}
       onClick={() => setIsFlipped(!isFlipped)}
       onMouseLeave={() => setIsFlipped(false)}
     >

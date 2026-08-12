@@ -13,41 +13,46 @@ export async function GET() {
   }
 
   try {
-    // Fetch user details for public repo count
-    const userRes = await fetch(`https://api.github.com/users/${username}`, {
+    const query = `
+      query($login: String!) {
+        user(login: $login) {
+          repositories(privacy: PUBLIC) {
+            totalCount
+          }
+          contributionsCollection {
+            contributionCalendar {
+              totalContributions
+            }
+          }
+        }
+      }
+    `
+
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        query,
+        variables: { login: username }
+      }),
       next: { revalidate: 3600 }
     })
 
-    if (!userRes.ok) {
-      throw new Error(`GitHub API returned ${userRes.status}`)
+    if (!res.ok) {
+      throw new Error(`GitHub GraphQL API returned ${res.status}`)
     }
 
-    const userData = await userRes.json()
-    const repos = userData.public_repos || 15
-
-    // To get total commits, we search the search/commits API for author:pjha26
-    // Note: Search API has strict rate limits (30/min), so caching is crucial.
-    const searchRes = await fetch(`https://api.github.com/search/commits?q=author:${username}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/vnd.github.cloak-preview+json',
-      },
-      next: { revalidate: 3600 }
-    })
+    const { data } = await res.json()
     
-    let commits = 150
-    if (searchRes.ok) {
-      const searchData = await searchRes.json()
-      commits = searchData.total_count || 150
-    }
+    const repos = data.user.repositories.totalCount || 15
+    const commits = data.user.contributionsCollection.contributionCalendar.totalContributions || 150
 
     return NextResponse.json({ repos, commits, live: true })
   } catch (error) {
-    console.error('Error fetching GitHub stats:', error)
+    console.error('Error fetching GitHub stats via GraphQL:', error)
     return NextResponse.json({ repos: 15, commits: 150, live: false })
   }
 }
