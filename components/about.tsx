@@ -261,6 +261,9 @@ function LiveActivityCalendar() {
           'var(--signal)'
         ]
       }}
+      labels={{
+        totalCount: '{{count}} activities in 2026'
+      }}
       fontSize={12}
       blockSize={12}
       blockMargin={4}

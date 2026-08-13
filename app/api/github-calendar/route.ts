@@ -19,15 +19,32 @@ export async function GET() {
     // Transform into the Activity array format expected by react-activity-calendar
     // Data format: { total: number, contributions: Array<Array<{ date, intensity: string, count }>> }
     
+    const currentYear = new Date().getFullYear()
     const activities = []
     
     for (const week of data.contributions) {
       for (const day of week) {
-        activities.push({
-          date: day.date,
-          count: day.count,
-          level: parseInt(day.intensity, 10) || 0
-        })
+        // Only include current year
+        if (day.date && day.date.startsWith(String(currentYear))) {
+          activities.push({
+            date: day.date,
+            count: day.count,
+            level: parseInt(day.intensity, 10) || 0
+          })
+        }
+      }
+    }
+
+    // If no current year data, include all
+    if (activities.length === 0) {
+      for (const week of data.contributions) {
+        for (const day of week) {
+          activities.push({
+            date: day.date,
+            count: day.count,
+            level: parseInt(day.intensity, 10) || 0
+          })
+        }
       }
     }
 
