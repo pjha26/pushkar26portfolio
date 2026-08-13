@@ -16,12 +16,15 @@ import { TelemetryHUD } from '@/components/telemetry-hud'
 import { RedactProvider } from '@/components/redact-context'
 import { InterrogationTerminal } from '@/components/interrogation-terminal'
 import { ThemeSwitcher } from '@/components/theme-switcher'
+import { Footer } from '@/components/footer'
+import { FloatingNav } from '@/components/floating-nav'
 
 export default function Page() {
   return (
     <>
       <CustomCursor />
       <GridBackground />
+      <FloatingNav />
       <SmoothScroll>
         <RedactProvider>
           <BootManager>
@@ -37,6 +40,7 @@ export default function Page() {
             <FieldReports />
             <SecureComm />
           </main>
+          <Footer />
           <InterrogationTerminal />
           </BootManager>
         </RedactProvider>

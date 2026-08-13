@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     siteName: 'Pushkar Raj Portfolio',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Pushkar Raj — Dossier File PR-2027',
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'PUSHKAR RAJ — FILE PR-2027',
     description: 'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems.',
-    images: ['/og-image.jpg'],
+    images: ['/og-image.png'],
   },
   manifest: '/manifest.json',
   icons: {
