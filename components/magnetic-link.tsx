@@ -44,7 +44,7 @@ export function MagneticLink({ children, className = '', ...props }: MagneticLin
   return (
     <a
       ref={ref}
-      className={`link-underline inline-block font-mono text-sm uppercase tracking-widest text-foreground transition-colors hover:text-signal focus-visible:text-signal ${className}`}
+      className={`font-mono text-sm uppercase tracking-widest text-foreground transition-colors hover:text-signal focus-visible:text-signal ${className}`}
       {...props}
     >
       {children}

@@ -315,14 +315,14 @@ export function Contact() {
         </p>
         
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-          <MagneticLink href={LINKS.email}>Email</MagneticLink>
-          <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer">
+          <MagneticLink href={LINKS.email} className="inline-block link-underline">Email</MagneticLink>
+          <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer" className="inline-block link-underline">
             GitHub
           </MagneticLink>
-          <MagneticLink href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">
+          <MagneticLink href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="inline-block link-underline">
             LinkedIn
           </MagneticLink>
-          <MagneticLink href={LINKS.leetcode} target="_blank" rel="noopener noreferrer">
+          <MagneticLink href={LINKS.leetcode} target="_blank" rel="noopener noreferrer" className="inline-block link-underline">
             LeetCode
           </MagneticLink>
         </div>

@@ -262,7 +262,7 @@ function LiveActivityCalendar() {
         ]
       }}
       labels={{
-        totalCount: '{{count}} activities in 2026'
+        totalCount: '{{count}} activities in the last year'
       }}
       fontSize={12}
       blockSize={12}
