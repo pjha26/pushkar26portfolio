@@ -150,19 +150,21 @@ export function Hero() {
           </TiltCard>
 
           {/* Bento 3: Social Links Row */}
-          <TiltCard data-hero-item className="col-span-2 glass-panel flex flex-row flex-nowrap rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden hover:border-signal/30 transition-colors duration-300 group">
-            <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors py-4 group/link">
-              <SiGithub className="w-6 h-6 text-white/40 group-hover/link:text-white transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(255,255,255,0.6)]" />
-            </MagneticLink>
-            <MagneticLink href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors py-4 group/link">
-              <FaLinkedin className="w-6 h-6 text-[#0A66C2]/40 group-hover/link:text-[#0A66C2] transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(10,102,194,0.6)]" />
-            </MagneticLink>
-            <MagneticLink href={LINKS.leetcode} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors py-4 group/link">
-              <SiLeetcode className="w-6 h-6 text-[#FFA116]/40 group-hover/link:text-[#FFA116] transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(255,161,22,0.6)]" />
-            </MagneticLink>
-            <MagneticLink href={LINKS.email} className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] transition-colors py-4 group/link">
-              <MdEmail className="w-6 h-6 text-signal/40 group-hover/link:text-signal transition-all duration-300 group-hover/link:scale-110 glow-signal" />
-            </MagneticLink>
+          <TiltCard data-hero-item className="col-span-2 glass-panel rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden hover:border-signal/30 transition-colors duration-300 group">
+            <div className="flex flex-row flex-nowrap w-full h-full">
+              <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors py-4 group/link">
+                <SiGithub className="w-6 h-6 text-white/40 group-hover/link:text-white transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(255,255,255,0.6)]" />
+              </MagneticLink>
+              <MagneticLink href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors py-4 group/link">
+                <FaLinkedin className="w-6 h-6 text-[#0A66C2]/40 group-hover/link:text-[#0A66C2] transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(10,102,194,0.6)]" />
+              </MagneticLink>
+              <MagneticLink href={LINKS.leetcode} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors py-4 group/link">
+                <SiLeetcode className="w-6 h-6 text-[#FFA116]/40 group-hover/link:text-[#FFA116] transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(255,161,22,0.6)]" />
+              </MagneticLink>
+              <MagneticLink href={LINKS.email} className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] transition-colors py-4 group/link">
+                <MdEmail className="w-6 h-6 text-signal/40 group-hover/link:text-signal transition-all duration-300 group-hover/link:scale-110 glow-signal" />
+              </MagneticLink>
+            </div>
           </TiltCard>
 
         </div>
