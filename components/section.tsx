@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useSectionReveal, prefersReducedMotion } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
+import { sound } from '@/lib/audio-engine'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -35,7 +36,7 @@ export function Section({ id, fileLabel, title, children, className, disableReve
           scaleX: 1,
           duration: 0.6,
           ease: 'power2.inOut',
-          scrollTrigger: { trigger: divider, start: 'top 90%', once: true },
+          scrollTrigger: { trigger: divider, start: 'top 90%', once: true, onEnter: () => sound.playSectionReveal() },
         },
       )
     }, divider)

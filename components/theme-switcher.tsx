@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { sound } from '@/lib/audio-engine'
 
 type Theme = {
   id: string
@@ -46,7 +47,10 @@ export function ThemeSwitcher() {
 
   if (!mounted) return null
 
-  const toggleMenu = () => setIsOpen(!isOpen)
+  const toggleMenu = () => {
+    sound.playNavClick()
+    setIsOpen(!isOpen)
+  }
 
   // Arc from 0 to 90 degrees (Right to Bottom)
   const getTransform = (index: number) => {
@@ -72,6 +76,7 @@ export function ThemeSwitcher() {
             key={theme.id}
             onClick={() => {
               applyTheme(theme.id)
+              sound.playThemeSwitch()
               setIsOpen(false)
             }}
             className="absolute w-10 h-10 rounded-full flex items-center justify-center border border-white/20 bg-black/80 backdrop-blur-md shadow-lg transition-all duration-300 ease-out hover:scale-110 group"

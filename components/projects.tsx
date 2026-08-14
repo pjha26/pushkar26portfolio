@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Section } from '@/components/section'
 import { CASES, type CaseFile } from '@/lib/dossier-data'
 import { cn } from '@/lib/utils'
+import { sound } from '@/lib/audio-engine'
 
 function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }) {
   const [isFlipped, setIsFlipped] = useState(false)
@@ -14,7 +15,8 @@ function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }
     <div 
       className="group relative h-[420px] w-[300px] sm:h-[500px] sm:w-[350px] flex-shrink-0 cursor-pointer mx-3 sm:mx-5 transition-transform duration-500 hover:z-20 hover:scale-[1.03]"
       style={{ perspective: '1500px' }}
-      onClick={() => setIsFlipped(!isFlipped)}
+      onClick={() => { sound.playCardFlip(); setIsFlipped(!isFlipped) }}
+      onMouseEnter={() => sound.playHover()}
       onMouseLeave={() => setIsFlipped(false)}
     >
       <div 

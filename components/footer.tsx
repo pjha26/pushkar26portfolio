@@ -4,6 +4,7 @@ import { SiGithub, SiLeetcode } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import { LINKS } from '@/lib/dossier-data'
+import { sound } from '@/lib/audio-engine'
 
 const NAV_ITEMS = [
   { id: 'hero-section', label: 'Home' },
@@ -23,6 +24,7 @@ const SOCIALS = [
 
 export function Footer() {
   const scrollToTop = () => {
+    sound.playScrollTop()
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -52,6 +54,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   aria-label={label}
                   className={`text-muted-foreground/50 ${hoverColor} transition-all duration-300 hover:scale-110`}
+                  onMouseEnter={() => sound.playHover()}
                 >
                   <Icon className="w-5 h-5" />
                 </a>

@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, ReactNode } from 'react'
 import gsap from 'gsap'
+import { sound } from '@/lib/audio-engine'
 import {
   SiPython,
   SiJavascript,
@@ -110,6 +111,7 @@ export function AnimatedSkillBadge({ skill }: { skill: string }) {
   return (
     <li
       ref={badgeRef}
+      onMouseEnter={() => sound.playHover()}
       className="skill-badge opacity-0 translate-y-4 flex items-center gap-2 bg-background/50 hover:bg-background px-3 py-1.5 font-mono text-[11px] text-foreground/85 border border-border/50 hover:border-signal/50 hover:text-signal hover:shadow-[0_0_10px_rgba(245,196,0,0.2)] transition-colors cursor-default select-none will-change-transform"
     >
       {ICON_MAP[skill] || <Box className="w-3 h-3" />}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import gsap from 'gsap'
+import { sound } from '@/lib/audio-engine'
 
 const BOOT_MESSAGES = [
   'INITIALIZING CORE SYSTEMS...',
@@ -43,6 +44,7 @@ export function BootSequence({ onComplete }: { onComplete: () => void }) {
 
       const msg = BOOT_MESSAGES[currentMessage]
       if (charIndex === 0) {
+        sound.playBootTick()
         setMessages(prev => [...prev, ''])
       }
 
@@ -56,7 +58,10 @@ export function BootSequence({ onComplete }: { onComplete: () => void }) {
 
       if (charIndex === msg.length) {
         let delay = Math.random() * 200 + 300 // random pause between lines
-        if (currentMessage === BOOT_MESSAGES.length - 1) delay = 800 // longer pause on ACCESS GRANTED
+        if (currentMessage === BOOT_MESSAGES.length - 1) {
+          delay = 800 // longer pause on ACCESS GRANTED
+          sound.playBootComplete()
+        }
         currentMessage++
         charIndex = 0
         timeoutId = setTimeout(typeMessage, delay)

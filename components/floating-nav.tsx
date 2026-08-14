@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { sound } from '@/lib/audio-engine'
 
 const NAV_ITEMS = [
   { id: 'hero-section', label: 'Home', shortLabel: 'HM' },
@@ -86,8 +87,10 @@ export function FloatingNav() {
               href={`#${id}`}
               onClick={(e) => {
                 e.preventDefault()
+                sound.playNavClick()
                 document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
               }}
+              onMouseEnter={() => sound.playHover()}
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 whitespace-nowrap',
                 activeSection === id
