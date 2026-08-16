@@ -277,35 +277,35 @@ export function About() {
   return (
     <Section id="about" fileLabel="SECTION 01 // SUBJECT PROFILE" title="About">
       <div className="grid gap-8 md:grid-cols-[auto_1fr_auto]">
-        {/* Profile Image Column */}
-        <div className="flex-shrink-0 mx-auto md:mx-0">
-          <div className="relative group p-2 border border-white/10 bg-card hover:bg-card-hover transition-colors overflow-hidden">
-            {/* Scanner line effect */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-signal/20 to-transparent h-4 w-full -translate-y-full group-hover:animate-scan pointer-events-none z-20" />
+        {/* Profile Image Column (Fajar Siddiq Style) */}
+        <div className="flex-shrink-0 mx-auto md:mx-0 mt-8 md:mt-0 lg:mr-8">
+          <div className="relative w-64 h-64 flex items-center justify-center group">
             
-            <div className="relative w-48 h-64 overflow-hidden rounded-sm bg-black">
-              {/* Cool-tone color grade via CSS filters */}
-              <div className="absolute inset-0 saturate-[0.85] contrast-[1.05] brightness-90 hue-rotate-[5deg] transition-all duration-700">
-                <Image 
-                  src="/profile-v7.png" 
-                  alt="Subject Photo" 
-                  fill
-                  className="object-cover object-center"
-                  sizes="(max-width: 768px) 192px, 192px"
-                  priority
-                />
-              </div>
-              
-              {/* Subtle dark overlay/gradient at the bottom */}
-              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#0a0a0d] via-[#0a0a0d]/60 to-transparent z-10 pointer-events-none" />
-              
-              {/* Subtle tech grid/scanlines overlay */}
-              <div className="absolute inset-0 bg-signal/5 mix-blend-overlay z-10 pointer-events-none group-hover:bg-transparent transition-colors" />
+            {/* Tilted Dark Background Frame */}
+            <div className="absolute w-56 h-64 bg-[#121214] border border-white/5 -rotate-6 rounded-lg shadow-2xl transition-all duration-500 group-hover:-rotate-3 group-hover:border-signal/20" />
+            
+            {/* Purple Circular Background (like the reference) */}
+            <div className="absolute w-48 h-48 bg-[#6320ee] rounded-full shadow-lg transition-transform duration-500 group-hover:scale-105" />
+            
+            {/* Overlapping Pop-out Image */}
+            <div className="relative w-64 h-72 z-10 drop-shadow-2xl transition-transform duration-500 group-hover:scale-[1.03] group-hover:-translate-y-1 rotate-3">
+              <Image 
+                src="/profile-v7.png" 
+                alt="Subject Photo" 
+                fill
+                className="object-contain object-bottom filter saturate-[0.85] contrast-[1.05]"
+                sizes="(max-width: 768px) 256px, 256px"
+                priority
+              />
             </div>
             
-            <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-2">
-              <span className="font-mono text-[9px] tracking-widest text-signal animate-pulse">● LIVE_FEED</span>
-              <span className="font-mono text-[9px] tracking-widest text-muted-foreground">ID: PR-2027</span>
+            {/* Status Badge */}
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-center gap-3 z-20 w-max bg-[#0a0a0d] px-4 py-1.5 rounded-sm border border-white/10 shadow-xl">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-signal"></span>
+              </span>
+              <span className="font-mono text-[9px] tracking-widest text-muted-foreground">PR-2027</span>
             </div>
           </div>
         </div>
