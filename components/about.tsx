@@ -287,10 +287,10 @@ export function About() {
               {/* Cool-tone color grade via CSS filters */}
               <div className="absolute inset-0 saturate-[0.85] contrast-[1.05] brightness-90 hue-rotate-[5deg] transition-all duration-700">
                 <Image 
-                  src="/profile-v7.png" 
+                  src="/PRF1.jpeg" 
                   alt="Subject Photo" 
                   fill
-                  className="object-cover object-center"
+                  className="object-cover object-center grayscale-[0.2]"
                   sizes="(max-width: 768px) 192px, 192px"
                   priority
                 />
