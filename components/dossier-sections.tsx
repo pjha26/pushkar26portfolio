@@ -10,8 +10,9 @@ import { LINKS, SKILL_GROUPS } from '@/lib/dossier-data'
 import { prefersReducedMotion } from '@/lib/use-reveal'
 import { cn } from '@/lib/utils'
 import { AnimatedSkillBadge } from '@/components/animated-skill-badge'
-import { SkillsSphere } from '@/components/skills-sphere'
+import dynamic from 'next/dynamic'
 
+const SkillsSphere = dynamic(() => import('@/components/skills-sphere').then(mod => mod.SkillsSphere), { ssr: false })
 gsap.registerPlugin(ScrollTrigger, TextPlugin)
 
 export function Skills() {
