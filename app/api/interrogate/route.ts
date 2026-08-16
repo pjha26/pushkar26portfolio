@@ -7,10 +7,10 @@ const groq = createGroq({
 
 export const maxDuration = 30
 
-// Simple in-memory rate limiter
+// In-memory rate limiter (localized to Vercel edge/serverless container)
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>()
-const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000
-const MAX_REQUESTS = 15
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000 // 10 minutes
+const MAX_REQUESTS = 5 // Max 5 interrogations per 10 mins per IP
 
 const SYSTEM_PROMPT = `You are an AI assistant built into a classified case-file/dossier website for Pushkar Raj.
 You are answering on behalf of Pushkar Raj, speaking about him in the third person.
@@ -81,7 +81,10 @@ DOSSIER DATA:
 
 export async function POST(req: Request) {
   try {
-    console.log(process.env.GROQ_API_KEY ? "GROQ_API_KEY is present" : "GROQ_API_KEY is MISSING")
+    if (!process.env.GROQ_API_KEY) {
+      console.warn("GROQ_API_KEY is missing. Terminating request.")
+      return new Response('SYSTEM OFFLINE: AI Core connection severed. Please contact administration.', { status: 503 })
+    }
     
     const ip = req.headers.get('x-forwarded-for') || 'unknown-ip'
     const now = Date.now()
@@ -91,7 +94,7 @@ export async function POST(req: Request) {
       if (record) {
         if (now - record.timestamp < RATE_LIMIT_WINDOW_MS) {
           if (record.count >= MAX_REQUESTS) {
-            return new Response('ACCESS TEMPORARILY RESTRICTED — RATE LIMIT EXCEEDED. TRY AGAIN SHORTLY.', { status: 429 })
+            return new Response('ACCESS RESTRICTED: SECURITY PROTOCOL ACTIVATED. You have exceeded your query quota. Retry in 10 minutes.', { status: 429 })
           }
           record.count++
         } else {
@@ -124,6 +127,7 @@ export async function POST(req: Request) {
     }
   } catch (error) {
     console.error('Interrogate API Error:', error)
-    return new Response('CRITICAL SYSTEM FAILURE — UNABLE TO PROCESS TRANSMISSION.', { status: 500 })
+    return new Response('CRITICAL ERROR: Neural net disrupted. The LLM provider is currently down.', { status: 500 })
   }
 }
+

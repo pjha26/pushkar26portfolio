@@ -1,21 +1,15 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Bebas_Neue, Inter, IBM_Plex_Mono, Syncopate, Michroma } from 'next/font/google'
+import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { Preloader } from '@/components/preloader'
 import { SoundToggle } from '@/components/sound-toggle'
 import './globals.css'
-
-const bebasNeue = Bebas_Neue({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-bebas-neue',
-  display: 'swap',
-})
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
+  preload: true,
 })
 
 const plexMono = IBM_Plex_Mono({
@@ -23,20 +17,7 @@ const plexMono = IBM_Plex_Mono({
   subsets: ['latin'],
   variable: '--font-plex-mono',
   display: 'swap',
-})
-
-const syncopate = Syncopate({
-  weight: ['700'],
-  subsets: ['latin'],
-  variable: '--font-syncopate',
-  display: 'swap',
-})
-
-const michroma = Michroma({
-  weight: ['400'],
-  subsets: ['latin'],
-  variable: '--font-michroma',
-  display: 'swap',
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -91,7 +72,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-[#0a0a0d] text-foreground ${inter.variable} ${bebasNeue.variable} ${plexMono.variable} ${syncopate.variable} ${michroma.variable} dark`}
+      className={`bg-[#0a0a0d] text-foreground ${inter.variable} ${plexMono.variable} dark`}
       suppressHydrationWarning
       style={{ backgroundColor: '#0a0a0d' }}
     >
