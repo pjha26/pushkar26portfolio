@@ -284,13 +284,13 @@ export function About() {
             {/* Tilted Dark Background Frame */}
             <div className="absolute w-56 h-64 bg-[#121214] border border-white/5 -rotate-6 rounded-lg shadow-2xl transition-all duration-500 group-hover:-rotate-3 group-hover:border-signal/20" />
             
-            {/* Purple Circular Background (like the reference) */}
-            <div className="absolute w-48 h-48 bg-[#6320ee] rounded-full shadow-lg transition-transform duration-500 group-hover:scale-105" />
+            {/* Theme-matching Circular Background */}
+            <div className="absolute w-48 h-48 bg-gradient-to-tr from-signal/20 to-transparent border border-signal/20 rounded-full shadow-[0_0_30px_-5px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-105" />
             
             {/* Overlapping Pop-out Image */}
             <div className="relative w-64 h-72 z-10 drop-shadow-2xl transition-transform duration-500 group-hover:scale-[1.03] group-hover:-translate-y-1 rotate-3">
               <Image 
-                src="/profile-v7.png" 
+                src="/prfolie_picture-removebg-preview.png" 
                 alt="Subject Photo" 
                 fill
                 className="object-contain object-bottom filter saturate-[0.85] contrast-[1.05]"
