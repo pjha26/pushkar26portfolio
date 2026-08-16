@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Section } from '@/components/section'
 import { CASES, type CaseFile } from '@/lib/dossier-data'
 import { cn } from '@/lib/utils'
@@ -10,6 +11,7 @@ import { sound } from '@/lib/audio-engine'
 
 function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }) {
   const [isFlipped, setIsFlipped] = useState(false)
+  const router = useRouter()
 
   return (
     <div 
@@ -109,23 +111,36 @@ function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }
           </div>
 
           <div 
-            className="mt-6 flex flex-wrap items-center gap-4 pt-4 border-t border-white/10 shrink-0 translate-z-10"
+            className="mt-6 flex items-center gap-4 pt-4 border-t border-white/10 shrink-0 translate-z-10"
             onClick={e => e.stopPropagation()}
             onPointerDown={e => e.stopPropagation()}
+            onDoubleClick={e => e.stopPropagation()}
           >
             {c.github && (
-              <a href={c.github} target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] uppercase tracking-widest text-white hover:text-signal transition-colors group/link relative z-50">
+              <a href={c.github} target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] uppercase tracking-widest text-white hover:text-signal transition-colors group/link relative z-50 py-3 pr-4 -my-3">
                 GitHub <span className="opacity-50 group-hover/link:opacity-100">↗</span>
               </a>
             )}
             {c.live && (
-              <a href={c.live} target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] uppercase tracking-widest text-signal hover:text-white transition-colors group/link relative z-50">
+              <a href={c.live} target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] uppercase tracking-widest text-signal hover:text-white transition-colors group/link relative z-50 py-3 pr-4 -my-3">
                 Live <span className="opacity-50 group-hover/link:opacity-100">↗</span>
               </a>
             )}
-            <Link href={`/projects/${c.id}`} className="font-mono text-[10px] uppercase tracking-widest text-white/50 hover:text-white transition-colors ml-auto group/link relative z-50">
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                router.push(`/projects/${c.id}`);
+              }}
+              onDoubleClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                router.push(`/projects/${c.id}`);
+              }}
+              className="font-mono text-[10px] uppercase tracking-widest text-white/50 hover:text-white transition-colors ml-auto group/link relative z-50 py-3 pl-6 -my-3 -mr-3 text-right"
+            >
               Case Study <span className="opacity-50 group-hover/link:opacity-100">↗</span>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
