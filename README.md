@@ -1,33 +1,52 @@
-# pushkar26portfolio
+# Pushkar's Developer Portfolio
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+Welcome to my personal developer portfolio! This project showcases my skills, projects, and professional experience through a dynamic and interactive web interface.
 
-## Built with v0
+## 🌐 Live Demo
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+**[View Live Portfolio](https://pushkar26portfolio.vercel.app/)**
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_IeEbqdqn86YtDJWHg0aITuN8PVSU)
+## 🛠️ Tech Stack
 
-## Getting Started
+This project is built using modern web technologies to ensure high performance and rich user interactions:
 
-First, run the development server:
+- **Framework**: [Next.js](https://nextjs.org/) (React)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
+- **Animations & 3D**: [Framer Motion](https://www.framer.com/motion/), [GSAP](https://gsap.com/), [Three.js](https://threejs.org/) & React Three Fiber
+- **AI Integration**: Vercel AI SDK
+- **Package Manager**: [pnpm](https://pnpm.io/)
+- **Deployment**: [Vercel](https://vercel.com/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## 🚀 Getting Started
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To run this project locally, follow these steps:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+Make sure you have Node.js and `pnpm` installed.
 
-## Learn More
+### Installation
 
-To learn more, take a look at the following resources:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/pjha26/pushkar26portfolio.git
+   cd pushkar26portfolio
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+3. Start the development server:
+   ```bash
+   pnpm dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the portfolio.
+
+## 🤝 Let's Connect
+
+Feel free to reach out if you'd like to collaborate, have a question, or just want to say hi!
+
+- **GitHub**: [pjha26](https://github.com/pjha26)
