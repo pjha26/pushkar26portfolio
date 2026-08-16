@@ -280,27 +280,33 @@ export function About() {
         {/* Profile Image Column */}
         <div className="flex-shrink-0 mx-auto md:mx-0">
           <div className="relative group p-2 border border-white/10 bg-card hover:bg-card-hover transition-colors overflow-hidden">
-            {/* Scanner line effect */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-signal/20 to-transparent h-4 w-full -translate-y-full group-hover:animate-scan pointer-events-none z-20" />
-            
-            <div className="relative w-48 h-64 overflow-hidden rounded-sm bg-black">
-              {/* Cool-tone color grade via CSS filters */}
-              <div className="absolute inset-0 saturate-[0.85] contrast-[1.05] brightness-90 hue-rotate-[5deg] transition-all duration-700">
+            <div className="relative w-48 h-64 overflow-hidden rounded-sm bg-black border border-white/5 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+              {/* Continuous Scanner line effect (clipped inside the image now) */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-signal/30 to-transparent h-16 w-full -translate-y-full animate-scan pointer-events-none z-30 opacity-75" />
+              
+              {/* Intense Cyberpunk Color Grade to mask artifacts */}
+              <div className="absolute inset-0 saturate-[0.6] contrast-[1.25] brightness-90 hue-rotate-[10deg] transition-all duration-700 group-hover:saturate-100 group-hover:contrast-100">
                 <Image 
                   src="/PRF1.jpeg" 
                   alt="Subject Photo" 
                   fill
-                  className="object-cover object-center grayscale-[0.2]"
+                  className="object-cover object-center grayscale-[0.3]"
                   sizes="(max-width: 768px) 192px, 192px"
                   priority
                 />
               </div>
               
-              {/* Subtle dark overlay/gradient at the bottom */}
-              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#0a0a0d] via-[#0a0a0d]/60 to-transparent z-10 pointer-events-none" />
+              {/* Dynamic Holographic Glow Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-signal/40 via-signal/0 to-transparent mix-blend-overlay animate-pulse pointer-events-none z-10 opacity-80" />
               
-              {/* Subtle tech grid/scanlines overlay */}
-              <div className="absolute inset-0 bg-signal/5 mix-blend-overlay z-10 pointer-events-none group-hover:bg-transparent transition-colors" />
+              {/* Subtle dark overlay/gradient at the bottom for text contrast */}
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0a0a0d] via-[#0a0a0d]/50 to-transparent z-10 pointer-events-none" />
+              
+              {/* CRT Scanlines pattern */}
+              <div 
+                className="absolute inset-0 z-20 pointer-events-none opacity-[0.15]" 
+                style={{ backgroundImage: 'repeating-linear-gradient(transparent, transparent 2px, #000 2px, #000 4px)' }}
+              />
             </div>
             
             <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-2">
