@@ -415,6 +415,11 @@
   .section-divider {
     transform: scaleX(1);
   }
+  .projects-marquee {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
 }
 
 /* Vengeance theme overrides */

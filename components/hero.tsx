@@ -111,22 +111,30 @@ export function Hero() {
             data-hero-item
             className="mt-8 max-w-xl text-lg leading-relaxed text-transparent bg-clip-text bg-gradient-to-r from-foreground/90 to-foreground/50 text-pretty md:text-xl font-light border-l-2 border-signal/50 pl-6 py-1"
           >
-            I build resilient, data-driven systems — multi-agent AI platforms,
-            real-time infrastructure, and machine learning pipelines that thrive in
-            production.
+            Full-stack developer and AI/ML engineer building resilient,
+            data-driven products — from multi-agent AI platforms to real-time
+            infrastructure and production machine learning pipelines.
           </p>
 
-          <a
-            data-hero-item
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            onMouseEnter={() => sound.playHover()}
-            className="mt-8 inline-flex items-center gap-3 px-6 py-3 border border-signal/50 bg-signal/10 hover:bg-signal hover:text-signal-foreground text-signal font-mono text-sm uppercase tracking-widest transition-all duration-300 group/resume rounded-sm shadow-[0_0_20px_rgba(245,196,0,0.1)] hover:shadow-[0_0_30px_rgba(245,196,0,0.3)]"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/resume:animate-bounce"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download Resume
-          </a>
+          <div data-hero-item className="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href="#projects"
+              onMouseEnter={() => sound.playHover()}
+              className="inline-flex items-center px-6 py-3 border border-signal bg-signal text-signal-foreground font-mono text-sm uppercase tracking-widest transition-all duration-300 rounded-sm hover:shadow-[0_0_30px_rgba(245,196,0,0.3)]"
+            >
+              View Projects
+            </a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={() => sound.playHover()}
+              className="inline-flex items-center gap-3 px-6 py-3 border border-signal/50 bg-signal/10 hover:bg-signal hover:text-signal-foreground text-signal font-mono text-sm uppercase tracking-widest transition-all duration-300 group/resume rounded-sm shadow-[0_0_20px_rgba(245,196,0,0.1)] hover:shadow-[0_0_30px_rgba(245,196,0,0.3)]"
+            >
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/resume:animate-bounce"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Resume
+            </a>
+          </div>
 
         </div>
 

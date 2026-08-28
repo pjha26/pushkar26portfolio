@@ -21,6 +21,10 @@ const plexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://pushkar26portfolio.vercel.app'),
+  alternates: {
+    canonical: '/',
+  },
   title: 'PUSHKAR RAJ — FILE PR-2027',
   description:
     'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems — multi-agent AI platforms, real-time infrastructure, and ML pipelines that survive contact with production.',
@@ -31,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'PUSHKAR RAJ — FILE PR-2027',
     description: 'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems.',
-    url: 'https://pushkarraj.dev',
+    url: '/',
     siteName: 'Pushkar Raj Portfolio',
     images: [
       {

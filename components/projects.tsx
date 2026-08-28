@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Section } from '@/components/section'
 import { CASES, type CaseFile } from '@/lib/dossier-data'
@@ -15,9 +14,20 @@ function Flashcard({ caseFile: c, index }: { caseFile: CaseFile, index: number }
 
   return (
     <div 
-      className="group relative h-[420px] w-[300px] sm:h-[500px] sm:w-[350px] flex-shrink-0 cursor-pointer mx-3 sm:mx-5 transition-transform duration-500 hover:z-20 hover:scale-[1.03]"
+      className="group relative h-[420px] w-[300px] sm:h-[500px] sm:w-[350px] flex-shrink-0 cursor-pointer mx-3 sm:mx-5 transition-transform duration-500 hover:z-20 hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-4 focus-visible:ring-offset-[#0a0a0d]"
       style={{ perspective: '1500px' }}
+      role="button"
+      tabIndex={0}
+      aria-label={`${isFlipped ? 'Hide' : 'Show'} details for ${c.title}`}
+      aria-pressed={isFlipped}
       onClick={() => { sound.playCardFlip(); setIsFlipped(!isFlipped) }}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          sound.playCardFlip()
+          setIsFlipped(!isFlipped)
+        }
+      }}
       onMouseEnter={() => sound.playHover()}
       onMouseLeave={() => setIsFlipped(false)}
     >
@@ -163,7 +173,7 @@ export function Projects() {
         {/* Marquee Track */}
         <div 
           ref={containerRef}
-          className="flex w-max animate-marquee hover:[animation-play-state:paused] items-center pt-8 pb-12"
+          className="projects-marquee flex w-max animate-marquee hover:[animation-play-state:paused] focus-within:[animation-play-state:paused] items-center pt-8 pb-12"
           style={{ willChange: 'transform' }}
         >
           {/* We duplicate the cases array multiple times to ensure the marquee is long enough to loop seamlessly */}
@@ -175,7 +185,7 @@ export function Projects() {
       
       <div className="mt-2 text-center flex flex-col items-center justify-center gap-2">
         <p className="font-mono text-[10px] tracking-[0.2em] text-white/40 uppercase">
-          Hover to pause <span className="text-signal mx-2">•</span> Click to flip
+          Hover or focus to pause <span className="text-signal mx-2">•</span> Click, Enter, or Space to flip
         </p>
       </div>
       
