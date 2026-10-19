@@ -81,8 +81,8 @@ export function Hero() {
               <span>Multi-agent AI / 2026</span>
             </div>
           </Link>
-          <div className="art-scribble" aria-hidden="true">
-            <svg viewBox="0 0 110 70" fill="none">
+          <div className="art-scribble">
+            <svg viewBox="0 0 110 70" fill="none" aria-hidden="true">
               <path
                 d="M9 18C40 0 94 17 78 40C65 59 31 40 49 28C67 16 89 34 90 57M79 50l12 11 8-14"
                 stroke="currentColor"

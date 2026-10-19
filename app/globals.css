@@ -73,6 +73,7 @@ textarea {
 }
 :focus-visible {
   outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 ::selection {
   background: #cdd7bd;
@@ -536,6 +537,7 @@ h2 {
 }
 .project-featured .project-title-row h3 {
   font-size: 42px;
+  font-family: var(--serif);
 }
 .project-workflow {
   margin-top: 25px;
@@ -675,6 +677,7 @@ html[data-theme='dark'] .project-visual-top {
   width: 100%;
   height: auto;
   display: block;
+  transition: transform 240ms ease;
 }
 .project-open {
   position: absolute;
@@ -689,6 +692,26 @@ html[data-theme='dark'] .project-visual-top {
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 10px #0000000a;
+}
+.project-open svg {
+  transition: transform 180ms ease;
+}
+.project-visual:focus-visible {
+  outline-offset: 5px;
+}
+.project-visual:focus-visible .project-open svg {
+  transform: translate(2px, -2px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .project-visual:hover .project-screenshot {
+    transform: scale(1.025);
+  }
+  .project-visual:hover .project-open svg {
+    transform: translate(2px, -2px);
+  }
+  .text-link:hover .lucide-arrow-right {
+    transform: translateX(3px);
+  }
 }
 .project-info {
   padding-top: 21px;
@@ -1634,5 +1657,16 @@ html[data-theme='dark'] .project-visual-top {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+  .project-visual .project-screenshot,
+  .project-visual .browser-frame,
+  .project-visual .project-open svg,
+  .text-link svg,
+  .project-live svg,
+  .button-primary:hover {
+    transform: none !important;
+  }
+  .workbench-card:hover {
+    transform: rotate(-4deg);
   }
 }
