@@ -1,13 +1,15 @@
 import type { MetadataRoute } from 'next'
+import { CASES } from '@/lib/dossier-data'
 
-const SITE_URL = 'https://pushkar26portfolio.vercel.app'
+const siteUrl = 'https://pushkar26portfolio.vercel.app'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    {
-      url: SITE_URL,
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
+    { url: siteUrl, changeFrequency: 'monthly', priority: 1 },
+    ...CASES.map((project) => ({
+      url: `${siteUrl}/projects/${project.id}`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
   ]
 }

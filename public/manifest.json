@@ -1,16 +1,16 @@
 {
-  "name": "Pushkar Raj - Developer Portfolio",
-  "short_name": "PR-2027",
-  "description": "Full-stack developer and AI/ML engineer portfolio.",
+  "name": "Pushkar Raj — Software developer",
+  "short_name": "Pushkar Raj",
+  "description": "Thoughtful code. Useful things. Full-stack development and applied AI.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#08080a",
-  "theme_color": "#0a0a0d",
+  "background_color": "#f5f4ef",
+  "theme_color": "#f5f4ef",
   "icons": [
     {
-      "src": "/icon-light-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png"
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     },
     {
       "src": "/apple-icon.png",
