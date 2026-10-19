@@ -1,129 +1,177 @@
-import { CASES } from '@/lib/dossier-data'
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { notFound } from 'next/navigation'
-import { CustomCursor } from '@/components/custom-cursor'
-import { GridBackground } from '@/components/grid-background'
-import { SmoothScroll } from '@/components/smooth-scroll'
+import { CASES } from '@/lib/dossier-data'
 
-export async function generateStaticParams() {
-  return CASES.map((c) => ({
-    id: c.id,
-  }))
+type Props = { params: Promise<{ id: string }> }
+
+export function generateStaticParams() {
+  return CASES.map((project) => ({ id: project.id }))
 }
 
-export default async function CaseStudy({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = await params;
-  const caseFile = CASES.find(c => c.id === resolvedParams.id)
-  
-  if (!caseFile) {
-    notFound()
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params
+  const project = CASES.find((item) => item.id === id)
+  if (!project) notFound()
+  return {
+    title: project.title,
+    description: project.summary,
+    alternates: { canonical: `/projects/${project.id}` },
+    openGraph: {
+      title: `${project.title} — A project by Pushkar Raj`,
+      description: project.summary,
+      url: `/projects/${project.id}`,
+      images: project.image
+        ? [{ url: project.image, alt: `${project.title} application preview` }]
+        : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} — Pushkar Raj`,
+      description: project.summary,
+      images: project.image ? [project.image] : [],
+    },
   }
+}
+
+export default async function CaseStudy({ params }: Props) {
+  const { id } = await params
+  const project = CASES.find((item) => item.id === id)
+  if (!project) notFound()
+  const next = CASES[(CASES.indexOf(project) + 1) % CASES.length]
 
   return (
-    <>
-      <CustomCursor />
-      <GridBackground />
-      <SmoothScroll>
-        <main className="relative z-10 min-h-screen text-foreground px-6 py-24 md:px-12 lg:px-20 max-w-5xl mx-auto selection:bg-signal selection:text-black">
-          {/* Back button */}
-          <a href="/#projects" className="group inline-flex items-center gap-2 font-mono text-xs tracking-widest text-muted-foreground hover:text-signal transition-colors mb-16">
-            <span className="transition-transform group-hover:-translate-x-1">←</span> RETURN TO HQ
-          </a>
-
-          {/* Header */}
-          <header className="mb-16 border-b border-signal/20 pb-12">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div>
-                <p className="font-mono text-xs tracking-[0.2em] text-signal/70 mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-signal animate-pulse" />
-                  {caseFile.fileNumber} // {caseFile.status}
-                </p>
-                <h1 className="text-4xl md:text-6xl font-bold uppercase drop-shadow-[0_0_15px_rgba(245,196,0,0.1)]">
-                  {caseFile.title}
-                </h1>
-              </div>
-              
-              <div className="flex gap-4">
-                {caseFile.github && (
-                  <a href={caseFile.github} target="_blank" rel="noopener noreferrer" className="px-4 py-2 border border-white/10 hover:border-signal hover:bg-signal hover:text-black transition-all font-mono text-xs uppercase tracking-widest">
-                    Source Code ↗
-                  </a>
-                )}
-                {caseFile.live && (
-                  <a href={caseFile.live} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-signal text-black hover:bg-signal/80 transition-colors font-mono text-xs uppercase tracking-widest font-bold">
-                    Live Demo ↗
-                  </a>
-                )}
-              </div>
-            </div>
-          </header>
-
-          {/* Content Grid */}
-          <div className="grid gap-16 md:grid-cols-3">
-            {/* Main Content */}
-            <div className="md:col-span-2 space-y-16">
-              
-              <section>
-                <h2 className="font-mono text-[10px] tracking-[0.3em] text-signal mb-6 uppercase flex items-center gap-3">
-                  <span className="h-px w-8 bg-signal/50" />
-                  01 // The Problem
-                </h2>
-                <p className="text-lg leading-relaxed text-foreground/90 text-pretty">
-                  {caseFile.problem}
-                </p>
-              </section>
-
-              {caseFile.challenge && (
-                <section className="p-8 border border-red-500/20 bg-red-500/5 relative overflow-hidden">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-red-500/50" />
-                  <h2 className="font-mono text-[10px] tracking-[0.3em] text-red-400 mb-4 uppercase">
-                    CRITICAL CHALLENGE DETECTED
-                  </h2>
-                  <p className="text-base leading-relaxed text-foreground/85">
-                    {caseFile.challenge}
-                  </p>
-                </section>
-              )}
-
-              <section>
-                <h2 className="font-mono text-[10px] tracking-[0.3em] text-signal mb-6 uppercase flex items-center gap-3">
-                  <span className="h-px w-8 bg-signal/50" />
-                  02 // Tactical Approach
-                </h2>
-                <ul className="space-y-4">
-                  {caseFile.approach.map((item, i) => (
-                    <li key={i} className="flex gap-4 p-4 border border-white/5 bg-card hover:bg-white/5 transition-colors">
-                      <span className="font-mono text-signal text-xs mt-1 block">0{i+1}</span>
-                      <p className="text-base leading-relaxed text-foreground/90">{item}</p>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-12">
-              <aside className="p-6 border border-signal/20 bg-signal/5">
-                <h3 className="font-mono text-[10px] tracking-[0.3em] text-signal/70 mb-4 uppercase">
-                  TECHNOLOGY STACK
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {caseFile.stack.map(tech => (
-                    <span key={tech} className="px-2 py-1 bg-black border border-white/10 font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </aside>
-
-              <div className="p-6 border border-white/5 bg-card/30 flex flex-col items-center justify-center text-center">
-                 <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground mb-4">END OF REPORT</p>
-                 <div className="w-12 h-[1px] bg-white/20" />
-              </div>
-            </div>
+    <main className="case-study shell" id="main-content">
+      <Link href="/#projects" className="case-back">
+        <ArrowLeft size={14} /> Back to selected work
+      </Link>
+      <header className="case-heading">
+        <div>
+          <p className="eyebrow">{project.category} / 2026</p>
+          <h1>{project.title}</h1>
+        </div>
+        <div>
+          <p>{project.summary}</p>
+          <div className="project-links">
+            {project.live && (
+              <a
+                className="button button-primary"
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit live site <ArrowUpRight size={15} />
+              </a>
+            )}
+            {project.github && (
+              <a
+                className="text-link"
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View source <ArrowUpRight size={15} />
+              </a>
+            )}
           </div>
-        </main>
-      </SmoothScroll>
-    </>
+        </div>
+      </header>
+      {project.image && (
+        <div className="case-cover">
+          <Image
+            src={project.image}
+            alt={`${project.title} application interface`}
+            width={1024}
+            height={483}
+            sizes="(max-width: 700px) 90vw, 1000px"
+            loading="eager"
+          />
+        </div>
+      )}
+      <dl className="case-facts">
+        <div>
+          <dt>Project</dt>
+          <dd>Independent build</dd>
+        </div>
+        <div>
+          <dt>Focus</dt>
+          <dd>{project.category}</dd>
+        </div>
+        <div>
+          <dt>Built with</dt>
+          <dd>{project.stack.join(' · ')}</dd>
+        </div>
+      </dl>
+      <div className="case-body">
+        <nav className="case-aside" aria-label="Case study contents">
+          <a href="#overview">01 — The problem</a>
+          <a href="#system">02 — How it connects</a>
+          <a href="#decisions">03 — Design decisions</a>
+          <a href="#implementation">04 — The implementation</a>
+        </nav>
+        <div className="case-content">
+          <section id="overview">
+            <p className="eyebrow section-kicker">01 / Context</p>
+            <h2>The problem worth solving.</h2>
+            <p>{project.problem}</p>
+            {project.challenge && (
+              <div className="case-decision" style={{ marginTop: 24 }}>
+                <h3>The hard part</h3>
+                <p>{project.challenge}</p>
+              </div>
+            )}
+          </section>
+          <section id="system">
+            <p className="eyebrow section-kicker">02 / System at a glance</p>
+            <h2>How the pieces connect.</h2>
+            <div className="case-flow" role="list" aria-label="Application flow">
+              {project.flow.map((step, index) => (
+                <div className="flow-step" role="listitem" key={step}>
+                  <span>0{index + 1}</span>
+                  {step}
+                </div>
+              ))}
+            </div>
+          </section>
+          <section id="decisions">
+            <p className="eyebrow section-kicker">03 / Engineering choices</p>
+            <h2>A few deliberate decisions.</h2>
+            <div className="case-decisions">
+              {project.decisions.map((decision) => (
+                <div className="case-decision" key={decision.title}>
+                  <h3>{decision.title}</h3>
+                  <p>{decision.body}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+          <section id="implementation">
+            <p className="eyebrow section-kicker">04 / From idea to implementation</p>
+            <h2>What went into the build.</h2>
+            <ul className="case-approach">
+              {project.approach.map((item, index) => (
+                <li key={item}>
+                  <span>0{index + 1}</span>
+                  <p>{item}</p>
+                </li>
+              ))}
+            </ul>
+            <div className="case-decision" style={{ marginTop: 24 }}>
+              <h3>The trade-off to keep in mind</h3>
+              <p>{project.tradeoff}</p>
+            </div>
+          </section>
+          <Link href={`/projects/${next.id}`} className="next-project">
+            <div>
+              <p className="eyebrow">Up next</p>
+              <h2>{next.title}</h2>
+            </div>
+            <ArrowRight />
+          </Link>
+        </div>
+      </div>
+    </main>
   )
 }
