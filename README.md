@@ -1,52 +1,49 @@
-# Pushkar's Developer Portfolio
+# Pushkar Raj — Portfolio
 
-Welcome to my personal developer portfolio! This project showcases my skills, projects, and professional experience through a dynamic and interactive web interface.
+A personal portfolio with a paper-and-olive palette, an optional dark theme, and project case studies.
 
-## 🌐 Live Demo
+Built with Next.js 16, React, TypeScript, and CSS. Most of the interface renders on the server; the navigation, theme switch, and email-copy button are the small interactive parts. Inter is self-hosted with its license in `public/fonts/`.
 
-**[View Live Portfolio](https://pushkar26portfolio.vercel.app/)**
+## Development
 
-## 🛠️ Tech Stack
+```sh
+pnpm install
+pnpm dev
+```
 
-This project is built using modern web technologies to ensure high performance and rich user interactions:
+Open http://localhost:3000.
 
-- **Framework**: [Next.js](https://nextjs.org/) (React)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
-- **Animations & 3D**: [Framer Motion](https://www.framer.com/motion/), [GSAP](https://gsap.com/), [Three.js](https://threejs.org/) & React Three Fiber
-- **AI Integration**: Vercel AI SDK
-- **Package Manager**: [pnpm](https://pnpm.io/)
-- **Deployment**: [Vercel](https://vercel.com/)
+## Production and checks
 
-## 🚀 Getting Started
+```sh
+pnpm build
+pnpm start
+pnpm test:smoke
+```
 
-To run this project locally, follow these steps:
+The build uses Next.js’s supported Webpack option because the local Windows Turbopack CSS worker fails in this environment. The development server still uses Turbopack.
 
-### Prerequisites
-Make sure you have Node.js and `pnpm` installed.
+Run the smoke checks against another running origin with:
 
-### Installation
+```sh
+node scripts/smoke-check.mjs http://127.0.0.1:3000
+```
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/pjha26/pushkar26portfolio.git
-   cd pushkar26portfolio
-   ```
+The checks cover the homepage, all four case studies, canonical URLs, screenshots, image optimization, résumé, social preview, sitemap, and a missing-project 404.
 
-2. Install dependencies:
-   ```bash
-   pnpm install
-   ```
+The existing lint command needs ESLint installed and configured; it is not a working check in this repository yet.
 
-3. Start the development server:
-   ```bash
-   pnpm dev
-   ```
+## Updating the content
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the portfolio.
+- Projects, repository links, demo links, architecture flows, and case-study text: `lib/dossier-data.ts`.
+- Introduction and portrait: `components/hero.tsx` and `components/about.tsx`.
+- Toolkit: `components/skills.tsx`.
+- Colors, typography, and responsive layouts: `app/globals.css`.
+- Résumé: `public/resume.pdf`.
+- Social preview: `app/opengraph-image.tsx`.
 
-## 🤝 Let's Connect
+Contact uses a direct email link and a copy-address button. It does not pretend to submit a form, and needs no email-service credentials.
 
-Feel free to reach out if you'd like to collaborate, have a question, or just want to say hi!
+The homepage no longer mounts the previous boot sequences, AI terminal, sound engine, redaction controls, GitHub statistics, or 3D scenes. Their existing source and API routes remain available in the checkout; optional API credentials are not needed to render the redesigned portfolio.
 
-- **GitHub**: [pjha26](https://github.com/pjha26)
+[GitHub](https://github.com/pjha26) · [Portfolio domain](https://pushkar26portfolio.vercel.app/)
