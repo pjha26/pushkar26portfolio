@@ -1,334 +1,116 @@
-'use client'
-
-import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
-import { prefersReducedMotion } from '@/lib/use-reveal'
-import { MagneticLink } from '@/components/magnetic-link'
-import dynamic from 'next/dynamic'
-const NeuralNetworkBackground = dynamic(() => import('@/components/particle-network').then(mod => mod.NeuralNetworkBackground), { ssr: false })
-import { LINKS, SECTION_IDS } from '@/lib/dossier-data'
-import { useScramble } from '@/lib/use-scramble'
-import { sound } from '@/lib/audio-engine'
-import { scrollToSection } from '@/components/smooth-scroll'
-import { TiltCard } from '@/components/ui/tilt-card'
-import { SiGithub, SiLeetcode } from 'react-icons/si'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import { SiGithub } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
-import { MdEmail } from 'react-icons/md'
-
-const VALID_SECTIONS = new Set<string>(SECTION_IDS)
-
-function ScrambleText({ text, as: Component = 'span', className, delay = 0 }: { text: string, as?: any, className?: string, delay?: number }) {
-  const { displayText, trigger } = useScramble(text, 800, delay)
-  return (
-    <Component className={className} onMouseEnter={trigger}>
-      {displayText}
-    </Component>
-  )
-}
+import { LINKS } from '@/lib/dossier-data'
 
 export function Hero() {
-  const rootRef = useRef<HTMLElement>(null)
-
-  // Clean, staggered fade-in entrance
-  useEffect(() => {
-    const el = rootRef.current
-    if (!el) return
-    const items = el.querySelectorAll('[data-hero-item]')
-    const reduced = prefersReducedMotion()
-
-    const ctx = gsap.context(() => {
-      if (reduced) {
-        gsap.set(items, { autoAlpha: 1 })
-        return
-      }
-
-      gsap.fromTo(
-        items,
-        { autoAlpha: 0, y: 30, rotationX: -10 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          rotationX: 0,
-          duration: 1,
-          ease: 'power4.out',
-          stagger: 0.1,
-          delay: 0.1,
-          clearProps: 'all',
-        }
-      )
-    }, el)
-
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <header
-      id="hero-section"
-      ref={rootRef}
-      className="relative flex min-h-svh flex-col justify-center overflow-hidden px-6 py-24 md:px-12 lg:px-20 bg-[#08080a]"
-    >
-      {/* Innovative AI Core Background - Shifted slightly left to balance asymmetry */}
-      <div className="ai-core-bg" style={{ transform: 'translateX(-10%)' }}>
-        <div className="ai-core-grid" />
-        <div className="ai-core-energy" />
-        <div className="ai-core-glow" />
+    <section className="hero shell" id="hero-section" aria-labelledby="hero-title">
+      <div className="hero-topline">
+        <span className="eyebrow">Bengaluru, India · Building for the web</span>
+        <span className="availability">
+          <span /> Open to opportunities
+        </span>
       </div>
-
-      {/* Subtle atmospheric dust */}
-      <div className="absolute inset-0 pointer-events-none z-0 opacity-15 mix-blend-screen">
-        <NeuralNetworkBackground />
-      </div>
-
-      <div className="relative z-20 w-full max-w-[90rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-20 items-center pt-10 px-4 md:px-0">
-        
-        {/* ================= LEFT COLUMN: TYPOGRAPHY ================= */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left perspective-1000 lg:pl-10 xl:pl-20">
-          
-          <div data-hero-item className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8 shadow-[0_0_20px_rgba(255,255,255,0.03)]">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-signal"></span>
+      <div className="hero-grid">
+        <div className="hero-copy">
+          <p className="intro-line">
+            Hello, I’m Pushkar{' '}
+            <span className="little-wave" aria-hidden="true">
+              ↗
             </span>
-            <p className="font-mono text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-              System Online // Full-Stack & AI
+          </p>
+          <h1 id="hero-title">
+            Thoughtful code.
+            <br />
+            <em>Useful things.</em>
+          </h1>
+          <p className="hero-description">
+            A full-stack developer with a curiosity for AI.
+            <br className="desktop-break" /> I turn complicated problems into things that
+            <br className="desktop-break" /> feel simple to use.
+          </p>
+          <div className="hero-actions">
+            <a className="button button-primary" href="#projects">
+              Explore my work <ArrowDown size={17} />
+            </a>
+            <a className="text-link" href={LINKS.email}>
+              Let’s talk <ArrowUpRight size={17} />
+            </a>
+          </div>
+          <div className="hero-person">
+            <Image src="/PRF1.jpeg" width={42} height={42} alt="Pushkar Raj" />
+            <p>
+              Currently studying Computer Science<span>JSSATE, Bengaluru · Class of 2027</span>
             </p>
           </div>
-
-          <h1 className="name-heading flex flex-col gap-2 font-extrabold tracking-tighter cursor-default drop-shadow-[0_0_30px_rgba(255,255,255,0.1)] pb-2 whitespace-nowrap z-10">
-            <ScrambleText
-              text="PUSHKAR"
-              delay={300}
-              className="text-[5rem] md:text-[6.5rem] lg:text-[7rem] xl:text-[8rem] leading-none bg-signal text-signal-foreground px-4 py-2 w-fit"
-            />
-            <ScrambleText
-              text="RAJ"
-              delay={600}
-              className="text-[5rem] md:text-[6.5rem] lg:text-[7rem] xl:text-[8rem] leading-[0.85] text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/30 w-fit pl-2"
-            />
-          </h1>
-
-          <p
-            data-hero-item
-            className="mt-8 max-w-xl text-lg leading-relaxed text-transparent bg-clip-text bg-gradient-to-r from-foreground/90 to-foreground/50 text-pretty md:text-xl font-light border-l-2 border-signal/50 pl-6 py-1"
+        </div>
+        <div className="hero-art" aria-label="A look at my work and approach">
+          <div className="art-grid" aria-hidden="true" />
+          <div className="art-caption">
+            <span className="tiny-star" aria-hidden="true">
+              ✳
+            </span>
+            <span>
+              A LITTLE CURIOSITY.
+              <br />A LOT OF BUILDING.
+            </span>
+          </div>
+          <Link
+            href="/projects/arth-ai"
+            className="workbench-card"
+            aria-label="Explore ArthAI, my multi-agent AI project"
           >
-            Full-stack developer and AI/ML engineer building resilient,
-            data-driven products — from multi-agent AI platforms to real-time
-            infrastructure and production machine learning pipelines.
-          </p>
-
-          <div data-hero-item className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href="#projects"
-              onMouseEnter={() => sound.playHover()}
-              className="inline-flex items-center px-6 py-3 border border-signal bg-signal text-signal-foreground font-mono text-sm uppercase tracking-widest transition-all duration-300 rounded-sm hover:shadow-[0_0_30px_rgba(245,196,0,0.3)]"
-            >
-              View Projects
-            </a>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              onMouseEnter={() => sound.playHover()}
-              className="inline-flex items-center gap-3 px-6 py-3 border border-signal/50 bg-signal/10 hover:bg-signal hover:text-signal-foreground text-signal font-mono text-sm uppercase tracking-widest transition-all duration-300 group/resume rounded-sm shadow-[0_0_20px_rgba(245,196,0,0.1)] hover:shadow-[0_0_30px_rgba(245,196,0,0.3)]"
-            >
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/resume:animate-bounce"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download Resume
-            </a>
+            <div className="workbench-heading">
+              <span>FROM THE WORKBENCH</span>
+              <ArrowUpRight size={13} />
+            </div>
+            <Image
+              src="/arthai.png"
+              alt="ArthAI application"
+              width={1024}
+              height={483}
+              sizes="(max-width: 700px) 78vw, 360px"
+              loading="eager"
+            />
+            <div className="workbench-foot">
+              <strong>ArthAI</strong>
+              <span>Multi-agent AI / 2026</span>
+            </div>
+          </Link>
+          <div className="art-scribble" aria-hidden="true">
+            <svg viewBox="0 0 110 70" fill="none">
+              <path
+                d="M9 18C40 0 94 17 78 40C65 59 31 40 49 28C67 16 89 34 90 57M79 50l12 11 8-14"
+                stroke="currentColor"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+              />
+            </svg>
+            <span>
+              the good part
+              <br />
+              is figuring it out.
+            </span>
           </div>
-
-        </div>
-
-        {/* ================= RIGHT COLUMN: BENTO GRID ================= */}
-        <div className="lg:col-span-5 grid grid-cols-2 gap-4 lg:gap-6 mt-12 lg:mt-0 perspective-1000 lg:pr-16 xl:pr-32">
-          
-          {/* Bento 1: Command Line (Spans full width of right column) */}
-          <TiltCard data-hero-item className="col-span-2 rounded-xl group">
-            <CommandLine />
-          </TiltCard>
-
-          {/* Bento 2: Live Status */}
-          <TiltCard data-hero-item className="col-span-2 sm:col-span-1 glass-panel flex flex-col justify-between rounded-xl border border-white/10 bg-black/20 backdrop-blur-xl p-5 hover:border-signal/30 transition-colors duration-300 group">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.6)]" />
-              <span className="text-xs font-mono tracking-widest text-muted-foreground uppercase">Status</span>
-            </div>
-            <div>
-              <p className="text-sm text-foreground/90 font-medium">Available for new opportunities</p>
-              <p className="text-xs text-foreground/50 mt-1">Based in India // Remote</p>
-            </div>
-          </TiltCard>
-
-          {/* Bento 3: Social Links Row */}
-          <TiltCard data-hero-item className="col-span-2 glass-panel rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden hover:border-signal/30 transition-colors duration-300 group">
-            <div className="flex flex-row flex-nowrap w-full h-full">
-              <MagneticLink href={LINKS.github} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors py-4 group/link">
-                <SiGithub className="w-6 h-6 text-white/40 group-hover/link:text-white transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(255,255,255,0.6)]" />
-              </MagneticLink>
-              <MagneticLink href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors py-4 group/link">
-                <FaLinkedin className="w-6 h-6 text-[#0A66C2]/40 group-hover/link:text-[#0A66C2] transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(10,102,194,0.6)]" />
-              </MagneticLink>
-              <MagneticLink href={LINKS.leetcode} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] border-r border-white/5 transition-colors py-4 group/link">
-                <SiLeetcode className="w-6 h-6 text-[#FFA116]/40 group-hover/link:text-[#FFA116] transition-all duration-300 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_12px_rgba(255,161,22,0.6)]" />
-              </MagneticLink>
-              <MagneticLink href={LINKS.email} className="flex-1 flex items-center justify-center bg-black/40 hover:bg-[#121214] transition-colors py-4 group/link">
-                <MdEmail className="w-6 h-6 text-signal/40 group-hover/link:text-signal transition-all duration-300 group-hover/link:scale-110 glow-signal" />
-              </MagneticLink>
-            </div>
-          </TiltCard>
-
-        </div>
-
-      </div>
-
-      {/* Kinetic Data Stream Marquee */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden border-t border-white/5 bg-black/40 backdrop-blur-sm py-3 z-30">
-        <div className="flex w-max animate-marquee font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-muted-foreground/50">
-          {Array(4).fill(0).map((_, i) => (
-            <div key={i} className="flex gap-8 px-4 items-center">
-              <span>REACT.JS</span><span className="text-signal/30">/</span>
-              <span>NEXT.JS</span><span className="text-signal/30">/</span>
-              <span>TYPESCRIPT</span><span className="text-signal/30">/</span>
-              <span>NODE.JS</span><span className="text-signal/30">/</span>
-              <span>PYTHON</span><span className="text-signal/30">/</span>
-              <span>PYTORCH</span><span className="text-signal/30">/</span>
-              <span>LLMs</span><span className="text-signal/30">/</span>
-              <span>POSTGRESQL</span><span className="text-signal/30">/</span>
-              <span>AWS</span><span className="text-signal/30">/</span>
-              <span>DOCKER</span><span className="text-signal/30">/</span>
-            </div>
-          ))}
+          <span className="art-index">PERSONAL PORTFOLIO / 2026</span>
         </div>
       </div>
-    </header>
-  )
-}
-
-const PLACEHOLDER = 'Type a command... (e.g. help, about)'
-
-function CommandLine() {
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [value, setValue] = useState('')
-  type HistoryEntry = { command: string; output: React.ReactNode | null }
-  const [history, setHistory] = useState<HistoryEntry[]>([])
-  const [focused, setFocused] = useState(false)
-  const historyRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (historyRef.current) {
-      historyRef.current.scrollTop = historyRef.current.scrollHeight
-    }
-  }, [history])
-
-  const submit = () => {
-    const query = value.trim().toLowerCase()
-    if (!query) return
-    let response: React.ReactNode | null = null
-    
-    if (VALID_SECTIONS.has(query)) {
-      response = `ACCESSING FILE: [${query.toUpperCase()}]...`
-      scrollToSection(query)
-    } else if (query === 'clear') {
-      setHistory([])
-      setValue('')
-      return
-    } else if (query === 'whoami') {
-      response = "IDENTITY: PUSHKAR RAJ // STATUS: FULL-STACK DEVELOPER & ML ENGINEER"
-      sound.playAccessGranted()
-    } else if (query === 'matrix') {
-      response = "WAKING UP IN THE MATRIX..."
-      document.body.style.color = '#00ff00'
-      document.documentElement.style.setProperty('--signal', '#00ff00')
-      sound.playGlitch()
-    } else if (query === 'help') {
-      response = (
-        <div className="flex flex-col gap-1 text-xs sm:text-sm mt-1">
-          <p className="text-white/80 border-b border-white/10 pb-1 mb-1">AVAILABLE COMMANDS:</p>
-          <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-muted-foreground">
-            <p><span className="text-signal">projects</span></p>
-            <p><span className="text-signal">skills</span></p>
-            <p><span className="text-signal">about</span></p>
-            <p><span className="text-signal">resume</span></p>
-            <p><span className="text-signal">contact</span></p>
-            <p><span className="text-signal">clear</span></p>
-          </div>
-        </div>
-      )
-    } else {
-      response = `Command not found: ${query}. Type 'help'.`
-      sound.playError()
-    }
-
-    setHistory((prev) => [...prev, { command: value, output: response }])
-    setValue('')
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      submit()
-    } else {
-      sound.playKeystroke()
-    }
-  }
-
-  return (
-    <div
-      data-cursor-text="[ EXECUTE ]"
-      className="glass-panel group relative flex w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-xl px-5 py-5 font-mono text-sm sm:text-base shadow-2xl transition-all duration-500 hover:border-signal/30 hover:shadow-[0_0_30px_rgba(245,196,0,0.1)] text-left h-[280px]"
-      onClick={() => inputRef.current?.focus()}
-    >
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-signal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
-      <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
-        <div className="flex gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
-          <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
-          <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
-        </div>
-        <div className="text-[10px] text-muted-foreground uppercase tracking-widest">root@system:~</div>
-      </div>
-
-      <div 
-        ref={historyRef}
-        className="flex-1 overflow-y-auto scrollbar-hide flex flex-col gap-2 mb-2"
-      >
-        {history.length === 0 && (
-          <div className="text-muted-foreground/70 text-xs sm:text-sm italic mb-2">
-            Terminal ready. Type 'help' to view available commands.
-          </div>
-        )}
-        {history.map((entry, i) => (
-          <div key={i} className="flex flex-col animate-in fade-in slide-in-from-bottom-1 duration-300">
-            <div className="flex text-muted-foreground">
-              <span className="mr-2 text-signal">❯</span>
-              <span className="text-white/90">{entry.command}</span>
-            </div>
-            {entry.output && (
-              <div className="text-foreground pl-4 mt-1 opacity-90">{entry.output}</div>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="flex items-center text-foreground mt-auto pt-2 border-t border-white/5">
-        <span className="mr-3 text-signal animate-pulse" aria-hidden="true">
-          ❯
-        </span>
-        <div className="relative flex-1">
-          <input
-            ref={inputRef}
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            aria-label="Command line input"
-            className="w-full bg-transparent outline-none placeholder:text-muted-foreground/40 text-white/90"
-            placeholder={focused ? '' : PLACEHOLDER}
-            spellCheck="false"
-            autoComplete="off"
-          />
+      <div className="hero-bottom">
+        <a href="#projects" className="scroll-cue">
+          <span className="scroll-line" /> A few things I’ve made <ArrowDown size={14} />
+        </a>
+        <div className="social-inline">
+          <a href={LINKS.github} target="_blank" rel="noopener noreferrer">
+            <SiGithub size={16} /> GitHub <ArrowUpRight size={12} />
+          </a>
+          <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">
+            <FaLinkedin size={16} /> LinkedIn <ArrowUpRight size={12} />
+          </a>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

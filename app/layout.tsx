@@ -1,93 +1,63 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Inter, IBM_Plex_Mono } from 'next/font/google'
-import { Preloader } from '@/components/preloader'
-import { SoundToggle } from '@/components/sound-toggle'
+import localFont from 'next/font/local'
+import { FloatingNav } from '@/components/floating-nav'
+import { Footer } from '@/components/footer'
 import './globals.css'
 
-const inter = Inter({
-  subsets: ['latin'],
+const inter = localFont({
+  src: '../public/fonts/inter-latin.woff2',
   variable: '--font-inter',
+  weight: '100 900',
   display: 'swap',
-  preload: true,
 })
-
-const plexMono = IBM_Plex_Mono({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-plex-mono',
-  display: 'swap',
-  preload: true,
-})
+const description =
+  'I’m Pushkar Raj, a full-stack developer and computer science student in Bengaluru. Explore my work in AI applications, real-time systems, and the web.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pushkar26portfolio.vercel.app'),
-  alternates: {
-    canonical: '/',
-  },
-  title: 'PUSHKAR RAJ — FILE PR-2027',
-  description:
-    'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems — multi-agent AI platforms, real-time infrastructure, and ML pipelines that survive contact with production.',
-  generator: 'Next.js',
-  keywords: ['Pushkar Raj', 'Software Engineer', 'Full-stack Developer', 'AI/ML', 'Next.js', 'React', 'TypeScript', 'PostgreSQL'],
+  title: { default: 'Pushkar Raj — Software developer', template: '%s — Pushkar Raj' },
+  description,
   authors: [{ name: 'Pushkar Raj' }],
-  creator: 'Pushkar Raj',
   openGraph: {
-    title: 'PUSHKAR RAJ — FILE PR-2027',
-    description: 'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems.',
+    title: 'Pushkar Raj — Software developer',
+    description,
     url: '/',
-    siteName: 'Pushkar Raj Portfolio',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Pushkar Raj — Dossier File PR-2027',
-      },
-    ],
+    siteName: 'Pushkar Raj',
     locale: 'en_US',
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'PUSHKAR RAJ — FILE PR-2027',
-    description: 'Case file: Pushkar Raj. Full-stack developer and AI/ML engineer building resilient, data-driven systems.',
-    images: ['/og-image.png'],
-  },
+  twitter: { card: 'summary_large_image', title: 'Pushkar Raj — Software developer', description },
   manifest: '/manifest.json',
-  icons: {
-    icon: [
-      { url: '/favicon.ico' }
-    ],
-    apple: '/apple-icon.png',
-  },
+  icons: { icon: '/icon.svg', apple: '/apple-icon.png' },
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: '#0a0a0d',
+  colorScheme: 'light dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f5f4ef' },
+    { media: '(prefers-color-scheme: dark)', color: '#1b211c' },
+  ],
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`bg-[#0a0a0d] text-foreground ${inter.variable} ${plexMono.variable} dark`}
-      suppressHydrationWarning
-      style={{ backgroundColor: '#0a0a0d' }}
-    >
-      <body 
-        className="antialiased font-sans bg-[#0a0a0d] text-foreground" 
-        suppressHydrationWarning
-        style={{ backgroundColor: '#08080a', color: '#a8a8ad' }}
-      >
-        <SoundToggle />
-        <Preloader />
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('portfolio-color-mode')==='dark')document.documentElement.dataset.theme='dark'}catch{}",
+          }}
+        />
+      </head>
+      <body>
+        <a className="skip-link" href="#main-content">
+          Skip to content
+        </a>
+        <FloatingNav />
         {children}
+        <Footer />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
