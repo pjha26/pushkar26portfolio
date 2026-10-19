@@ -14,8 +14,14 @@ async function get(path) {
 const home = await (await get('/')).text()
 assert.equal((home.match(/<h1[\s>]/g) || []).length, 1, 'Home must have one primary heading')
 assert.ok(
-  home.includes('mailto:pushkarraj88313@gmail.com'),
-  'Visitors must have a direct contact link'
+  home.includes('mailto:pjha2608@gmail.com'),
+  'Visitors must have the correct direct contact link'
+)
+assert.ok(!home.includes('pushkarraj88313@gmail.com'), 'The old email must not be displayed')
+assert.ok(home.includes('href="https://github.com/pjha26"'), 'The GitHub profile must be correct')
+assert.ok(
+  home.includes('href="https://leetcode.com/u/pjha2608/"'),
+  'The LeetCode profile must be correct'
 )
 assert.ok(home.includes('href="#main-content"'), 'A keyboard skip link must be present')
 

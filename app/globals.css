@@ -1121,7 +1121,7 @@ html[data-theme='dark'] .project-visual-top {
   padding-block: 140px;
 }
 .not-found h1 {
-  font-size: 64px;
+  font-size: clamp(38px, 8vw, 64px);
   margin: 15px 0 25px;
   line-height: 1.1;
 }
