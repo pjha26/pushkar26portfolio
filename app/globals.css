@@ -515,12 +515,74 @@ h2 {
 }
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 32px;
   row-gap: 52px;
 }
 .project-card {
   min-width: 0;
+}
+.project-featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--line);
+}
+.project-featured .project-info {
+  padding-top: 0;
+}
+.project-featured .project-title-row h3 {
+  font-size: 42px;
+}
+.project-workflow {
+  margin-top: 25px;
+}
+.project-workflow .eyebrow {
+  font-size: 8px;
+}
+.project-workflow ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 20px;
+  counter-reset: workflow;
+  padding: 0;
+  margin-top: 14px;
+  list-style: none;
+}
+.project-workflow li {
+  counter-increment: workflow;
+  border-top: 1px solid var(--line);
+  padding-top: 9px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.project-workflow li::before {
+  content: '0' counter(workflow) ' / ';
+  color: var(--accent);
+  font-size: 9px;
+}
+.project-info > .project-build-note {
+  border-left: 2px solid var(--accent);
+  padding-left: 12px;
+  margin-block: 22px;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.project-build-note > span {
+  display: block;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 5px;
 }
 .project-visual {
   display: block;
@@ -1136,6 +1198,12 @@ html[data-theme='dark'] .project-visual-top {
   }
 }
 @media (max-width: 1000px) {
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .project-featured {
+    gap: 24px;
+  }
   .shell {
     width: calc(100% - 64px);
   }
@@ -1356,6 +1424,14 @@ html[data-theme='dark'] .project-visual-top {
   .project-grid {
     grid-template-columns: 1fr;
     gap: 37px;
+  }
+  .project-featured {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding-bottom: 30px;
+  }
+  .project-featured .project-title-row h3 {
+    font-size: 32px;
   }
   .project-visual {
     aspect-ratio: 1.5;

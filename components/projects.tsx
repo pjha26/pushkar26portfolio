@@ -15,21 +15,27 @@ export function Projects() {
             </h2>
           </div>
           <p>
-            A few projects I’ve taken from
+            Research, conversation, reservations.
             <br />
-            “what if” to a working product.
+            Different problems. Decisions behind each one.
           </p>
         </div>
         <div className="project-grid">
           {CASES.map((project, index) => (
-            <article className={`project-card project-${project.id}`} key={project.id}>
+            <article
+              className={`project-card project-${project.id}${index === 0 ? ' project-featured' : ''}`}
+              key={project.id}
+            >
               <Link
                 href={`/projects/${project.id}`}
                 className="project-visual"
                 aria-label={`Read the ${project.title} case study`}
               >
                 <div className="project-visual-top">
-                  <span>{project.category}</span>
+                  <span>
+                    {index === 0 ? 'Featured build / ' : ''}
+                    {project.category}
+                  </span>
                   <span className="project-year">
                     2026 <ArrowUpRight size={14} />
                   </span>
@@ -46,7 +52,11 @@ export function Projects() {
                     alt={`${project.title} application preview`}
                     width={1024}
                     height={483}
-                    sizes="(max-width: 700px) 92vw, 44vw"
+                    sizes={
+                      index === 0
+                        ? '(max-width: 700px) 92vw, 60vw'
+                        : '(max-width: 700px) 92vw, (max-width: 1000px) 44vw, 28vw'
+                    }
                     className="project-screenshot"
                   />
                 </div>
@@ -62,6 +72,20 @@ export function Projects() {
                   <span className="project-number">0{index + 1}</span>
                 </div>
                 <p>{project.summary}</p>
+                {index === 0 && (
+                  <div className="project-workflow">
+                    <p className="eyebrow">From request to result</p>
+                    <ol>
+                      {project.flow.map((step) => (
+                        <li key={step}>{step}</li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+                <p className="project-build-note">
+                  <span>Build note</span>
+                  {project.decisions[0].title}
+                </p>
                 <div className="project-tags">
                   {project.stack.slice(0, 4).map((tag) => (
                     <span key={tag}>{tag}</span>
