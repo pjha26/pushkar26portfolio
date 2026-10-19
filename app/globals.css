@@ -282,6 +282,7 @@ h2 em {
   letter-spacing: -0.055em;
 }
 .hero-description {
+  max-width: 48ch;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.85;

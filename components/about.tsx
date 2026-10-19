@@ -27,22 +27,23 @@ export function About() {
         <div className="about-copy">
           <p className="eyebrow section-kicker">02 / The person behind the code</p>
           <h2 id="about-title">
-            Curiosity is
+            Between the UI
             <br />
-            the <em>starting point.</em>
+            and the <em>worker queue.</em>
           </h2>
           <p>
             I’m Pushkar, a Computer Science student at JSS Academy of Technical Education,
             Bengaluru, specializing in AI & Machine Learning.
           </p>
           <p>
-            I like building across the whole stack: the interface someone touches, the API behind
-            it, and the data that makes it useful. Recently, that’s meant voice interviews,
-            multi-agent workflows, and real-time booking systems.
+            My projects take me across the stack. In ArthAI, the interface starts a research job,
+            a background worker coordinates the agents, and the results become a report you can
+            ask questions about.
           </p>
           <p>
-            My favorite part is connecting the pieces—and staying with a problem until the result
-            feels right.
+            That work comes with decisions I’m still exploring: how to keep a long-running job
+            out of a request, when a voice interview should ask a follow-up, and how to keep a
+            booking dashboard current. The case studies share those decisions and their limits.
           </p>
           <a
             className="text-link about-resume"

@@ -23,14 +23,15 @@ export function Hero() {
             </span>
           </p>
           <h1 id="hero-title">
-            Thoughtful code.
+            AI workflows.
             <br />
-            <em>Useful things.</em>
+            Voice interfaces.
+            <br />
+            <em>Real-time apps.</em>
           </h1>
           <p className="hero-description">
-            A full-stack developer with a curiosity for AI.
-            <br className="desktop-break" /> I turn complicated problems into things that
-            <br className="desktop-break" /> feel simple to use.
+            I’m a full-stack developer in Bengaluru. My recent work spans company research,
+            spoken interviews, and booking systems that stay in sync.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#projects">
@@ -54,8 +55,8 @@ export function Hero() {
               ✳
             </span>
             <span>
-              A LITTLE CURIOSITY.
-              <br />A LOT OF BUILDING.
+              COMPANY URL IN.
+              <br />RESEARCH REPORT OUT.
             </span>
           </div>
           <Link
@@ -90,9 +91,9 @@ export function Hero() {
               />
             </svg>
             <span>
-              the good part
+              research runs
               <br />
-              is figuring it out.
+              in the background.
             </span>
           </div>
           <span className="art-index">PERSONAL PORTFOLIO / 2026</span>
