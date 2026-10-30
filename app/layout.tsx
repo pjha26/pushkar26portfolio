@@ -42,12 +42,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={inter.variable} data-theme="dark" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{if(localStorage.getItem('portfolio-color-mode')==='dark')document.documentElement.dataset.theme='dark'}catch{}",
+              "try{document.documentElement.dataset.theme=localStorage.getItem('portfolio-color-mode')==='light'?'light':'dark'}catch{}",
           }}
         />
       </head>

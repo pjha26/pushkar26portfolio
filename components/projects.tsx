@@ -11,7 +11,7 @@ export function Projects() {
           <div>
             <p className="eyebrow section-kicker">01 / Selected work</p>
             <h2 id="work-title">
-              Ideas, made <em>real.</em>
+              Selected <em>work.</em>
             </h2>
           </div>
           <p>

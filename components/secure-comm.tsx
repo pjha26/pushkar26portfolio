@@ -31,9 +31,9 @@ export function SecureComm() {
           </span>
         </div>
         <h2 id="contact-title">
-          Good things start
+          Got something
           <br />
-          with a <em>conversation.</em>
+          <em>in mind?</em>
         </h2>
         <div className="contact-bottom">
           <p>

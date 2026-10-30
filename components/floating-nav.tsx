@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react'
+import { ArrowUpRight, Menu, Moon, Sun, X, Pause, Play } from 'lucide-react'
 
 const items = [
   { id: 'projects', label: 'Work' },
@@ -14,10 +14,18 @@ const items = [
 export function FloatingNav() {
   const [open, setOpen] = useState(false)
   const [dark, setDark] = useState(false)
+  const [motionPaused, setMotionPaused] = useState(false)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   useEffect(() => {
     setDark(document.documentElement.dataset.theme === 'dark')
+    setMotionPaused(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   }, [])
+
+  function toggleMotion() {
+    const next = !motionPaused
+    setMotionPaused(next)
+    document.documentElement.dataset.motion = next ? 'paused' : 'running'
+  }
 
   function toggleTheme() {
     const next = !dark
@@ -62,6 +70,15 @@ export function FloatingNav() {
           ))}
         </nav>
         <div className="header-actions">
+          <button
+            className="icon-button motion-button"
+            onClick={toggleMotion}
+            aria-label={motionPaused ? 'Resume animations' : 'Pause animations'}
+            aria-pressed={motionPaused}
+            title={motionPaused ? 'Resume animations' : 'Pause animations'}
+          >
+            {motionPaused ? <Play size={15} /> : <Pause size={15} />}
+          </button>
           <button
             className="icon-button theme-button"
             onClick={toggleTheme}

@@ -9,100 +9,97 @@ export function Hero() {
   return (
     <section className="hero shell" id="hero-section" aria-labelledby="hero-title">
       <div className="hero-topline">
-        <span className="eyebrow">Bengaluru, India · Building for the web</span>
+        <span className="eyebrow">Independent developer · Bengaluru, IN</span>
         <span className="availability">
           <span /> Open to opportunities
         </span>
       </div>
-      <div className="hero-grid">
+      <div className="hero-stage">
         <div className="hero-copy">
           <p className="intro-line">
-            Hello, I’m Pushkar{' '}
-            <span className="little-wave" aria-hidden="true">
-              ↗
-            </span>
+            <span className="crosshair" aria-hidden="true">
+              ✳
+            </span>{' '}
+            Code meets curiosity.
           </p>
           <h1 id="hero-title">
-            AI workflows.
-            <br />
-            Voice interfaces.
-            <br />
-            <em>Real-time apps.</em>
+            <span className="hero-name">Pushkar</span>
+            <span className="hero-name hero-name-last">
+              Raj
+              <span className="hero-role">
+                Full-stack
+                <br />
+                developer &<br />
+                AI builder.
+              </span>
+            </span>
           </h1>
           <p className="hero-description">
-            I’m a full-stack developer in Bengaluru. My recent work spans company research,
-            spoken interviews, and booking systems that stay in sync.
+            I build AI workflows, voice interfaces, and real-time apps. From the first interaction
+            to the worker running behind it.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#projects">
               Explore my work <ArrowDown size={17} />
             </a>
             <a className="text-link" href={LINKS.email}>
-              Let’s talk <ArrowUpRight size={17} />
+              Let’s talk <ArrowUpRight size={18} />
             </a>
           </div>
-          <div className="hero-person">
-            <Image src="/PRF1.jpeg" width={42} height={42} alt="Pushkar Raj" />
-            <p>
-              Currently studying Computer Science<span>JSSATE, Bengaluru · Class of 2027</span>
-            </p>
-          </div>
         </div>
-        <div className="hero-art" aria-label="A look at my work and approach">
-          <div className="art-grid" aria-hidden="true" />
-          <div className="art-caption">
-            <span className="tiny-star" aria-hidden="true">
-              ✳
-            </span>
-            <span>
-              COMPANY URL IN.
-              <br />RESEARCH REPORT OUT.
+        <div className="hero-art">
+          <div className="orbital-art" aria-hidden="true">
+            <span className="orbital-coordinate orbital-coordinate-top">01 / IDEAS IN ORBIT</span>
+            <svg className="orbital-sculpture" viewBox="0 0 420 420" fill="none">
+              <circle className="orbit-guide" cx="210" cy="210" r="190" strokeDasharray="2 12" />
+              <g className="orbital-rings">
+                {Array.from({ length: 18 }, (_, index) => (
+                  <ellipse
+                    key={index}
+                    cx="210"
+                    cy="210"
+                    rx="152"
+                    ry="68"
+                    transform={`rotate(${index * 10} 210 210)`}
+                  />
+                ))}
+              </g>
+              <circle className="orbit-core" cx="210" cy="210" r="29" />
+              <path className="orbit-cross" d="M199 210h22m-11-11v22" />
+              <circle className="orbit-satellite" cx="210" cy="20" r="6" />
+            </svg>
+            <span className="orbital-coordinate orbital-coordinate-bottom">
+              INTERFACE ↔ INTELLIGENCE ↔ SYSTEM
             </span>
           </div>
           <Link
+            className="hero-feature"
             href="/projects/arth-ai"
-            className="workbench-card"
             aria-label="Explore ArthAI, my multi-agent AI project"
           >
-            <div className="workbench-heading">
-              <span>FROM THE WORKBENCH</span>
-              <ArrowUpRight size={13} />
-            </div>
             <Image
               src="/arthai.png"
-              alt="ArthAI application"
+              alt="ArthAI website preview"
               width={1024}
               height={483}
-              sizes="(max-width: 700px) 78vw, 360px"
+              sizes="88px"
               loading="eager"
             />
-            <div className="workbench-foot">
-              <strong>ArthAI</strong>
-              <span>Multi-agent AI / 2026</span>
-            </div>
-          </Link>
-          <div className="art-scribble">
-            <svg viewBox="0 0 110 70" fill="none" aria-hidden="true">
-              <path
-                d="M9 18C40 0 94 17 78 40C65 59 31 40 49 28C67 16 89 34 90 57M79 50l12 11 8-14"
-                stroke="currentColor"
-                strokeWidth="1.7"
-                strokeLinecap="round"
-              />
-            </svg>
             <span>
-              research runs
-              <br />
-              in the background.
+              <small>On the workbench</small>
+              <strong>ArthAI / Multi-agent research</strong>
             </span>
-          </div>
-          <span className="art-index">PERSONAL PORTFOLIO / 2026</span>
+            <ArrowUpRight size={22} />
+          </Link>
         </div>
       </div>
       <div className="hero-bottom">
-        <a href="#projects" className="scroll-cue">
-          <span className="scroll-line" /> A few things I’ve made <ArrowDown size={14} />
-        </a>
+        <div className="hero-person">
+          <Image src="/PRF1.jpeg" width={42} height={42} alt="Pushkar Raj" />
+          <p>
+            JSSATE, Bengaluru<span>Computer Science · Class of 2027</span>
+          </p>
+        </div>
         <div className="social-inline">
           <a href={LINKS.github} target="_blank" rel="noopener noreferrer">
             <SiGithub size={16} /> GitHub <ArrowUpRight size={12} />
@@ -111,6 +108,9 @@ export function Hero() {
             <FaLinkedin size={16} /> LinkedIn <ArrowUpRight size={12} />
           </a>
         </div>
+        <a href="#projects" className="scroll-cue">
+          Scroll to explore <ArrowDown size={14} />
+        </a>
       </div>
     </section>
   )
