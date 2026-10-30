@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { SiGithub } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import { LINKS } from '@/lib/dossier-data'
+import { EntryMusic } from '@/components/entry-music'
 
 export function Hero() {
   return (
@@ -46,11 +47,14 @@ export function Hero() {
               Let’s talk <ArrowUpRight size={18} />
             </a>
           </div>
+          <EntryMusic />
         </div>
         <div className="hero-art">
-          <div className="orbital-art" aria-hidden="true">
-            <span className="orbital-coordinate orbital-coordinate-top">01 / IDEAS IN ORBIT</span>
-            <svg className="orbital-sculpture" viewBox="0 0 420 420" fill="none">
+          <div className="orbital-art portrait-stage">
+            <span className="orbital-coordinate orbital-coordinate-top" aria-hidden="true">
+              01 / THE PERSON BEHIND THE CODE
+            </span>
+            <svg className="orbital-sculpture" viewBox="0 0 420 420" fill="none" aria-hidden="true">
               <circle className="orbit-guide" cx="210" cy="210" r="190" strokeDasharray="2 12" />
               <g className="orbital-rings">
                 {Array.from({ length: 18 }, (_, index) => (
@@ -64,12 +68,19 @@ export function Hero() {
                   />
                 ))}
               </g>
-              <circle className="orbit-core" cx="210" cy="210" r="29" />
-              <path className="orbit-cross" d="M199 210h22m-11-11v22" />
               <circle className="orbit-satellite" cx="210" cy="20" r="6" />
             </svg>
-            <span className="orbital-coordinate orbital-coordinate-bottom">
-              INTERFACE ↔ INTELLIGENCE ↔ SYSTEM
+            <Image
+              className="hero-portrait"
+              src="/pushkar-3d-portrait.png"
+              alt="3D-style illustrated portrait of Pushkar Raj"
+              width={1223}
+              height={1286}
+              sizes="(max-width: 700px) 80vw, 440px"
+              loading="eager"
+            />
+            <span className="orbital-coordinate orbital-coordinate-bottom" aria-hidden="true">
+              PUSHKAR RAJ / ALWAYS BUILDING
             </span>
           </div>
           <Link

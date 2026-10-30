@@ -5,10 +5,16 @@ import { FloatingNav } from '@/components/floating-nav'
 import { Footer } from '@/components/footer'
 import './globals.css'
 
-const inter = localFont({
-  src: '../public/fonts/inter-latin.woff2',
-  variable: '--font-inter',
-  weight: '100 900',
+const manrope = localFont({
+  src: '../public/fonts/manrope-latin.woff2',
+  variable: '--font-manrope',
+  weight: '200 800',
+  display: 'swap',
+})
+const syne = localFont({
+  src: '../public/fonts/syne-latin.woff2',
+  variable: '--font-syne',
+  weight: '400 800',
   display: 'swap',
 })
 const description =
@@ -42,7 +48,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable} data-theme="dark" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${manrope.variable} ${syne.variable}`}
+      data-theme="dark"
+      suppressHydrationWarning
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{

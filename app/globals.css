@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @theme inline {
-  --font-sans: var(--font-inter), Arial, sans-serif;
+  --font-sans: var(--font-manrope), Arial, sans-serif;
   --color-background: var(--paper);
   --color-foreground: var(--ink);
   --color-card: var(--surface);
@@ -51,7 +51,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-inter), Arial, sans-serif;
+  font-family: var(--font-manrope), Arial, sans-serif;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
@@ -91,6 +91,7 @@ p {
 }
 h1,
 h2 {
+  font-family: var(--font-syne), Arial, sans-serif;
   font-weight: 650;
   letter-spacing: -0.055em;
   line-height: 1.05;
@@ -296,9 +297,9 @@ h2 em {
   font-size: 30px;
 }
 .hero h1 {
-  font-size: clamp(72px, 10vw, 148px);
+  font-size: clamp(40px, 6vw, 88px);
   line-height: 0.89;
-  font-weight: 850;
+  font-weight: 800;
   letter-spacing: -0.085em;
   text-transform: uppercase;
 }
@@ -374,6 +375,116 @@ h2 em {
 }
 .hero-art {
   min-width: 0;
+}
+.portrait-stage {
+  perspective: 900px;
+  isolation: isolate;
+}
+.hero-portrait {
+  position: absolute;
+  z-index: 1;
+  width: 82%;
+  height: 90%;
+  inset: 4% 9% 6%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 24px #00000028);
+  transform-origin: 50% 75%;
+  animation: portrait-float 7s ease-in-out infinite;
+}
+.portrait-stage .orbital-sculpture {
+  opacity: 0.45;
+}
+.portrait-stage .orbital-coordinate {
+  z-index: 2;
+}
+.entry-music {
+  margin-top: 26px;
+}
+.music-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  text-align: left;
+}
+.music-disc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--signal);
+}
+.music-trigger small,
+.music-player-heading small {
+  display: block;
+  color: var(--muted);
+  font:
+    8px/1.6 ui-monospace,
+    Consolas,
+    monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.music-trigger strong,
+.music-player-heading strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+}
+.music-trigger strong span {
+  color: var(--muted);
+  font-weight: 400;
+}
+.music-trigger > svg {
+  margin-left: 10px;
+  color: var(--accent);
+}
+.music-player {
+  position: fixed;
+  z-index: 60;
+  right: 20px;
+  bottom: 20px;
+  width: min(360px, calc(100% - 40px));
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--signal);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 20px 80px #00000055;
+}
+.music-player-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 14px;
+}
+.music-player iframe {
+  display: block;
+  width: 100%;
+  height: 152px;
+  border: 0;
+  border-radius: 5px;
+}
+.music-player > p {
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 12px;
+}
+.music-player > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+  font-size: 11px;
+  margin-top: 8px;
 }
 .orbital-art {
   position: relative;
@@ -650,6 +761,7 @@ h2 em {
   gap: 10px;
 }
 .project-title-row h3 {
+  font-family: var(--font-syne), Arial, sans-serif;
   font-size: 25px;
   font-weight: 650;
   letter-spacing: -0.05em;
@@ -1190,6 +1302,15 @@ h2 em {
     transform: rotate(360deg);
   }
 }
+@keyframes portrait-float {
+  0%,
+  100% {
+    transform: translateY(0) rotateY(-5deg) rotateZ(-1deg);
+  }
+  50% {
+    transform: translateY(-12px) rotateY(5deg) rotateZ(1deg);
+  }
+}
 @keyframes arrive {
   from {
     opacity: 0;
@@ -1242,7 +1363,7 @@ h2 em {
     gap: 15px;
   }
   .hero h1 {
-    font-size: 10vw;
+    font-size: 6vw;
   }
   .hero-role {
     font-size: 8px;
@@ -1301,6 +1422,12 @@ h2 em {
   }
 }
 @media (max-width: 700px) {
+  .music-player {
+    right: 12px;
+    bottom: 12px;
+    width: calc(100% - 24px);
+    max-width: 360px;
+  }
   html {
     scroll-padding-top: 90px;
   }
@@ -1380,7 +1507,7 @@ h2 em {
     margin-bottom: 20px;
   }
   .hero h1 {
-    font-size: clamp(62px, 15.2vw, 105px);
+    font-size: clamp(32px, 10.5vw, 68px);
   }
   .hero-name-last {
     gap: 25px;
@@ -1625,7 +1752,7 @@ h2 em {
     font-size: 9px;
   }
   .hero h1 {
-    font-size: 15vw;
+    font-size: 10.5vw;
   }
   .hero-role {
     font-size: 7px;
