@@ -14,13 +14,13 @@ Built with Next.js 16, React, TypeScript, and CSS. Most content renders on the s
 
 The existing `framer-motion/dom` entry point supplies animation controls, shared scroll scheduling, and IntersectionObserver-based reveals. There are no new dependencies, per-scroll React state updates, scroll interception, or pinned sections. Parallax is disabled at 850px and below; mobile reveal distances and mask depth are smaller. Hero idle animations pause offscreen. Observers, media-query listeners, scroll subscriptions, and animation controls are cleaned up on route changes.
 
-The global pause control cancels motion and restores original inline styles. Reduced-motion preferences use the same static fallback, including changes made while the page is open. Keyboard focus completes active reveals. All content is visible in the server HTML and remains usable without the motion controller. The existing soundtrack is unchanged and is independent of visual timing.
+The global pause control cancels motion and restores original inline styles. Reduced-motion preferences use the same static fallback, including changes made while the page is open. Keyboard focus completes active reveals. All content is visible in the server HTML and remains usable without the motion controller.
 
-Verification includes browser checks for pause/reset, keyboard navigation, mobile overflow, desktop/tablet layouts, case-study navigation and return, and delayed soundtrack loading. Full Safari/Firefox and assistive-technology audits remain separate checks.
+Verification includes browser checks for pause/reset, keyboard navigation, mobile overflow, desktop/tablet layouts, case-study navigation and return, and visitor-initiated sound with scene pause/resume. `npm run test:audio` (Node 22.6+) checks audio scheduling against a suspended clock and disposal of all audio nodes. Full Safari/Firefox and assistive-technology audits remain separate checks.
 
 The homepage portrait is a generated 3D-style illustration based on the existing profile photo, with CSS floating and perspective motion. Its source prompt and asset details are in [docs/portrait-artwork.md](docs/portrait-artwork.md).
 
-The entry soundtrack control loads Spotify’s official “MY EYES” preview only after the visitor opens it. Native player controls handle playback; closing the panel removes the iframe. Full playback is linked through Spotify and may require an account. The recording is not bundled in the repository.
+The compact homepage sound control starts an original ambient progression generated with the Web Audio API after an explicit visitor click. Soft pads, overlapping chords, and a filtered echo accompany the scene without loading recordings or external players. The waveform reflects actual playback. Pausing animations or hiding the tab suspends the audio clock; resuming continues it. Disabling sound or leaving the homepage releases the audio graph and scheduler. No playback preference is persisted, so a new visit starts silent.
 
 Design references: [Dribbble portfolio animation](https://dribbble.com/search/portfolio-animation), [animated portfolios on GitHub](https://github.com/topics/animated-portfolio), and [Awwwards animation](https://www.awwwards.com/websites/animation/). The layout, orbital SVG, and styles are implemented locally; no reference-site code or artwork is bundled.
 

@@ -35,8 +35,9 @@ assert.ok(
 )
 assert.ok(home.includes('href="#main-content"'), 'A keyboard skip link must be present')
 assert.ok(home.includes('pushkar-3d-portrait.png'), 'The homepage must show the custom portrait')
-assert.ok(home.includes('Play entry music preview'), 'The soundtrack must be visitor initiated')
-assert.ok(!/<iframe[\s>]/.test(home), 'External music must not load before the visitor opens it')
+assert.ok(home.includes('Enable ambient soundtrack'), 'The soundtrack must be visitor initiated')
+assert.ok(!/<iframe[\s>]/.test(home), 'The homepage must not contain an embedded music player')
+assert.ok(!home.includes('open.spotify.com/embed'), 'The old Spotify popup must be removed')
 
 const titles = new Set()
 for (const id of projects) {

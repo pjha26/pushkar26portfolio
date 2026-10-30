@@ -5,6 +5,7 @@ import { About } from '@/components/about'
 import { Skills } from '@/components/skills'
 import { SecureComm } from '@/components/secure-comm'
 import { CinematicScroll } from '@/components/cinematic-scroll'
+import { SceneSound } from '@/components/scene-sound'
 
 export const metadata: Metadata = { alternates: { canonical: '/' } }
 
@@ -16,6 +17,7 @@ export default function Page() {
       <About />
       <Skills />
       <SecureComm />
+      <SceneSound />
     </CinematicScroll>
   )
 }

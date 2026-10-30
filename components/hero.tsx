@@ -4,7 +4,6 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { SiGithub } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import { LINKS } from '@/lib/dossier-data'
-import { EntryMusic } from '@/components/entry-music'
 
 export function Hero() {
   return (
@@ -49,7 +48,6 @@ export function Hero() {
               Let’s talk <ArrowUpRight size={18} />
             </a>
           </div>
-          <EntryMusic />
         </div>
         <div className="hero-art">
           <div className="orbital-art portrait-stage">
