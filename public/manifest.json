@@ -1,11 +1,11 @@
 {
   "name": "Pushkar Raj — Software developer",
   "short_name": "Pushkar Raj",
-  "description": "Thoughtful code. Useful things. Full-stack development and applied AI.",
+  "description": "Pushkar Raj. Full-stack development, AI workflows, and real-time systems.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f5f4ef",
-  "theme_color": "#f5f4ef",
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
   "icons": [
     {
       "src": "/icon.svg",

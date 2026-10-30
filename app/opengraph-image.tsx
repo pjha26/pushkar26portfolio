@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'Pushkar Raj — Thoughtful code. Useful things.'
+export const alt = 'Pushkar Raj — Full-stack developer & AI builder'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -13,35 +13,36 @@ export default function OpenGraphImage() {
         justifyContent: 'space-between',
         width: '100%',
         height: '100%',
-        background: '#f5f4ef',
-        color: '#252b25',
+        background: '#08090c',
+        color: '#f2f3f8',
         padding: '60px 75px',
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 21 }}>
         <span>Pushkar Raj</span>
-        <span style={{ color: '#48583d' }}>Software developer / Bengaluru</span>
+        <span style={{ color: '#ff4f97' }}>Full-stack developer / Bengaluru</span>
       </div>
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
-          fontSize: 88,
-          lineHeight: 1.12,
-          letterSpacing: '-5px',
+          fontSize: 130,
+          fontWeight: 800,
+          lineHeight: 0.95,
+          letterSpacing: '-7px',
         }}
       >
-        <span>Thoughtful code.</span>
-        <span style={{ color: '#48583d', fontStyle: 'italic' }}>Useful things.</span>
+        <span>PUSHKAR</span>
+        <span style={{ color: '#28b9ec' }}>RAJ.</span>
       </div>
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          borderTop: '1px solid #dedfd5',
+          borderTop: '1px solid #282d3a',
           paddingTop: 25,
           fontSize: 19,
-          color: '#686d62',
+          color: '#a4aabb',
         }}
       >
         <span>Full-stack development & applied AI</span>

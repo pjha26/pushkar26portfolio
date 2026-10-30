@@ -1,8 +1,10 @@
 # Pushkar Raj — Portfolio
 
-A personal portfolio with a paper-and-olive palette, an optional dark theme, and project case studies.
+A personal portfolio with animated orbital artwork, oversized typography, and project case studies. Dark mode combines jet black, cerulean blue, and neon rose; light mode uses ice silver, deep aubergine, and marigold. Dark mode is the default, with the visitor’s selected theme remembered locally.
 
-Built with Next.js 16, React, TypeScript, and CSS. Most of the interface renders on the server; the navigation, theme switch, and email-copy button are the small interactive parts. Inter is self-hosted with its license in `public/fonts/`.
+Built with Next.js 16, React, TypeScript, and CSS. Most of the interface renders on the server; navigation, theme and animation controls, and the email-copy button are the small interactive parts. Inter is self-hosted with its license in `public/fonts/`. CSS drives the orbital animation and progressive scroll reveals. The pause control stops animations, and reduced-motion preferences disable them.
+
+Design references: [Dribbble portfolio animation](https://dribbble.com/search/portfolio-animation), [animated portfolios on GitHub](https://github.com/topics/animated-portfolio), and [Awwwards animation](https://www.awwwards.com/websites/animation/). The layout, orbital SVG, and styles are implemented locally; no reference-site code or artwork is bundled.
 
 ## Development
 
@@ -19,6 +21,7 @@ Open http://localhost:3000.
 pnpm build
 pnpm start
 pnpm test:smoke
+pnpm test:contrast
 ```
 
 The build uses Next.js’s supported Webpack option because the local Windows Turbopack CSS worker fails in this environment. The development server still uses Turbopack.
@@ -29,7 +32,7 @@ Run the smoke checks against another running origin with:
 node scripts/smoke-check.mjs http://127.0.0.1:3000
 ```
 
-The checks cover the homepage, all four case studies, canonical URLs, screenshots, image optimization, résumé, social preview, sitemap, and a missing-project 404.
+The smoke checks cover the homepage, all four case studies, canonical URLs, screenshot assets, image optimization, résumé, social preview, sitemap, and a missing-project 404. The contrast check validates WCAG AA text contrast for both palettes.
 
 The existing lint command needs ESLint installed and configured; it is not a working check in this repository yet.
 
