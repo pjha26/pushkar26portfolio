@@ -2,7 +2,21 @@
 
 A personal portfolio with animated orbital artwork, oversized typography, and project case studies. Dark mode combines jet black, cerulean blue, and neon rose; light mode uses ice silver, deep aubergine, and marigold. Dark mode is the default, with the visitor’s selected theme remembered locally.
 
-Built with Next.js 16, React, TypeScript, and CSS. Most of the interface renders on the server; navigation, theme and animation controls, the soundtrack player, and the email-copy button are the small interactive parts. Syne headings and Manrope body text are self-hosted with their licenses in `public/fonts/`. CSS drives the portrait, orbital animation, and progressive scroll reveals. The pause control stops animations, and reduced-motion preferences disable them.
+Built with Next.js 16, React, TypeScript, and CSS. Most content renders on the server. A small Framer Motion DOM controller enhances the homepage, alongside navigation, theme and animation controls, the soundtrack player, and the email-copy button. Syne headings and Manrope body text are self-hosted with their licenses in `public/fonts/`. CSS retains the portrait and orbital idle motion; Framer Motion handles the cinematic entrances, scroll progression, and project reveals.
+
+## Cinematic scrolling
+
+`components/cinematic-scroll.tsx` coordinates three phases without replacing the existing sections:
+
+- Introduction: staggered hero words, soft entrances, static grain, and bounded desktop parallax.
+- Discovery: grouped heading and content reveals, a reading-progress line, and calmer transitions through About, Toolkit, and Contact.
+- Work transition: a brief accent-light sweep, an extending seam, masked project previews, and staggered project titles. The lighting fades as the showcase settles.
+
+The existing `framer-motion/dom` entry point supplies animation controls, shared scroll scheduling, and IntersectionObserver-based reveals. There are no new dependencies, per-scroll React state updates, scroll interception, or pinned sections. Parallax is disabled at 850px and below; mobile reveal distances and mask depth are smaller. Hero idle animations pause offscreen. Observers, media-query listeners, scroll subscriptions, and animation controls are cleaned up on route changes.
+
+The global pause control cancels motion and restores original inline styles. Reduced-motion preferences use the same static fallback, including changes made while the page is open. Keyboard focus completes active reveals. All content is visible in the server HTML and remains usable without the motion controller. The existing soundtrack is unchanged and is independent of visual timing.
+
+Verification includes browser checks for pause/reset, keyboard navigation, mobile overflow, desktop/tablet layouts, case-study navigation and return, and delayed soundtrack loading. Full Safari/Firefox and assistive-technology audits remain separate checks.
 
 The homepage portrait is a generated 3D-style illustration based on the existing profile photo, with CSS floating and perspective motion. Its source prompt and asset details are in [docs/portrait-artwork.md](docs/portrait-artwork.md).
 

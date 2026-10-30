@@ -12,6 +12,16 @@ async function get(path) {
 }
 
 const home = await (await get('/')).text()
+assert.ok(
+  home.includes('data-scroll-behavior="smooth"'),
+  'Next.js must know about native smooth scrolling'
+)
+const mainTag = home.match(/<main\b[^>]*>/)?.[0]
+assert.ok(mainTag?.includes('cinematic-experience'), 'The homepage must retain its cinematic shell')
+assert.ok(
+  !/\bhidden\b|opacity:\s*0(?:;|["\s])/.test(mainTag),
+  'Server-rendered content must be visible before JavaScript'
+)
 assert.equal((home.match(/<h1[\s>]/g) || []).length, 1, 'Home must have one primary heading')
 assert.ok(
   home.includes('mailto:pjha2608@gmail.com'),
