@@ -2,7 +2,11 @@
 
 A personal portfolio with animated orbital artwork, oversized typography, and project case studies. Dark mode combines jet black, cerulean blue, and neon rose; light mode uses ice silver, deep aubergine, and marigold. Dark mode is the default, with the visitor’s selected theme remembered locally.
 
-Built with Next.js 16, React, TypeScript, and CSS. Most of the interface renders on the server; navigation, theme and animation controls, and the email-copy button are the small interactive parts. Inter is self-hosted with its license in `public/fonts/`. CSS drives the orbital animation and progressive scroll reveals. The pause control stops animations, and reduced-motion preferences disable them.
+Built with Next.js 16, React, TypeScript, and CSS. Most of the interface renders on the server; navigation, theme and animation controls, the soundtrack player, and the email-copy button are the small interactive parts. Syne headings and Manrope body text are self-hosted with their licenses in `public/fonts/`. CSS drives the portrait, orbital animation, and progressive scroll reveals. The pause control stops animations, and reduced-motion preferences disable them.
+
+The homepage portrait is a generated 3D-style illustration based on the existing profile photo, with CSS floating and perspective motion. Its source prompt and asset details are in [docs/portrait-artwork.md](docs/portrait-artwork.md).
+
+The entry soundtrack control loads Spotify’s official “MY EYES” preview only after the visitor opens it. Native player controls handle playback; closing the panel removes the iframe. Full playback is linked through Spotify and may require an account. The recording is not bundled in the repository.
 
 Design references: [Dribbble portfolio animation](https://dribbble.com/search/portfolio-animation), [animated portfolios on GitHub](https://github.com/topics/animated-portfolio), and [Awwwards animation](https://www.awwwards.com/websites/animation/). The layout, orbital SVG, and styles are implemented locally; no reference-site code or artwork is bundled.
 

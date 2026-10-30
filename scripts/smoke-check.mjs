@@ -24,6 +24,9 @@ assert.ok(
   'The LeetCode profile must be correct'
 )
 assert.ok(home.includes('href="#main-content"'), 'A keyboard skip link must be present')
+assert.ok(home.includes('pushkar-3d-portrait.png'), 'The homepage must show the custom portrait')
+assert.ok(home.includes('Play entry music preview'), 'The soundtrack must be visitor initiated')
+assert.ok(!/<iframe[\s>]/.test(home), 'External music must not load before the visitor opens it')
 
 const titles = new Set()
 for (const id of projects) {
@@ -51,7 +54,9 @@ for (const path of [
   '/resume.pdf',
   '/icon.svg',
   '/manifest.json',
-  '/fonts/inter-latin.woff2',
+  '/fonts/syne-latin.woff2',
+  '/fonts/manrope-latin.woff2',
+  '/pushkar-3d-portrait.png',
   '/arthai.png',
   '/interviewai.png',
   '/ai-concierge.png',
