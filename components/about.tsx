@@ -6,7 +6,7 @@ export function About() {
   return (
     <section className="about-section section-space shell" id="about" aria-labelledby="about-title">
       <div className="about-grid">
-        <div className="about-portrait">
+        <div className="about-portrait" data-reveal>
           <div className="portrait-frame">
             <Image
               src="/PRF1.jpeg"
@@ -24,7 +24,7 @@ export function About() {
             <span>Bengaluru, IN ↗</span>
           </div>
         </div>
-        <div className="about-copy">
+        <div className="about-copy" data-reveal>
           <p className="eyebrow section-kicker">02 / The person behind the code</p>
           <h2 id="about-title">
             Between the UI
@@ -36,14 +36,14 @@ export function About() {
             Bengaluru, specializing in AI & Machine Learning.
           </p>
           <p>
-            My projects take me across the stack. In ArthAI, the interface starts a research job,
-            a background worker coordinates the agents, and the results become a report you can
-            ask questions about.
+            My projects take me across the stack. In ArthAI, the interface starts a research job, a
+            background worker coordinates the agents, and the results become a report you can ask
+            questions about.
           </p>
           <p>
-            That work comes with decisions I’m still exploring: how to keep a long-running job
-            out of a request, when a voice interview should ask a follow-up, and how to keep a
-            booking dashboard current. The case studies share those decisions and their limits.
+            That work comes with decisions I’m still exploring: how to keep a long-running job out
+            of a request, when a voice interview should ask a follow-up, and how to keep a booking
+            dashboard current. The case studies share those decisions and their limits.
           </p>
           <a
             className="text-link about-resume"
@@ -55,7 +55,7 @@ export function About() {
           </a>
         </div>
       </div>
-      <div className="background-notes" id="experience">
+      <div className="background-notes" id="experience" data-reveal>
         <div>
           <span className="eyebrow">The foundation</span>
           <h3>Learning by doing.</h3>

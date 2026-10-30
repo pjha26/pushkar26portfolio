@@ -17,15 +17,17 @@ export function Hero() {
       </div>
       <div className="hero-stage">
         <div className="hero-copy">
-          <p className="intro-line">
+          <p className="intro-line" data-hero-reveal>
             <span className="crosshair" aria-hidden="true">
               ✳
             </span>{' '}
             Code meets curiosity.
           </p>
           <h1 id="hero-title">
-            <span className="hero-name">Pushkar</span>
-            <span className="hero-name hero-name-last">
+            <span className="hero-name" data-hero-reveal>
+              Pushkar
+            </span>
+            <span className="hero-name hero-name-last" data-hero-reveal>
               Raj
               <span className="hero-role">
                 Full-stack
@@ -35,11 +37,11 @@ export function Hero() {
               </span>
             </span>
           </h1>
-          <p className="hero-description">
+          <p className="hero-description" data-hero-reveal>
             I build AI workflows, voice interfaces, and real-time apps. From the first interaction
             to the worker running behind it.
           </p>
-          <div className="hero-actions">
+          <div className="hero-actions" data-hero-reveal>
             <a className="button button-primary" href="#projects">
               Explore my work <ArrowDown size={17} />
             </a>

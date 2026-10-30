@@ -23,7 +23,7 @@ export function SecureComm() {
       id="contact"
       aria-labelledby="contact-title"
     >
-      <div className="contact-panel">
+      <div className="contact-panel" data-reveal>
         <div className="contact-topline">
           <span className="eyebrow">04 / Let’s make something worthwhile</span>
           <span className="availability">

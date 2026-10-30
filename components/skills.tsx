@@ -25,7 +25,7 @@ export function Skills() {
   return (
     <section className="toolkit-section section-space" id="skills" aria-labelledby="toolkit-title">
       <div className="shell">
-        <div className="section-heading">
+        <div className="section-heading" data-reveal>
           <div>
             <p className="eyebrow section-kicker">03 / Tools of the trade</p>
             <h2 id="toolkit-title">
@@ -38,7 +38,7 @@ export function Skills() {
             choose what helps the idea work.
           </p>
         </div>
-        <div className="toolkit-grid">
+        <div className="toolkit-grid" data-reveal>
           {toolkit.map((group, index) => (
             <div className="toolkit-group" key={group.label}>
               <span className="toolkit-index">0{index + 1}</span>

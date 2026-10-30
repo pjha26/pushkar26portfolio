@@ -6,8 +6,12 @@ import { CASES } from '@/lib/dossier-data'
 export function Projects() {
   return (
     <section className="work-section section-space" id="projects" aria-labelledby="work-title">
+      <div className="work-transition" aria-hidden="true">
+        <div className="work-transition-light" />
+        <div className="work-transition-line" />
+      </div>
       <div className="shell">
-        <div className="section-heading">
+        <div className="section-heading" data-reveal>
           <div>
             <p className="eyebrow section-kicker">01 / Selected work</p>
             <h2 id="work-title">
@@ -40,25 +44,27 @@ export function Projects() {
                     2026 <ArrowUpRight size={14} />
                   </span>
                 </div>
-                <div className="browser-frame">
-                  <div className="browser-chrome" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                    <span>{project.title.toLowerCase()}</span>
+                <div className="project-reveal">
+                  <div className="browser-frame">
+                    <div className="browser-chrome" aria-hidden="true">
+                      <i />
+                      <i />
+                      <i />
+                      <span>{project.title.toLowerCase()}</span>
+                    </div>
+                    <Image
+                      src={project.image!}
+                      alt={`${project.title} application preview`}
+                      width={1024}
+                      height={483}
+                      sizes={
+                        index === 0
+                          ? '(max-width: 700px) 92vw, 60vw'
+                          : '(max-width: 700px) 92vw, (max-width: 1000px) 44vw, 28vw'
+                      }
+                      className="project-screenshot"
+                    />
                   </div>
-                  <Image
-                    src={project.image!}
-                    alt={`${project.title} application preview`}
-                    width={1024}
-                    height={483}
-                    sizes={
-                      index === 0
-                        ? '(max-width: 700px) 92vw, 60vw'
-                        : '(max-width: 700px) 92vw, (max-width: 1000px) 44vw, 28vw'
-                    }
-                    className="project-screenshot"
-                  />
                 </div>
                 <span className="project-open">
                   <ArrowUpRight size={20} />
