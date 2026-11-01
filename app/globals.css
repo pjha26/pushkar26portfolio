@@ -2000,3 +2000,139 @@ body {
     display: none;
   }
 }
+
+/* The portrait anchors an open, three-column composition. */
+.hero-centered {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: clamp(16px, 3vw, 56px);
+  row-gap: 28px;
+  align-content: center;
+}
+.hero-centered h1 {
+  display: contents;
+}
+.hero-centered .hero-name {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  font-family: var(--font-syne), sans-serif;
+  font-size: clamp(32px, 3.65vw, 76px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.075em;
+  text-transform: uppercase;
+}
+.hero-centered .hero-name-last {
+  grid-column: 3;
+  display: block;
+  margin: 0;
+  font-size: clamp(64px, 7vw, 134px);
+}
+.hero-centered .hero-copy {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+}
+.hero-centered .intro-line {
+  margin-bottom: 16px;
+}
+.hero-centered .hero-description {
+  margin-top: 0;
+  max-width: 29ch;
+}
+.hero-centered .hero-aside {
+  grid-column: 3;
+  grid-row: 2;
+  align-self: start;
+}
+.hero-centered .hero-role {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.hero-centered .hero-actions {
+  flex-direction: column;
+  align-items: start;
+  gap: 20px;
+  margin-top: 26px;
+}
+.hero-centered .hero-feature {
+  margin-top: 32px;
+  padding-block: 14px;
+  gap: 12px;
+}
+.hero-centered .hero-feature strong {
+  font-size: 11px;
+  line-height: 1.6;
+}
+.hero-centered .hero-art {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  width: 100%;
+  align-self: center;
+}
+.hero-centered .hero-art .portrait-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(300px, 52svh, 560px);
+  padding: 0;
+}
+.hero-centered .portrait-stage::before {
+  content: '';
+  position: absolute;
+  inset: 4% 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  transform: rotate(-12deg);
+}
+.hero-centered .hero-portrait {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+@media (max-width: 900px) and (min-width: 701px) {
+  .hero-centered { column-gap: 16px; }
+  .hero-centered .hero-name:not(.hero-name-last) { font-size: 3.2vw; }
+  .hero-centered .hero-role { font-size: 10px; padding-left: 12px; }
+  .hero-centered .button { padding-inline: 15px; gap: 10px; }
+  .hero-centered .intro-line { font-size: 9px; gap: 6px; }
+}
+@media (max-width: 700px) {
+  .home-page .hero-centered {
+    grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    gap: 14px;
+  }
+  .hero-centered .hero-name,
+  .hero-centered .hero-name-last {
+    grid-row: 1;
+    font-size: clamp(23px, 7vw, 46px);
+  }
+  .hero-centered .hero-name-last { grid-column: 2; justify-self: end; }
+  .hero-centered .hero-art {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .home-page .hero-centered .hero-art .portrait-stage {
+    width: 210px;
+    height: 210px;
+    margin-inline: auto;
+  }
+  .hero-centered .hero-copy {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+  .hero-centered .intro-line { display: none; }
+  .home-page .hero-centered .hero-description { margin: 0; max-width: 45ch; }
+  .hero-centered .hero-aside { grid-column: 1 / -1; grid-row: 4; }
+  .hero-centered .hero-role { display: none; }
+  .home-page .hero-centered .hero-actions {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0;
+  }
+  .home-page .hero-centered .hero-sound { margin-top: 8px; }
+}
