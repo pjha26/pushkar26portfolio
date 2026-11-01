@@ -1,11 +1,16 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
 import { ArrowUp, ArrowUpRight } from 'lucide-react'
 import { LINKS } from '@/lib/dossier-data'
 
 export function Footer() {
+  const pathname = usePathname()
+  if (!pathname.startsWith('/projects/')) return null
   return (
     <footer className="site-footer shell">
       <div className="footer-top">
-        <a className="footer-signature" href="/#hero-section">
+        <a className="footer-signature" href="/">
           Pushkar Raj<span>A little thought in every line.</span>
         </a>
         <div className="footer-links">

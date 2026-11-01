@@ -8,7 +8,7 @@
     "start": "next start",
     "test:smoke": "node scripts/smoke-check.mjs",
     "test:contrast": "node scripts/check-theme-contrast.mjs",
-    "test:audio": "node --experimental-strip-types scripts/check-ambient-audio.mjs",
+    "test:audio": "node scripts/check-soundtrack.mjs",
     "lint": "eslint ."
   },
   "dependencies": {

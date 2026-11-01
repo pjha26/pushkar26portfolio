@@ -3,6 +3,8 @@ import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import { FloatingNav } from '@/components/floating-nav'
 import { Footer } from '@/components/footer'
+import { SoundProvider } from '@/components/scene-sound'
+import { SwipeNavigation } from '@/components/swipe-navigation'
 import './globals.css'
 
 const manrope = localFont({
@@ -67,9 +69,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
-        <FloatingNav />
-        {children}
-        <Footer />
+        <SoundProvider>
+          <FloatingNav />
+          <SwipeNavigation />
+          {children}
+          <Footer />
+        </SoundProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

@@ -1,70 +1,50 @@
 # Pushkar Raj — Portfolio
 
-A personal portfolio with animated orbital artwork, oversized typography, and project case studies. Dark mode combines jet black, cerulean blue, and neon rose; light mode uses ice silver, deep aubergine, and marigold. Dark mode is the default, with the visitor’s selected theme remembered locally.
+A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. Dark mode uses jet black, cerulean blue, and neon rose; light mode uses ice silver, deep aubergine, and marigold. Syne and Manrope are self-hosted with their licenses in `public/fonts/`.
 
-Built with Next.js 16, React, TypeScript, and CSS. Most content renders on the server. A small Framer Motion DOM controller enhances the homepage, alongside navigation, theme and animation controls, the soundtrack player, and the email-copy button. Syne headings and Manrope body text are self-hosted with their licenses in `public/fonts/`. CSS retains the portrait and orbital idle motion; Framer Motion handles the cinematic entrances, scroll progression, and project reveals.
+## Pages and movement
 
-## Cinematic scrolling
+| Page | Route |
+| --- | --- |
+| Home | `/` |
+| Selected work | `/work` |
+| About | `/about` |
+| Toolkit | `/toolkit` |
+| Contact | `/contact` |
 
-`components/cinematic-scroll.tsx` coordinates three phases without replacing the existing sections:
+Home ends after the intro shown in the design reference. It does not contain the other sections or an offscreen spacer. Work is a compact directory; the four detailed case studies keep their direct `/projects/[id]` URLs.
 
-- Introduction: a complete viewport-height intro, staggered words, and a scroll-driven swipe into the next solid surface. Short or narrow screens allow the intro to grow so every control and the portrait remain readable before the swipe begins.
-- Discovery: grouped heading and content reveals, a reading-progress line, and calmer transitions through About, Toolkit, and Contact.
-- Work transition: the solid swipe surface leads into four full-width project chapters. A sticky chapter navigator follows the project crossing the reading area. Browser previews unfold with scroll position, including reverse scrolling; desktop previews remain alongside the project details while reading. Chapter links jump within the page, and case-study links navigate only on a visitor click.
+At the end of a page, a deliberate wheel movement or upward touch swipe opens the next route. Swiping down at the start returns to the previous route. PageDown/PageUp and visible Previous/Next links provide keyboard and click alternatives. Longer pages scroll normally until their boundary. Controls, horizontal gestures, and pinch zoom are excluded from gesture navigation. A cooldown prevents momentum from skipping several pages.
 
-The existing `framer-motion/dom` entry point supplies animation controls, shared scroll scheduling, and IntersectionObserver-based reveals. There are no new dependencies or scroll interception. A ResizeObserver measures the intro and starts the swipe only after its bottom has reached the viewport. The following surface rises over the held intro; scrolling back reverses the transition. Pausing or reduced motion restores normal document flow without a spacer. Sticky project previews are disabled at 850px and below; mobile reveal distances and mask depth are smaller. Hero idle animations pause offscreen. Observers, media-query listeners, scroll subscriptions, and animation controls are cleaned up on route changes.
+The installed Next.js 16 App Router supports React ViewTransition. A new solid page slides over the outgoing page while the header remains fixed. Reduced motion and the animation pause control disable the transition animation. Browsers without View Transitions still navigate normally. Browser history and direct links remain available. Old section bookmarks redirect to the corresponding page.
 
-The global pause control cancels motion and restores original inline styles. Reduced-motion preferences use the same static fallback, including changes made while the page is open. Keyboard focus completes active reveals. All content is visible in the server HTML and remains usable without the motion controller.
+## Soundtrack
 
-Verification includes browser checks for pause/reset, keyboard navigation, mobile overflow, desktop/tablet layouts, case-study navigation and return, and visitor-initiated sound with scene pause/resume. `npm run test:audio` (Node 22.6+) checks audio scheduling against a suspended clock and disposal of all audio nodes. Full Safari/Firefox and assistive-technology audits remain separate checks.
+**Quiet Circuit** is an original 32-second instrumental synthesized specifically for this portfolio, with no recordings or third-party samples. The previous low-frequency Web Audio pads have been replaced by a local PCM WAV with audible midrange notes and an immediate, short attack.
 
-The homepage portrait is a generated 3D-style illustration based on the existing profile photo, with CSS floating and perspective motion. Its source prompt and asset details are in [docs/portrait-artwork.md](docs/portrait-artwork.md).
+Audio loads only after a visitor clicks Enable sound or the header sound icon. One native audio element in the root layout persists between routes. The hero offers a volume slider, initially 65%. The header icon can pause playback on every page. Sound is independent of animation pause, pauses while the tab is hidden, and resumes only if the visitor had enabled it. A new visit starts silent. No Spotify embed or commercial song is included.
 
-The hero's “Enable sound” invitation and a bottom-right control (shown after the first 80px of scrolling) share one original ambient progression generated with the Web Audio API after an explicit visitor click. Soft pads, overlapping chords, and a filtered echo accompany the scene without loading recordings or external players. The waveform reflects actual playback. The floating control renders outside the animated page to stay anchored to the viewport. Pausing animations or hiding the tab suspends the audio clock; resuming continues it. Disabling sound or leaving the homepage releases the audio graph and scheduler. No playback preference is persisted, so a new visit starts silent.
-
-Design references: [Dribbble portfolio animation](https://dribbble.com/search/portfolio-animation), [animated portfolios on GitHub](https://github.com/topics/animated-portfolio), and [Awwwards animation](https://www.awwwards.com/websites/animation/). The layout, orbital SVG, and styles are implemented locally; no reference-site code or artwork is bundled.
+The asset is `public/audio/quiet-circuit.wav`. Regenerate it with `node scripts/generate-soundtrack.mjs`. The file is about 1.35 MB and is not loaded before interaction. `npm run test:audio` checks its PCM format, duration, audible first second, average level, and clipping headroom.
 
 ## Development
 
 ```sh
 pnpm install
-pnpm dev
-```
-
-Open http://localhost:3000.
-
-## Production and checks
-
-```sh
+pnpm dev --webpack
 pnpm build
 pnpm start
-pnpm test:smoke
-pnpm test:contrast
 ```
 
-The build uses Next.js’s supported Webpack option because the local Windows Turbopack CSS worker fails in this environment. The development server still uses Turbopack.
-
-Run the smoke checks against another running origin with:
+The production script uses webpack because the Windows environment previously had unstable Turbopack CSS workers.
 
 ```sh
+npm run test:audio
+npm run test:contrast
 node scripts/smoke-check.mjs http://127.0.0.1:3000
 ```
 
-The smoke checks cover the homepage, all four case studies, canonical URLs, screenshot assets, image optimization, résumé, social preview, sitemap, and a missing-project 404. The contrast check validates WCAG AA text contrast for both palettes.
+Smoke checks cover the five distinct pages, case studies, contact/profile links, local audio delivery, optimized images, assets, social preview, sitemap, and 404 behavior. Browser QA checks actual media playhead progression, sound across route changes, swipe navigation, keyboard controls, and responsive layouts. Hardware speaker output, Safari/Firefox, and a full assistive-technology audit require separate checks.
 
-The existing lint command needs ESLint installed and configured; it is not a working check in this repository yet.
+The homepage portrait is a generated 3D-style illustration based on the profile photograph; see [portrait artwork](docs/portrait-artwork.md). Existing optional AI/API/3D source remains in the checkout but is not mounted in the portfolio.
 
-## Updating the content
-
-- Projects, repository links, demo links, architecture flows, and case-study text: `lib/dossier-data.ts`.
-- Introduction and portrait: `components/hero.tsx` and `components/about.tsx`.
-- Toolkit: `components/skills.tsx`.
-- Colors, typography, and responsive layouts: `app/globals.css`.
-- Résumé: `public/resume.pdf`.
-- Social preview: `app/opengraph-image.tsx`.
-
-Contact uses a direct email link and a copy-address button. It does not pretend to submit a form, and needs no email-service credentials.
-
-The homepage no longer mounts the previous boot sequences, AI terminal, sound engine, redaction controls, GitHub statistics, or 3D scenes. Their existing source and API routes remain available in the checkout; optional API credentials are not needed to render the redesigned portfolio.
-
-[GitHub](https://github.com/pjha26) · [Portfolio domain](https://pushkar26portfolio.vercel.app/)
+Design references: [Dribbble portfolio animation](https://dribbble.com/search/portfolio-animation) and [Next.js view-transition patterns](https://nextjs.org/docs/app/guides/view-transitions). The layout and interactions are implemented locally; reference-site assets and code are not copied.

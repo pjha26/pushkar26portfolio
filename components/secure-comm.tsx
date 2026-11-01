@@ -30,11 +30,11 @@ export function SecureComm() {
             <span /> Open to opportunities
           </span>
         </div>
-        <h2 id="contact-title">
+        <h1 id="contact-title">
           Got something
           <br />
           <em>in mind?</em>
-        </h2>
+        </h1>
         <div className="contact-bottom">
           <p>
             Have a project in mind, a role that fits,

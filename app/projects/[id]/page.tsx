@@ -44,7 +44,7 @@ export default async function CaseStudy({ params }: Props) {
 
   return (
     <main className="case-study shell" id="main-content">
-      <Link href="/#projects" className="case-back">
+      <Link href="/work" className="case-back" transitionTypes={['page-prev']}>
         <ArrowLeft size={14} /> Back to selected work
       </Link>
       <header className="case-heading">

@@ -2,16 +2,19 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { SceneSound } from '@/components/scene-sound'
 import { ArrowUpRight, Menu, Moon, Sun, X, Pause, Play } from 'lucide-react'
 
 const items = [
-  { id: 'projects', label: 'Work' },
-  { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Toolkit' },
-  { id: 'contact', label: 'Contact' },
+  { id: '/work', label: 'Work' },
+  { id: '/about', label: 'About' },
+  { id: '/toolkit', label: 'Toolkit' },
+  { id: '/contact', label: 'Contact' },
 ]
 
 export function FloatingNav() {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [dark, setDark] = useState(false)
   const [motionPaused, setMotionPaused] = useState(false)
@@ -49,8 +52,9 @@ export function FloatingNav() {
       }}
     >
       <div className="shell header-inner">
-        <a
-          href="/#hero-section"
+        <Link
+          href="/"
+          transitionTypes={['page-prev']}
           className="wordmark"
           aria-label="Pushkar Raj, home"
           onClick={() => setOpen(false)}
@@ -61,15 +65,21 @@ export function FloatingNav() {
           <span className="wordmark-name">
             Pushkar Raj<span>Software developer</span>
           </span>
-        </a>
+        </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           {items.map((item) => (
-            <Link key={item.id} href={`/#${item.id}`}>
+            <Link
+              key={item.id}
+              href={item.id}
+              transitionTypes={['page-next']}
+              aria-current={pathname === item.id ? 'page' : undefined}
+            >
               {item.label}
             </Link>
           ))}
         </nav>
         <div className="header-actions">
+          <SceneSound compact />
           <button
             className="icon-button motion-button"
             onClick={toggleMotion}
@@ -104,7 +114,13 @@ export function FloatingNav() {
       {open && (
         <nav id="mobile-navigation" className="mobile-nav shell" aria-label="Mobile navigation">
           {items.map((item) => (
-            <Link key={item.id} href={`/#${item.id}`} onClick={() => setOpen(false)}>
+            <Link
+              key={item.id}
+              href={item.id}
+              transitionTypes={['page-next']}
+              aria-current={pathname === item.id ? 'page' : undefined}
+              onClick={() => setOpen(false)}
+            >
               {item.label}
               <ArrowUpRight size={18} />
             </Link>

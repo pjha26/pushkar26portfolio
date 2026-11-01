@@ -17,7 +17,7 @@ assert.ok(
   'Next.js must know about native smooth scrolling'
 )
 const mainTag = home.match(/<main\b[^>]*>/)?.[0]
-assert.ok(mainTag?.includes('cinematic-experience'), 'The homepage must retain its cinematic shell')
+assert.ok(mainTag?.includes('screen-page'), 'The homepage must render its own page')
 assert.ok(
   !/\bhidden\b|opacity:\s*0(?:;|["\s])/.test(mainTag),
   'Server-rendered content must be visible before JavaScript'
@@ -35,29 +35,35 @@ assert.ok(
 )
 assert.ok(home.includes('href="#main-content"'), 'A keyboard skip link must be present')
 assert.ok(home.includes('pushkar-3d-portrait.png'), 'The homepage must show the custom portrait')
-assert.ok(home.includes('Enable ambient soundtrack'), 'The soundtrack must be visitor initiated')
-assert.ok(home.includes('class="hero-sound"'), 'Sound must be discoverable in the homepage hero')
-assert.ok(home.includes('class="hero-scene"'), 'The intro must have its own fullscreen scene')
+assert.ok(home.includes('Quiet Circuit'), 'The original soundtrack must be named')
+assert.ok(home.includes('/audio/quiet-circuit.wav'), 'The real local audio file must be attached')
+assert.ok(home.includes('preload="none"'), 'Audio loading must be visitor initiated')
+assert.ok(!/<audio[^>]*autoplay/.test(home), 'Sound must never autoplay on a new visit')
+assert.ok(home.includes('class="hero-sound"'), 'Sound must be discoverable in the hero')
 assert.ok(
-  /<div\b[^>]*class="hero-scene"[^>]*id="hero-section"/.test(home),
-  'Home navigation must target the outer scene, not the sticky hero'
+  !home.includes('id="work-title"'),
+  'Home must end with the intro rather than contain work'
 )
-assert.ok(
-  home.includes('class="portfolio-sections"'),
-  'Following sections must share a swipe surface'
-)
-assert.ok(home.includes('aria-label="Project chapters"'), 'Projects must have a chapter navigator')
-for (const id of projects) {
-  assert.ok(home.includes(`href="#work-${id}"`), `${id} must have a working chapter link`)
-  assert.ok(home.includes(`id="work-${id}"`), `${id} must have a server-rendered chapter target`)
+assert.ok(!home.includes('id="about-title"'), 'Home must not contain the about page')
+assert.ok(!/<iframe[\s>]/.test(home), 'Embedded players must be absent')
+const work = await (await get('/work')).text()
+for (const page of ['work', 'about', 'toolkit', 'contact']) {
+  assert.ok(home.includes(`href="/${page}"`), `${page} must be a real navigation destination`)
+  const html = page === 'work' ? work : await (await get(`/${page}`)).text()
+  assert.equal((html.match(/<h1[\s>]/g) || []).length, 1, `${page} must have one primary heading`)
+  assert.ok(html.includes(`${canonicalOrigin}/${page}`), `${page} must have its own canonical URL`)
 }
-assert.ok(!/<iframe[\s>]/.test(home), 'The homepage must not contain an embedded music player')
-assert.ok(!home.includes('open.spotify.com/embed'), 'The old Spotify popup must be removed')
-
+const soundtrack = await get('/audio/quiet-circuit.wav')
+assert.ok(
+  soundtrack.headers.get('content-type')?.startsWith('audio/'),
+  'The audio must be served as audio'
+)
+const wav = new Uint8Array(await soundtrack.arrayBuffer())
+assert.equal(new TextDecoder().decode(wav.slice(0, 4)), 'RIFF')
 const titles = new Set()
 for (const id of projects) {
   const path = `/projects/${id}`
-  assert.ok(home.includes(`href="${path}"`), `${id} must be reachable from the homepage`)
+  assert.ok(work.includes(`href="${path}"`), `${id} must be reachable from the Work page`)
   const html = await (await get(path)).text()
   const repository = repositories[projects.indexOf(id)]
   assert.ok(
@@ -103,11 +109,13 @@ assert.ok(
 const og = await get('/opengraph-image')
 assert.equal(og.headers.get('content-type'), 'image/png', 'The social preview must render')
 const sitemap = await (await get('/sitemap.xml')).text()
+for (const page of ['work', 'about', 'toolkit', 'contact'])
+  assert.ok(sitemap.includes(`/${page}</loc>`), `${page} must be in the sitemap`)
 for (const id of projects)
   assert.ok(sitemap.includes(`/projects/${id}`), `${id} must be in the sitemap`)
 
 const missing = await fetch(new URL('/projects/not-a-real-project', origin))
 assert.equal(missing.status, 404, 'An unknown project must return a proper 404')
 console.log(
-  'Portfolio smoke checks passed: homepage, four case studies, contact, assets, optimized images, social preview, sitemap, and 404.'
+  'Portfolio smoke checks passed: five pages, four case studies, contact, audio, assets, optimized images, social preview, sitemap, and 404.'
 )

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
-import { SiGithub } from 'react-icons/si'
+import { SiGithub, SiLeetcode } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import { LINKS } from '@/lib/dossier-data'
 import { SceneSound } from '@/components/scene-sound'
@@ -42,9 +42,9 @@ export function Hero() {
             to the worker running behind it.
           </p>
           <div className="hero-actions" data-hero-reveal>
-            <a className="button button-primary" href="#projects">
+            <Link className="button button-primary" href="/work" transitionTypes={['page-next']}>
               Explore my work <ArrowDown size={17} />
-            </a>
+            </Link>
             <a className="text-link" href={LINKS.email}>
               Let’s talk <ArrowUpRight size={18} />
             </a>
@@ -120,10 +120,13 @@ export function Hero() {
           <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">
             <FaLinkedin size={16} /> LinkedIn <ArrowUpRight size={12} />
           </a>
+          <a href={LINKS.leetcode} target="_blank" rel="noopener noreferrer">
+            <SiLeetcode size={16} /> LeetCode <ArrowUpRight size={12} />
+          </a>
         </div>
-        <a href="#projects" className="scroll-cue">
-          Scroll to explore <ArrowDown size={14} />
-        </a>
+        <Link href="/work" className="scroll-cue" transitionTypes={['page-next']}>
+          Swipe up to explore <ArrowDown size={14} />
+        </Link>
       </div>
     </section>
   )

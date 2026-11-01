@@ -28,9 +28,9 @@ export function Skills() {
         <div className="section-heading" data-reveal>
           <div>
             <p className="eyebrow section-kicker">03 / Tools of the trade</p>
-            <h2 id="toolkit-title">
+            <h1 id="toolkit-title">
               A practical <em>toolkit.</em>
-            </h2>
+            </h1>
           </div>
           <p>
             The tools change. The goal stays the same:

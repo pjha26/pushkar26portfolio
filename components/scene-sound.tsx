@@ -1,146 +1,151 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Volume2, VolumeX } from 'lucide-react'
-import { createPortal } from 'react-dom'
-import { createAmbientAudio } from '@/lib/ambient-audio'
 
-type Session = { context: AudioContext; stop: () => void }
+type SoundState = {
+  status: 'off' | 'loading' | 'on' | 'paused' | 'error'
+  volume: number
+  toggle: () => void
+  setVolume: (value: number) => void
+}
+const SoundContext = createContext<SoundState | null>(null)
 
-export function SceneSound() {
-  const session = useRef<Session | null>(null)
+export function SoundProvider({ children }: { children: ReactNode }) {
+  const audio = useRef<HTMLAudioElement>(null)
   const busy = useRef(false)
-  const [floating, setFloating] = useState(false)
-  const [status, setStatus] = useState<'off' | 'on' | 'paused' | 'error'>('off')
-
+  const resumeWhenVisible = useRef(false)
+  const [status, setStatus] = useState<SoundState['status']>('off')
+  const [volume, updateVolume] = useState(0.65)
   useEffect(() => {
-    let beyondIntro = window.scrollY > 80
-    setFloating(beyondIntro)
-    function syncFloating() {
-      const next = window.scrollY > 80
-      if (next !== beyondIntro) {
-        beyondIntro = next
-        setFloating(next)
+    function visibility() {
+      const player = audio.current
+      if (!player) return
+      if (document.hidden) {
+        resumeWhenVisible.current = !player.paused
+        player.pause()
+      } else if (resumeWhenVisible.current) {
+        resumeWhenVisible.current = false
+        void player.play().catch(() => setStatus('error'))
       }
     }
-    window.addEventListener('scroll', syncFloating, { passive: true })
-    async function syncScene() {
-      const audio = session.current
-      if (!audio || audio.context.state === 'closed') return
-      try {
-        if (document.hidden || document.documentElement.dataset.motion === 'paused') {
-          await audio.context.suspend()
-        } else {
-          await audio.context.resume()
-        }
-      } catch {
-        if (session.current === audio) setStatus('error')
-      }
-    }
-    const observer = new MutationObserver(syncScene)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-motion'],
-    })
-    document.addEventListener('visibilitychange', syncScene)
-    return () => {
-      window.removeEventListener('scroll', syncFloating)
-      observer.disconnect()
-      document.removeEventListener('visibilitychange', syncScene)
-      const audio = session.current
-      session.current = null
-      if (audio) {
-        audio.context.onstatechange = null
-        audio.stop()
-        void audio.context.close().catch(() => {})
-      }
-    }
+    document.addEventListener('visibilitychange', visibility)
+    return () => document.removeEventListener('visibilitychange', visibility)
   }, [])
-
-  async function toggleSound() {
-    if (busy.current) return
+  async function toggle() {
+    const player = audio.current
+    if (!player || busy.current) return
+    resumeWhenVisible.current = false
+    if (!player.paused) {
+      player.pause()
+      return
+    }
     busy.current = true
+    setStatus('loading')
+    player.volume = volume
+    player.muted = false
     try {
-      const current = session.current
-      if (current) {
-        session.current = null
-        current.context.onstatechange = null
-        current.stop()
-        await current.context.close()
-        setStatus('off')
-        return
-      }
-      const context = new AudioContext()
-      const audio: Session = { context, stop: () => {} }
-      session.current = audio
-      audio.stop = createAmbientAudio(context)
-      context.onstatechange = () => {
-        if (session.current === audio) setStatus(context.state === 'running' ? 'on' : 'paused')
-      }
-      await context.resume()
-      if (session.current !== audio) return
-      if (document.hidden || document.documentElement.dataset.motion === 'paused')
-        await context.suspend()
-      if (session.current === audio) setStatus(context.state === 'running' ? 'on' : 'paused')
+      if (player.error) player.load()
+      await player.play()
     } catch {
-      const audio = session.current
-      session.current = null
-      if (audio) {
-        audio.context.onstatechange = null
-        audio.stop()
-        void audio.context.close().catch(() => {})
-      }
       setStatus('error')
     } finally {
       busy.current = false
     }
   }
-
-  const enabled = status === 'on' || status === 'paused'
-  const soundButton = (compact: boolean) => (
-    <button
-      className={compact ? 'sound-toggle' : 'sound-invitation'}
-      onClick={toggleSound}
-      aria-pressed={enabled}
-      aria-label={enabled ? 'Disable ambient soundtrack' : 'Enable ambient soundtrack'}
-    >
-      <span className="sound-orb" aria-hidden="true">
-        {enabled ? <Volume2 size={15} /> : <VolumeX size={15} />}
-      </span>
-      <span className="sound-wave" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-        <i />
-        <i />
-      </span>
-      <span>
-        {status === 'on'
-          ? 'Sound on'
-          : status === 'paused'
-            ? 'Scene paused'
-            : compact
-              ? 'Sound off'
-              : 'Enable sound'}
-      </span>
-    </button>
-  )
+  function setVolume(value: number) {
+    updateVolume(value)
+    if (audio.current) audio.current.volume = value
+  }
   return (
-    <>
-      <div className="hero-sound" data-playing={status === 'on'}>
-        {soundButton(false)}
-        <p>Original ambient soundtrack · made for this space</p>
-        <span className="sound-status" role="status">
-          {status === 'error' ? 'Sound is unavailable. Tap to retry.' : ''}
+    <SoundContext.Provider value={{ status, volume, toggle, setVolume }}>
+      {children}
+      <audio
+        ref={audio}
+        src="/audio/quiet-circuit.wav"
+        preload="none"
+        loop
+        hidden
+        onPlaying={() => setStatus('on')}
+        onPause={() => setStatus('paused')}
+        onError={() => setStatus('error')}
+      />
+    </SoundContext.Provider>
+  )
+}
+
+export function SceneSound({ compact = false }: { compact?: boolean }) {
+  const sound = useContext(SoundContext)
+  if (!sound) return null
+  const playing = sound.status === 'on'
+  const label = playing ? 'Pause Quiet Circuit soundtrack' : 'Play Quiet Circuit soundtrack'
+  if (compact)
+    return (
+      <button
+        className="icon-button sound-header"
+        aria-label={
+          playing
+            ? 'Sound on — pause Quiet Circuit soundtrack'
+            : 'Enable sound — play Quiet Circuit soundtrack'
+        }
+        aria-pressed={playing}
+        title={label}
+        onClick={sound.toggle}
+      >
+        {playing ? <Volume2 size={16} /> : <VolumeX size={16} />}
+      </button>
+    )
+  return (
+    <div className="hero-sound" data-playing={playing}>
+      <button
+        className="sound-invitation"
+        onClick={sound.toggle}
+        aria-label={
+          playing
+            ? 'Sound on — pause Quiet Circuit soundtrack'
+            : 'Enable sound — play Quiet Circuit soundtrack'
+        }
+        aria-pressed={playing}
+      >
+        <span className="sound-orb" aria-hidden="true">
+          {playing ? <Volume2 size={15} /> : <VolumeX size={15} />}
         </span>
-      </div>
-      {floating &&
-        createPortal(
-          <div className="scene-sound" data-playing={status === 'on'}>
-            {soundButton(true)}
-          </div>,
-          document.body
-        )}
-    </>
+        <span className="sound-wave" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+          <i />
+          <i />
+        </span>
+        <span>
+          {sound.status === 'loading'
+            ? 'Loading sound…'
+            : playing
+              ? 'Sound on'
+              : sound.status === 'error'
+                ? 'Retry sound'
+                : 'Enable sound'}
+        </span>
+      </button>
+      <p>Quiet Circuit · original instrumental</p>
+      <label className="sound-volume">
+        Volume{' '}
+        <input
+          aria-label="Soundtrack volume"
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          value={sound.volume}
+          onChange={(event) => sound.setVolume(Number(event.target.value))}
+        />{' '}
+        {Math.round(sound.volume * 100)}%
+      </label>
+      <p className="sound-status" role="status">
+        {sound.status === 'error'
+          ? 'Audio could not play. Tap Retry sound; check the tab is not muted.'
+          : ''}
+      </p>
+    </div>
   )
 }

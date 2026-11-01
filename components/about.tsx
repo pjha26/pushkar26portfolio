@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
-import { LINKS } from '@/lib/dossier-data'
 
 export function About() {
   return (
@@ -26,24 +25,19 @@ export function About() {
         </div>
         <div className="about-copy" data-reveal>
           <p className="eyebrow section-kicker">02 / The person behind the code</p>
-          <h2 id="about-title">
+          <h1 id="about-title">
             Between the UI
             <br />
             and the <em>worker queue.</em>
-          </h2>
+          </h1>
           <p>
             I’m Pushkar, a Computer Science student at JSS Academy of Technical Education,
             Bengaluru, specializing in AI & Machine Learning.
           </p>
           <p>
-            My projects take me across the stack. In ArthAI, the interface starts a research job, a
-            background worker coordinates the agents, and the results become a report you can ask
-            questions about.
-          </p>
-          <p>
-            That work comes with decisions I’m still exploring: how to keep a long-running job out
-            of a request, when a voice interview should ask a follow-up, and how to keep a booking
-            dashboard current. The case studies share those decisions and their limits.
+            I build across interfaces, APIs, and worker queues. My projects explore AI research,
+            voice interviews, reliable bookings, and live traffic visibility. The case studies share
+            the decisions behind each build.
           </p>
           <a
             className="text-link about-resume"
@@ -55,32 +49,9 @@ export function About() {
           </a>
         </div>
       </div>
-      <div className="background-notes" id="experience" data-reveal>
-        <div>
-          <span className="eyebrow">The foundation</span>
-          <h3>Learning by doing.</h3>
-        </div>
-        <div className="background-note">
-          <span className="note-date">2023 — 2027</span>
-          <h4>B.E. Computer Science</h4>
-          <p>
-            AI & Machine Learning
-            <br />
-            JSSATE, Bengaluru
-          </p>
-        </div>
-        <div className="background-note">
-          <span className="note-date">2026 — Ongoing</span>
-          <h4>Independent projects</h4>
-          <p>
-            Building full-stack applications,
-            <br />
-            AI workflows, and real-time systems.
-          </p>
-          <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="small-link">
-            Follow along on GitHub <ArrowUpRight size={13} />
-          </a>
-        </div>
+      <div className="about-foundation">
+        <span className="eyebrow">2023–2027 / JSSATE, Bengaluru</span>
+        <p>B.E. Computer Science · AI &amp; Machine Learning</p>
       </div>
     </section>
   )
