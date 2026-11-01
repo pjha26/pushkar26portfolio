@@ -37,6 +37,11 @@ assert.ok(home.includes('href="#main-content"'), 'A keyboard skip link must be p
 assert.ok(home.includes('pushkar-3d-portrait.png'), 'The homepage must show the custom portrait')
 assert.ok(home.includes('Enable ambient soundtrack'), 'The soundtrack must be visitor initiated')
 assert.ok(home.includes('class="hero-sound"'), 'Sound must be discoverable in the homepage hero')
+assert.ok(home.includes('class="hero-scene"'), 'The intro must have its own fullscreen scene')
+assert.ok(
+  home.includes('class="portfolio-sections"'),
+  'Following sections must share a swipe surface'
+)
 assert.ok(home.includes('aria-label="Project chapters"'), 'Projects must have a chapter navigator')
 for (const id of projects) {
   assert.ok(home.includes(`href="#work-${id}"`), `${id} must have a working chapter link`)

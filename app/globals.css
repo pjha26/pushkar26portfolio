@@ -10,6 +10,7 @@
   --color-signal: var(--accent);
 }
 :root {
+  --nav-height: 85px;
   color-scheme: light;
   --paper: #eef1f5;
   --surface: #e4e8ef;
@@ -135,8 +136,7 @@ h2 em {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: var(--header);
-  backdrop-filter: blur(18px);
+  background: var(--paper);
   border-bottom: 1px solid var(--line);
 }
 .header-inner {
@@ -242,22 +242,6 @@ h2 em {
 .mobile-nav {
   display: none;
 }
-.hero {
-  padding-top: 26px;
-  position: relative;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at 80% 35%,
-    color-mix(in srgb, var(--accent) 5%, transparent),
-    transparent 65%
-  );
-}
 .cinematic-experience {
   position: relative;
   isolation: isolate;
@@ -300,6 +284,43 @@ h2 em {
 .hero-topline {
   color: var(--muted);
 }
+.hero-scene {
+  position: relative;
+  z-index: 1;
+  --swipe-distance: min(55svh, 480px);
+  background: var(--paper);
+}
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: calc(100svh - var(--nav-height) + 1px);
+  padding-top: 20px;
+  transform-origin: 50% 0%;
+}
+[data-cinematic='on'] .hero-scene::after {
+  content: '';
+  display: block;
+  height: var(--swipe-distance);
+}
+[data-cinematic='on'] .hero {
+  position: sticky;
+  top: min(var(--nav-height), calc(100svh - var(--hero-height, 100svh)));
+}
+.portfolio-sections {
+  position: relative;
+  z-index: 2;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  border-radius: 28px 28px 0 0;
+}
+[data-cinematic='on'] .portfolio-sections {
+  margin-top: calc(-1 * var(--swipe-distance, min(55svh, 480px)));
+}
+.portfolio-sections > .work-section {
+  border-top: 0;
+  border-radius: inherit;
+}
 .availability {
   display: inline-flex;
   align-items: center;
@@ -319,7 +340,7 @@ h2 em {
   grid-template-columns: 1.3fr 1fr;
   align-items: center;
   gap: 22px;
-  padding-block: 66px 60px;
+  padding-block: clamp(14px, 3svh, 40px);
 }
 .hero-copy {
   min-width: 0;
@@ -421,6 +442,11 @@ h2 em {
 .hero-art {
   min-width: 0;
 }
+.hero-art .portrait-stage {
+  width: min(100%, clamp(220px, 46svh, 420px));
+  margin-inline: auto;
+  padding-block: 12px;
+}
 .portrait-stage {
   perspective: 900px;
   isolation: isolate;
@@ -476,9 +502,8 @@ h2 em {
   padding: 5px 14px 5px 5px;
   border: 1px solid var(--line);
   border-radius: 30px;
-  background: var(--header);
+  background: var(--paper);
   color: var(--muted);
-  backdrop-filter: blur(12px);
   font-size: 12px;
   box-shadow: 0 4px 25px #00000018;
 }
@@ -714,22 +739,6 @@ h2 em {
   pointer-events: none;
   overflow: clip;
 }
-.work-transition-light {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  background:
-    radial-gradient(
-      ellipse at 12% 0%,
-      color-mix(in srgb, var(--accent) 24%, transparent),
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse at 88% 0%,
-      color-mix(in srgb, var(--signal) 18%, transparent),
-      transparent 65%
-    );
-}
 .work-transition-line {
   position: absolute;
   inset: 0 0 auto;
@@ -878,7 +887,8 @@ h2 em {
 }
 .project-title-row h3 {
   font-family: var(--font-syne), Arial, sans-serif;
-  font-size: clamp(36px, 4vw, 60px);
+  font-size: clamp(30px, 3.5vw, 50px);
+  overflow-wrap: anywhere;
   font-weight: 650;
   letter-spacing: -0.05em;
 }
@@ -1226,13 +1236,17 @@ h2 em {
 }
 .case-heading {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
   gap: 50px;
   align-items: end;
   margin-bottom: 40px;
 }
+.case-heading > div {
+  min-width: 0;
+}
 .case-heading h1 {
-  font-size: clamp(52px, 7vw, 100px);
+  font-size: clamp(36px, 5vw, 76px);
+  overflow-wrap: anywhere;
   line-height: 1;
   letter-spacing: -0.07em;
   margin-top: 20px;
@@ -1496,6 +1510,9 @@ h2 em {
   }
 }
 @media (max-width: 700px) {
+  :root {
+    --nav-height: 73px;
+  }
   .cinema-progress {
     top: 72px;
   }
@@ -1659,7 +1676,7 @@ h2 em {
     margin-top: 22px;
   }
   .project-title-row h3 {
-    font-size: 36px;
+    font-size: clamp(28px, 8vw, 36px);
   }
   .about-grid {
     grid-template-columns: 1fr;
@@ -1773,7 +1790,7 @@ h2 em {
     gap: 25px;
   }
   .case-heading h1 {
-    font-size: clamp(36px, 10vw, 60px);
+    font-size: clamp(30px, 8.4vw, 60px);
   }
   .case-heading > div > p:not(.eyebrow) {
     font-size: 13px;

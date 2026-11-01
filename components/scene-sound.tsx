@@ -10,11 +10,20 @@ type Session = { context: AudioContext; stop: () => void }
 export function SceneSound() {
   const session = useRef<Session | null>(null)
   const busy = useRef(false)
-  const [mounted, setMounted] = useState(false)
+  const [floating, setFloating] = useState(false)
   const [status, setStatus] = useState<'off' | 'on' | 'paused' | 'error'>('off')
 
   useEffect(() => {
-    setMounted(true)
+    let beyondIntro = window.scrollY > 80
+    setFloating(beyondIntro)
+    function syncFloating() {
+      const next = window.scrollY > 80
+      if (next !== beyondIntro) {
+        beyondIntro = next
+        setFloating(next)
+      }
+    }
+    window.addEventListener('scroll', syncFloating, { passive: true })
     async function syncScene() {
       const audio = session.current
       if (!audio || audio.context.state === 'closed') return
@@ -35,6 +44,7 @@ export function SceneSound() {
     })
     document.addEventListener('visibilitychange', syncScene)
     return () => {
+      window.removeEventListener('scroll', syncFloating)
       observer.disconnect()
       document.removeEventListener('visibilitychange', syncScene)
       const audio = session.current
@@ -124,7 +134,7 @@ export function SceneSound() {
           {status === 'error' ? 'Sound is unavailable. Tap to retry.' : ''}
         </span>
       </div>
-      {mounted &&
+      {floating &&
         createPortal(
           <div className="scene-sound" data-playing={status === 'on'}>
             {soundButton(true)}

@@ -82,25 +82,39 @@ export function CinematicScroll({ children }: { children: ReactNode }) {
             }
           })
         )
-        if (!compact.matches) {
-          const copy = hero.querySelector<HTMLElement>('.hero-copy')!
-          const art = hero.querySelector<HTMLElement>('.hero-art')!
-          remember(copy)
-          remember(art)
-          cleanups.push(
-            scroll(
-              (progress: number) => {
-                if (!active) return
-                copy.style.transform = `translateY(${progress * 42}px)`
-                art.style.transform = `translateY(${progress * -30}px)`
-              },
-              {
-                target: hero,
-                offset: ['start start', 'end start'],
-              }
-            )
+        const scene = hero.closest<HTMLElement>('.hero-scene')!
+        remember(hero)
+        remember(scene)
+        let swipeStart = 0
+        let swipeDistance = 1
+        function measureHero() {
+          if (!active) return
+          scene.style.setProperty('--hero-height', `${hero!.offsetHeight}px`)
+          swipeStart = Math.max(
+            0,
+            scene.getBoundingClientRect().top +
+              window.scrollY +
+              hero!.offsetHeight -
+              window.innerHeight
           )
+          swipeDistance = Math.min(window.innerHeight * 0.55, 480)
         }
+        measureHero()
+        const resize = new ResizeObserver(measureHero)
+        resize.observe(hero)
+        window.addEventListener('resize', measureHero)
+        cleanups.push(() => {
+          resize.disconnect()
+          window.removeEventListener('resize', measureHero)
+        })
+        cleanups.push(
+          scroll((_progress, info) => {
+            if (!active) return
+            // Begin the swipe only after the entire intro has been readable.
+            const swipe = Math.max(0, Math.min(1, (info.y.current - swipeStart) / swipeDistance))
+            hero.style.transform = `translateY(${-swipe * (compact.matches ? 12 : 24)}px) scale(${1 - swipe * (compact.matches ? 0.02 : 0.045)})`
+          })
+        )
       }
 
       const progress = main!.querySelector<HTMLElement>('.cinema-progress')!
@@ -113,16 +127,12 @@ export function CinematicScroll({ children }: { children: ReactNode }) {
       )
 
       if (work) {
-        const light = work.querySelector<HTMLElement>('.work-transition-light')!
         const line = work.querySelector<HTMLElement>('.work-transition-line')!
-        remember(light)
         remember(line)
         cleanups.push(
           scroll(
             (progress: number) => {
               if (!active) return
-              const intensity = 1 - Math.abs(progress * 2 - 1)
-              light.style.opacity = String(intensity * (compact.matches ? 0.35 : 0.7))
               line.style.transform = `scaleX(${0.04 + Math.min(1, progress * 2) * 0.96})`
               line.style.opacity = String(Math.min(1, progress * 2))
             },

@@ -8,7 +8,6 @@ export function Projects() {
   return (
     <section className="work-section section-space" id="projects" aria-labelledby="work-title">
       <div className="work-transition" aria-hidden="true">
-        <div className="work-transition-light" />
         <div className="work-transition-line" />
       </div>
       <div className="shell">
