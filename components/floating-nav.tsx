@@ -49,7 +49,7 @@ export function FloatingNav() {
       }}
     >
       <div className="shell header-inner">
-        <Link
+        <a
           href="/#hero-section"
           className="wordmark"
           aria-label="Pushkar Raj, home"
@@ -61,7 +61,7 @@ export function FloatingNav() {
           <span className="wordmark-name">
             Pushkar Raj<span>Software developer</span>
           </span>
-        </Link>
+        </a>
         <nav className="desktop-nav" aria-label="Main navigation">
           {items.map((item) => (
             <Link key={item.id} href={`/#${item.id}`}>
