@@ -13,14 +13,14 @@ export default function OpenGraphImage() {
         justifyContent: 'space-between',
         width: '100%',
         height: '100%',
-        background: '#08090c',
-        color: '#f2f3f8',
+        background: '#0c0907',
+        color: '#fff5eb',
         padding: '60px 75px',
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 21 }}>
         <span>Pushkar Raj</span>
-        <span style={{ color: '#ff4f97' }}>Full-stack developer / Bengaluru</span>
+        <span style={{ color: '#ff934f' }}>Full-stack developer / Bengaluru</span>
       </div>
       <div
         style={{
@@ -33,16 +33,16 @@ export default function OpenGraphImage() {
         }}
       >
         <span>PUSHKAR</span>
-        <span style={{ color: '#28b9ec' }}>RAJ.</span>
+        <span style={{ color: '#ff934f' }}>RAJ.</span>
       </div>
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          borderTop: '1px solid #282d3a',
+          borderTop: '1px solid #3b2b20',
           paddingTop: 25,
           fontSize: 19,
-          color: '#a4aabb',
+          color: '#bdb0a3',
         }}
       >
         <span>Full-stack development & applied AI</span>

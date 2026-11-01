@@ -1,98 +1,72 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, Download, Mail } from 'lucide-react'
 import { SiGithub, SiLeetcode } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
-import { LINKS } from '@/lib/dossier-data'
+import { CASES, LINKS } from '@/lib/dossier-data'
 import { SceneSound } from '@/components/scene-sound'
+
+const technologies = ['React', 'Next.js', 'TypeScript', 'Python', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker']
 
 export function Hero() {
   return (
-    <section className="hero shell" aria-labelledby="hero-title">
-      <div className="hero-topline">
-        <span className="eyebrow">Independent developer · Bengaluru, IN</span>
-        <span className="availability">
-          <span /> Open to opportunities
-        </span>
-      </div>
-      <div className="hero-stage hero-centered">
-        <h1 id="hero-title">
-          <span className="hero-name" data-hero-reveal>
-            Pushkar
-          </span>
-          <span className="hero-name hero-name-last" data-hero-reveal>
-            Raj
-          </span>
-        </h1>
-        <div className="hero-copy">
-          <p className="intro-line" data-hero-reveal>
-            <span className="crosshair" aria-hidden="true">
-              ✳
-            </span>{' '}
-            Code meets curiosity.
+    <section className="warm-hero" aria-labelledby="hero-title">
+      <div className="warm-stage shell">
+        <div className="warm-intro">
+          <p className="warm-kicker">Introduction</p>
+          <h1 id="hero-title">
+            Building thoughtful<br className="wide-break" />{' '}
+            <em>software,</em> from<br className="wide-break" />{' '}
+            interface to system.
+          </h1>
+          <p className="warm-description">
+            I’m Pushkar, a developer in Bengaluru. I build AI workflows, voice interfaces, and
+            real-time apps — from the first interaction to the worker behind it.
           </p>
-          <p className="hero-description" data-hero-reveal>
-            I build AI workflows, voice interfaces, and real-time apps. From the first interaction
-            to the worker running behind it.
-          </p>
+          <ul className="warm-tags" aria-label="Specialties">
+            {['Next.js', 'TypeScript', 'Python', 'Applied AI'].map((tool) => <li key={tool}>{tool}</li>)}
+          </ul>
+          <dl className="warm-facts">
+            <div><dt>Selected projects</dt><dd>{String(CASES.length).padStart(2, '0')}</dd></div>
+            <div><dt>Computer Science · JSSATE</dt><dd>2027</dd></div>
+          </dl>
+          <div className="warm-actions">
+            <a className="button button-primary" href={LINKS.email}>
+              Start a conversation <ArrowUpRight size={16} />
+            </a>
+            <Link className="button warm-secondary" href="/work" transitionTypes={['page-next']}>
+              Explore my work <ArrowDown size={16} />
+            </Link>
+          </div>
           <SceneSound />
         </div>
-        <div className="hero-aside">
-          <p className="hero-role">
-            Full-stack developer<br />& AI builder.
-          </p>
-          <div className="hero-actions" data-hero-reveal>
-            <Link className="button button-primary" href="/work" transitionTypes={['page-next']}>
-              Explore my work <ArrowDown size={17} />
-            </Link>
-            <a className="text-link" href={LINKS.email}>
-              Let’s talk <ArrowUpRight size={18} />
-            </a>
-          </div>
-          <Link
-            className="hero-feature"
-            href="/projects/arth-ai"
-            aria-label="Explore ArthAI, my multi-agent AI project"
-          >
-            <span>
-              <small>On the workbench</small>
-              <strong>ArthAI / Multi-agent research</strong>
-            </span>
-            <ArrowUpRight size={22} />
-          </Link>
-        </div>
-        <div className="hero-art">
-          <div className="portrait-stage">
+        <aside className="profile-card" aria-label="About Pushkar Raj">
+          <p className="profile-availability"><span /> Open to opportunities</p>
+          <div className="profile-art">
             <Image
-              className="hero-portrait"
               src="/pushkar-3d-portrait.png"
               alt="3D-style illustrated portrait of Pushkar Raj"
               width={1223}
               height={1286}
-              sizes="(max-width: 700px) 220px, 40vw"
+              sizes="(max-width: 700px) 320px, 380px"
               loading="eager"
             />
           </div>
-        </div>
+          <h2>Pushkar Raj</h2>
+          <p className="profile-role">Full-stack developer & AI builder</p>
+          <a className="profile-email" href={LINKS.email}><Mail size={16} /> pjha2608@gmail.com</a>
+          <div className="profile-socials">
+            <a href={LINKS.github} target="_blank" rel="noopener noreferrer"><SiGithub size={16} /> GitHub</a>
+            <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedin size={16} /> LinkedIn</a>
+            <a href={LINKS.leetcode} target="_blank" rel="noopener noreferrer"><SiLeetcode size={16} /> LeetCode</a>
+          </div>
+          <a className="button profile-resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <Download size={16} /> Download résumé <ArrowUpRight size={15} />
+          </a>
+        </aside>
       </div>
-      <div className="hero-bottom">
-        <div className="hero-person">
-          <Image src="/PRF1.jpeg" width={42} height={42} alt="Pushkar Raj" />
-          <p>
-            JSSATE, Bengaluru<span>Computer Science · Class of 2027</span>
-          </p>
-        </div>
-        <div className="social-inline">
-          <a href={LINKS.github} target="_blank" rel="noopener noreferrer">
-            <SiGithub size={16} /> GitHub <ArrowUpRight size={12} />
-          </a>
-          <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">
-            <FaLinkedin size={16} /> LinkedIn <ArrowUpRight size={12} />
-          </a>
-          <a href={LINKS.leetcode} target="_blank" rel="noopener noreferrer">
-            <SiLeetcode size={16} /> LeetCode <ArrowUpRight size={12} />
-          </a>
-        </div>
+      <div className="warm-footer shell">
+        <ul aria-label="Development tools">{technologies.map((tool) => <li key={tool}>{tool}</li>)}</ul>
         <Link href="/work" className="scroll-cue" transitionTypes={['page-next']}>
           Swipe up to explore <ArrowDown size={14} />
         </Link>
