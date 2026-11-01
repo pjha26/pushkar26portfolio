@@ -2017,7 +2017,7 @@ body {
   grid-row: 1;
   align-self: end;
   font-family: var(--font-syne), sans-serif;
-  font-size: clamp(32px, 3.65vw, 76px);
+  font-size: clamp(32px, 3.2vw, 48px);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.075em;
@@ -2027,7 +2027,7 @@ body {
   grid-column: 3;
   display: block;
   margin: 0;
-  font-size: clamp(64px, 7vw, 134px);
+  font-size: clamp(64px, 6vw, 96px);
 }
 .hero-centered .hero-copy {
   grid-column: 1;
