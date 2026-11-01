@@ -1,6 +1,6 @@
 # Pushkar Raj — Portfolio
 
-A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. The reference-inspired homepage uses burnt orange fading into charcoal, warm white editorial typography, and an opaque portrait/contact card. Light mode uses warm cream, espresso, and orange. The matching palette continues across the five pages. Syne and Manrope are self-hosted with their licenses in `public/fonts/`.
+A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. The reference-inspired editorial layout retains the original themes: jet black, cerulean blue, and neon rose in dark mode; ice silver, deep aubergine, and marigold in light mode. The portrait card and subtle light-leak effect follow the active theme across the five pages. Syne and Manrope are self-hosted with their licenses in `public/fonts/`.
 
 ## Pages and movement
 

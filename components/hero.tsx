@@ -16,8 +16,8 @@ export function Hero() {
           <p className="warm-kicker">Introduction</p>
           <h1 id="hero-title">
             Building thoughtful<br className="wide-break" />{' '}
-            <em>software,</em> from<br className="wide-break" />{' '}
-            interface to system.
+            <em>websites</em> that solve<br className="wide-break" />{' '}
+            real-world problems.
           </h1>
           <p className="warm-description">
             I’m Pushkar, a developer in Bengaluru. I build AI workflows, voice interfaces, and

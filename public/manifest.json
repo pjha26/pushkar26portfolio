@@ -4,8 +4,8 @@
   "description": "Pushkar Raj. Full-stack development, AI workflows, and real-time systems.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0c0907",
-  "theme_color": "#0c0907",
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
   "icons": [
     {
       "src": "/icon.svg",
