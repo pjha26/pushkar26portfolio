@@ -8,7 +8,7 @@ import { SceneSound } from '@/components/scene-sound'
 
 export function Hero() {
   return (
-    <section className="hero shell" id="hero-section" aria-labelledby="hero-title">
+    <section className="hero shell" aria-labelledby="hero-title">
       <div className="hero-topline">
         <span className="eyebrow">Independent developer · Bengaluru, IN</span>
         <span className="availability">

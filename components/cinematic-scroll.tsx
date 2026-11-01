@@ -55,10 +55,10 @@ export function CinematicScroll({ children }: { children: ReactNode }) {
           if (style === null) element.removeAttribute('style')
           else element.setAttribute('style', style)
         })
-        main!.querySelector('#hero-section')?.removeAttribute('data-motion-visible')
+        main!.querySelector('.hero')?.removeAttribute('data-motion-visible')
       }
 
-      const hero = main!.querySelector<HTMLElement>('#hero-section')
+      const hero = main!.querySelector<HTMLElement>('.hero')
       const work = main!.querySelector<HTMLElement>('#projects')
       if (!introPlayed) {
         introPlayed = true

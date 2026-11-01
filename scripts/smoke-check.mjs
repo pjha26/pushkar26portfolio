@@ -39,6 +39,10 @@ assert.ok(home.includes('Enable ambient soundtrack'), 'The soundtrack must be vi
 assert.ok(home.includes('class="hero-sound"'), 'Sound must be discoverable in the homepage hero')
 assert.ok(home.includes('class="hero-scene"'), 'The intro must have its own fullscreen scene')
 assert.ok(
+  /<div\b[^>]*class="hero-scene"[^>]*id="hero-section"/.test(home),
+  'Home navigation must target the outer scene, not the sticky hero'
+)
+assert.ok(
   home.includes('class="portfolio-sections"'),
   'Following sections must share a swipe surface'
 )

@@ -11,7 +11,7 @@ export const metadata: Metadata = { alternates: { canonical: '/' } }
 export default function Page() {
   return (
     <CinematicScroll>
-      <div className="hero-scene">
+      <div className="hero-scene" id="hero-section">
         <Hero />
       </div>
       <div className="portfolio-sections">
