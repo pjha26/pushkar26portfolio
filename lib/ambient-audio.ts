@@ -6,7 +6,7 @@ export function createAmbientAudio(context: AudioContext) {
   const feedback = context.createGain()
   const wet = context.createGain()
   output.gain.setValueAtTime(0, context.currentTime)
-  output.gain.linearRampToValueAtTime(0.07, context.currentTime + 3)
+  output.gain.linearRampToValueAtTime(0.16, context.currentTime + 2)
   filter.type = 'lowpass'
   filter.frequency.value = 900
   filter.Q.value = 0.3

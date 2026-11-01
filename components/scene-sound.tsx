@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Volume2, VolumeX } from 'lucide-react'
+import { createPortal } from 'react-dom'
 import { createAmbientAudio } from '@/lib/ambient-audio'
 
 type Session = { context: AudioContext; stop: () => void }
@@ -9,9 +10,11 @@ type Session = { context: AudioContext; stop: () => void }
 export function SceneSound() {
   const session = useRef<Session | null>(null)
   const busy = useRef(false)
+  const [mounted, setMounted] = useState(false)
   const [status, setStatus] = useState<'off' | 'on' | 'paused' | 'error'>('off')
 
   useEffect(() => {
+    setMounted(true)
     async function syncScene() {
       const audio = session.current
       if (!audio || audio.context.state === 'closed') return
@@ -84,32 +87,50 @@ export function SceneSound() {
   }
 
   const enabled = status === 'on' || status === 'paused'
-  return (
-    <div className="scene-sound" data-playing={status === 'on'}>
-      <button
-        className="sound-toggle"
-        onClick={toggleSound}
-        aria-pressed={enabled}
-        aria-label={enabled ? 'Disable ambient soundtrack' : 'Enable ambient soundtrack'}
-        title="Original ambient soundtrack · follows scene playback"
-      >
-        <span className="sound-orb" aria-hidden="true">
-          {enabled ? <Volume2 size={15} /> : <VolumeX size={15} />}
-        </span>
-        <span className="sound-wave" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-        </span>
-        <span>
-          {status === 'on' ? 'Ambient on' : status === 'paused' ? 'Scene paused' : 'Sound off'}
-        </span>
-      </button>
-      <span className="sound-status" role="status">
-        {status === 'error' ? 'Sound is unavailable. Tap to retry.' : ''}
+  const soundButton = (compact: boolean) => (
+    <button
+      className={compact ? 'sound-toggle' : 'sound-invitation'}
+      onClick={toggleSound}
+      aria-pressed={enabled}
+      aria-label={enabled ? 'Disable ambient soundtrack' : 'Enable ambient soundtrack'}
+    >
+      <span className="sound-orb" aria-hidden="true">
+        {enabled ? <Volume2 size={15} /> : <VolumeX size={15} />}
       </span>
-    </div>
+      <span className="sound-wave" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+        <i />
+        <i />
+      </span>
+      <span>
+        {status === 'on'
+          ? 'Sound on'
+          : status === 'paused'
+            ? 'Scene paused'
+            : compact
+              ? 'Sound off'
+              : 'Enable sound'}
+      </span>
+    </button>
+  )
+  return (
+    <>
+      <div className="hero-sound" data-playing={status === 'on'}>
+        {soundButton(false)}
+        <p>Original ambient soundtrack · made for this space</p>
+        <span className="sound-status" role="status">
+          {status === 'error' ? 'Sound is unavailable. Tap to retry.' : ''}
+        </span>
+      </div>
+      {mounted &&
+        createPortal(
+          <div className="scene-sound" data-playing={status === 'on'}>
+            {soundButton(true)}
+          </div>,
+          document.body
+        )}
+    </>
   )
 }

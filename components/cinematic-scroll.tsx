@@ -5,10 +5,7 @@ import { animate, inView, scroll } from 'framer-motion/dom'
 
 type Frames = {
   opacity?: number[]
-  x?: number[]
   y?: number[]
-  scale?: number[]
-  clipPath?: string[]
 }
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1]
@@ -151,38 +148,34 @@ export function CinematicScroll({ children }: { children: ReactNode }) {
       )
 
       const cards = main!.querySelectorAll<HTMLElement>('.project-card')
-      cleanups.push(
-        inView(
-          cards,
-          (element) => {
-            if (!active || seen.has(element)) return
-            seen.add(element)
-            if (element.contains(document.activeElement)) return
-            const card = element as HTMLElement
-            const image = card.querySelector<HTMLElement>('.project-reveal')!
-            const info = card.querySelector<HTMLElement>('.project-info')!
-            const title = card.querySelector<HTMLElement>('h3')!
-            reveal(
-              image,
-              {
-                clipPath: [
-                  compact.matches ? 'inset(8% 0% 8% 0%)' : 'inset(35% 0% 35% 0%)',
-                  'inset(0% 0% 0% 0%)',
-                ],
-                scale: [compact.matches ? 1.025 : 1.08, 1],
-                y: [compact.matches ? 12 : 36, 0],
-              },
-              1.15
-            )
-            reveal(info, { opacity: [0, 1], y: [distance, 0] }, 0.9, 0.12)
-            reveal(title, { x: [compact.matches ? 0 : -16, 0] }, 0.9, 0.2)
-          },
-          { amount: 0.12, margin: '0px 0px -24px 0px' }
+      cards.forEach((card) => {
+        const image = card.querySelector<HTMLElement>('.project-reveal')!
+        remember(image)
+        cleanups.push(
+          scroll(
+            (progress: number) => {
+              if (!active) return
+              // Open the browser preview with the visitor's scroll, in either direction.
+              const opening = card.contains(document.activeElement)
+                ? 1
+                : Math.min(1, progress / 0.65)
+              const remaining = 1 - opening
+              image.style.clipPath = `inset(${remaining * (compact.matches ? 4 : 16)}% 0% 0% 0% round 8px)`
+              image.style.transform = `perspective(1200px) rotateX(${remaining * (compact.matches ? 0 : 8)}deg) scale(${1 - remaining * 0.045})`
+            },
+            { target: card, offset: ['start end', 'start 20%'] }
+          )
         )
-      )
-
+      })
       function revealFocusedContent(event: FocusEvent) {
         if (!(event.target instanceof Element)) return
+        const preview = event.target
+          .closest('.project-card')
+          ?.querySelector<HTMLElement>('.project-reveal')
+        if (preview) {
+          preview.style.clipPath = 'none'
+          preview.style.transform = 'none'
+        }
         // Keyboard navigation must never land on content that is still fading in.
         if (event.target.closest('[data-reveal], .project-card, .hero-copy')) {
           animations.forEach((animation) => {

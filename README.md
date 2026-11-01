@@ -10,9 +10,9 @@ Built with Next.js 16, React, TypeScript, and CSS. Most content renders on the s
 
 - Introduction: staggered hero words, soft entrances, static grain, and bounded desktop parallax.
 - Discovery: grouped heading and content reveals, a reading-progress line, and calmer transitions through About, Toolkit, and Contact.
-- Work transition: a brief accent-light sweep, an extending seam, masked project previews, and staggered project titles. The lighting fades as the showcase settles.
+- Work transition: an accent-light sweep leads into four full-width project chapters. A sticky chapter navigator follows the project crossing the reading area. Browser previews unfold with scroll position, including reverse scrolling; desktop previews remain alongside the project details while reading. Chapter links jump within the page, and case-study links navigate only on a visitor click.
 
-The existing `framer-motion/dom` entry point supplies animation controls, shared scroll scheduling, and IntersectionObserver-based reveals. There are no new dependencies, per-scroll React state updates, scroll interception, or pinned sections. Parallax is disabled at 850px and below; mobile reveal distances and mask depth are smaller. Hero idle animations pause offscreen. Observers, media-query listeners, scroll subscriptions, and animation controls are cleaned up on route changes.
+The existing `framer-motion/dom` entry point supplies animation controls, shared scroll scheduling, and IntersectionObserver-based reveals. There are no new dependencies, per-scroll React state updates, or scroll interception. Parallax and sticky project previews are disabled at 850px and below; mobile reveal distances and mask depth are smaller. Hero idle animations pause offscreen. Observers, media-query listeners, scroll subscriptions, and animation controls are cleaned up on route changes.
 
 The global pause control cancels motion and restores original inline styles. Reduced-motion preferences use the same static fallback, including changes made while the page is open. Keyboard focus completes active reveals. All content is visible in the server HTML and remains usable without the motion controller.
 
@@ -20,7 +20,7 @@ Verification includes browser checks for pause/reset, keyboard navigation, mobil
 
 The homepage portrait is a generated 3D-style illustration based on the existing profile photo, with CSS floating and perspective motion. Its source prompt and asset details are in [docs/portrait-artwork.md](docs/portrait-artwork.md).
 
-The compact homepage sound control starts an original ambient progression generated with the Web Audio API after an explicit visitor click. Soft pads, overlapping chords, and a filtered echo accompany the scene without loading recordings or external players. The waveform reflects actual playback. Pausing animations or hiding the tab suspends the audio clock; resuming continues it. Disabling sound or leaving the homepage releases the audio graph and scheduler. No playback preference is persisted, so a new visit starts silent.
+The hero's “Enable sound” invitation and a persistent bottom-right control share one original ambient progression generated with the Web Audio API after an explicit visitor click. Soft pads, overlapping chords, and a filtered echo accompany the scene without loading recordings or external players. The waveform reflects actual playback. The floating control renders outside the animated page to stay anchored to the viewport. Pausing animations or hiding the tab suspends the audio clock; resuming continues it. Disabling sound or leaving the homepage releases the audio graph and scheduler. No playback preference is persisted, so a new visit starts silent.
 
 Design references: [Dribbble portfolio animation](https://dribbble.com/search/portfolio-animation), [animated portfolios on GitHub](https://github.com/topics/animated-portfolio), and [Awwwards animation](https://www.awwwards.com/websites/animation/). The layout, orbital SVG, and styles are implemented locally; no reference-site code or artwork is bundled.
 

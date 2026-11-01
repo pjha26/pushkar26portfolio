@@ -36,6 +36,12 @@ assert.ok(
 assert.ok(home.includes('href="#main-content"'), 'A keyboard skip link must be present')
 assert.ok(home.includes('pushkar-3d-portrait.png'), 'The homepage must show the custom portrait')
 assert.ok(home.includes('Enable ambient soundtrack'), 'The soundtrack must be visitor initiated')
+assert.ok(home.includes('class="hero-sound"'), 'Sound must be discoverable in the homepage hero')
+assert.ok(home.includes('aria-label="Project chapters"'), 'Projects must have a chapter navigator')
+for (const id of projects) {
+  assert.ok(home.includes(`href="#work-${id}"`), `${id} must have a working chapter link`)
+  assert.ok(home.includes(`id="work-${id}"`), `${id} must have a server-rendered chapter target`)
+}
 assert.ok(!/<iframe[\s>]/.test(home), 'The homepage must not contain an embedded music player')
 assert.ok(!home.includes('open.spotify.com/embed'), 'The old Spotify popup must be removed')
 
