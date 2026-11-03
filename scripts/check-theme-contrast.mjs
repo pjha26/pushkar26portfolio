@@ -25,6 +25,7 @@ for (const [name, pattern] of palettes) {
     ['muted', 'surface'],
     ['accent', 'paper'],
     ['button-ink', 'button'],
+    ...(name === 'dark' ? [['signal', 'paper']] : []),
   ]) {
     assert.ok(
       colors[foreground] && colors[background],

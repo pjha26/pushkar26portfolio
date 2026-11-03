@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowDown, ArrowUpRight, Download, Mail } from 'lucide-react'
 import { SiGithub, SiLeetcode } from 'react-icons/si'
@@ -6,6 +5,7 @@ import { FaLinkedin } from 'react-icons/fa'
 import { CASES, LINKS } from '@/lib/dossier-data'
 import { SceneSound } from '@/components/scene-sound'
 import { BrushReveal } from '@/components/brush-reveal'
+import { ThemedPortrait } from '@/components/themed-portrait'
 
 const technologies = ['React', 'Next.js', 'TypeScript', 'Python', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker']
 
@@ -17,9 +17,9 @@ export function Hero() {
           <BrushReveal>
             <p className="warm-kicker">Introduction</p>
             <h1 id="hero-title">
-              Building thoughtful<br className="wide-break" />{' '}
+              <span className="hero-lead">Building thoughtful</span><br className="wide-break" />{' '}
               <em>websites</em> that solve<br className="wide-break" />{' '}
-              real-world problems.
+              <span className="hero-outcome">real-world problems.</span>
             </h1>
             <p className="warm-description">
               I’m Pushkar, a developer in Bengaluru. I build AI workflows, voice interfaces, and
@@ -46,14 +46,7 @@ export function Hero() {
         <aside className="profile-card" aria-label="About Pushkar Raj">
           <p className="profile-availability"><span /> Open to opportunities</p>
           <div className="profile-art">
-            <Image
-              src="/pushkar-3d-portrait.png"
-              alt="3D-style illustrated portrait of Pushkar Raj"
-              width={1223}
-              height={1286}
-              sizes="(max-width: 700px) 320px, 380px"
-              loading="eager"
-            />
+            <ThemedPortrait />
           </div>
           <h2>Pushkar Raj</h2>
           <p className="profile-role">Full-stack developer & AI builder</p>

@@ -4,6 +4,8 @@ A minimal developer portfolio with five separate pages: Home, Work, About, Toolk
 
 ## Pages and movement
 
+The reference-led dark palette and theme-specific portrait are documented in [the neon design direction](docs/neon-design-direction.md), including how the supplied UI/UX Pro Max repository was used. The original light theme remains intact.
+
 | Page | Route |
 | --- | --- |
 | Home | `/` |

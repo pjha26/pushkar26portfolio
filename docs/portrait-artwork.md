@@ -1,5 +1,7 @@
 # Homepage portrait artwork
 
+Dark mode now uses `public/pushkar-neon-portrait.webp`, an identity-preserving relight of the original illustration with blue and rose illumination. Light mode keeps the original asset below. See [the design direction](neon-design-direction.md) for asset details and validation.
+
 Generated with the built-in image-generation tool from `public/PRF1.jpeg`.
 
 - Project asset: `public/pushkar-3d-portrait.png` (1223 × 1286, transparent PNG).

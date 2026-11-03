@@ -28,18 +28,18 @@
 }
 html[data-theme='dark'] {
   color-scheme: dark;
-  --paper: #08090c;
-  --surface: #11141b;
+  --paper: #030407;
+  --surface: #090c13;
   --ink: #f2f3f8;
   --muted: #a4aabb;
-  --accent: #28b9ec;
-  --signal: #ff4f97;
-  --button: #28b9ec;
-  --button-ink: #08090c;
-  --line: #282d3a;
-  --art: #101824;
-  --contact: #11141b;
-  --header: #08090ced;
+  --accent: #46bfff;
+  --signal: #f02eaa;
+  --button: #46bfff;
+  --button-ink: #030407;
+  --line: #202734;
+  --art: #06101a;
+  --contact: #090c13;
+  --header: #030407ed;
 }
 * {
   box-sizing: border-box;
@@ -2010,7 +2010,7 @@ body {
   background: radial-gradient(ellipse 75% 68% at 57% -8%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 78%);
 }
 html[data-theme='dark'] .warm-hero {
-  background: radial-gradient(ellipse 82% 76% at 57% -8%, color-mix(in srgb, var(--accent) 24%, var(--paper)) 0%, color-mix(in srgb, var(--signal) 10%, var(--paper)) 45%, transparent 85%), var(--paper);
+  background: radial-gradient(ellipse 25% 46% at 84% 33%, color-mix(in srgb, var(--signal) 7%, transparent), transparent 80%), radial-gradient(ellipse 32% 50% at 72% 35%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 80%), var(--paper);
 }
 .warm-stage {
   display: grid;
@@ -2040,6 +2040,10 @@ html[data-theme='dark'] .warm-hero {
   text-transform: none;
 }
 .warm-intro h1 em { font-family: var(--serif); font-weight: 400; color: var(--accent); }
+html[data-theme='dark'] .hero-lead { color: var(--accent); }
+html[data-theme='dark'] .hero-outcome { color: var(--signal); }
+html[data-theme='dark'] .warm-intro h1 em { font-family: inherit; font-style: normal; font-weight: inherit; }
+html[data-theme='dark'] .brush-curiosity { color: var(--signal); }
 .warm-description {
   font-size: 15px;
   line-height: 1.8;
@@ -2109,6 +2113,9 @@ html[data-theme='dark'] .warm-hero {
 .profile-availability > span { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); }
 .profile-art { position: relative; overflow: hidden; height: clamp(220px, 36svh, 380px); background: radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--accent) 38%, var(--paper)), var(--art) 80%); border-radius: 7px; }
 .profile-art img { display: block; width: 100%; height: 100%; padding-top: 12px; object-fit: cover; object-position: 50% 0; }
+html[data-theme='dark'] .profile-card { background: transparent; box-shadow: none; border-color: color-mix(in srgb, var(--accent) 12%, var(--line)); }
+html[data-theme='dark'] .profile-art { background: radial-gradient(ellipse at 20% 55%, color-mix(in srgb, var(--accent) 10%, var(--paper)), transparent 70%), var(--paper); }
+html[data-theme='dark'] .profile-card h2 { color: var(--accent); }
 .profile-art::after {
   content: '';
   position: absolute;

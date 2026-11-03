@@ -34,7 +34,7 @@ assert.ok(
   'The LeetCode profile must be correct'
 )
 assert.ok(home.includes('href="#main-content"'), 'A keyboard skip link must be present')
-assert.ok(home.includes('pushkar-3d-portrait.png'), 'The homepage must show the custom portrait')
+assert.ok(home.includes('pushkar-neon-portrait.webp'), 'The dark homepage must show the neon portrait')
 assert.ok(home.includes('Quiet Circuit'), 'The original soundtrack must be named')
 assert.ok(home.includes('/audio/quiet-circuit.wav'), 'The real local audio file must be attached')
 assert.ok(home.includes('preload="none"'), 'Audio loading must be visitor initiated')
@@ -98,6 +98,7 @@ for (const path of [
   '/fonts/BRICOLAGE-OFL.txt',
   '/art/frontier-silhouettes.webp',
   '/pushkar-3d-portrait.png',
+  '/pushkar-neon-portrait.webp',
   '/arthai.png',
   '/interviewai.png',
   '/ai-concierge.png',
