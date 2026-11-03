@@ -2232,8 +2232,22 @@ html:has(.project-lab[open]) { overflow: hidden; scrollbar-gutter: stable; }
 }
 
 /* The artwork is a transparent mask: both themes retain their own colors. */
-.closing-scene { position: relative; width: 100%; margin: 8px 0 0; }
-.closing-scene figcaption { position: absolute; inset: 28px 0 auto; z-index: 1; display: flex; justify-content: space-between; gap: 16px; align-items: baseline; font-size: 12px; color: var(--muted); }
+.closing-scene { position: relative; width: 100%; margin: 8px 0 0; view-timeline: --closing-caption block; }
+.closing-scene figcaption { position: absolute; inset: 28px 0 auto; z-index: 1; display: flex; justify-content: space-between; gap: 16px; align-items: start; color: var(--ink); }
+.closing-title { font: 550 clamp(25px, 2.8vw, 42px)/1.08 var(--font-bricolage), sans-serif; letter-spacing: -.045em; }
+.closing-word { display: inline-block; }
+.closing-title-end { display: block; color: var(--accent); }
+.closing-tagline { display: grid; gap: 5px; padding-top: 4px; font: 450 clamp(13px, 1.4vw, 20px)/1.4 var(--font-bricolage), sans-serif; }
+.closing-tagline::before { content: ''; width: 34px; height: 2px; margin-bottom: 8px; background: var(--signal); transform-origin: left; animation: closing-line 8s ease-in-out infinite alternate; }
+@keyframes closing-line { from { transform: scaleX(.65); } to { transform: scaleX(1.35); } }
+@keyframes closing-type { from { opacity: .15; transform: translateY(16px); clip-path: inset(0 0 100%); } to { opacity: 1; transform: translateY(0); clip-path: inset(0); } }
+@supports (animation-timeline: view()) {
+  .closing-word { animation: closing-type linear both; animation-timeline: --closing-caption; animation-range: entry 12% entry 48%; }
+  .closing-word:nth-child(2) { animation-range: entry 20% entry 56%; }
+  .closing-title-end { animation-range: entry 28% entry 64%; }
+  .closing-tagline .closing-word { animation-range: entry 34% entry 70%; }
+  .closing-tagline .closing-word:last-child { animation-range: entry 42% entry 78%; }
+}
 .closing-landscape { position: relative; isolation: isolate; overflow: hidden; height: calc(100svh - var(--nav-height)); min-height: 420px; background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 22%, var(--paper)), var(--paper) 75%); }
 .closing-sun { position: absolute; width: min(68svh, 58vw); aspect-ratio: 1; left: 50%; bottom: 3%; translate: -50% 0; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 12px color-mix(in srgb, var(--signal) 9%, transparent), 0 0 0 28px color-mix(in srgb, var(--signal) 4%, transparent); animation: closing-drift 8s ease-in-out infinite alternate; }
 .closing-ridge { position: absolute; inset: 0; background: var(--accent); mask: url('/art/frontier-silhouettes.webp') center bottom / max(100%, 135svh) auto no-repeat; }
@@ -2244,7 +2258,9 @@ html[data-theme='dark'] .closing-ridge { background: var(--paper); }
   .closing-landscape { animation: closing-arrive linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
 }
 @media (max-width: 600px) {
-  .closing-scene figcaption { align-items: start; flex-direction: column; gap: 6px; }
+  .closing-scene figcaption { flex-direction: column; gap: 16px; }
+  .closing-tagline { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; padding: 0; }
+  .closing-tagline::before { width: 20px; margin: 0 6px 0 0; }
   .closing-sun { width: min(70svh, 110vw); bottom: 12%; }
   .closing-ridge { mask-size: auto 72%; }
 }
