@@ -47,6 +47,8 @@ assert.ok(
 assert.ok(!home.includes('id="about-title"'), 'Home must not contain the about page')
 assert.ok(!/<iframe[\s>]/.test(home), 'Embedded players must be absent')
 const work = await (await get('/work')).text()
+assert.ok(work.includes('Explore ArthAI'), 'Work must expose the interactive workbench')
+assert.ok(work.includes('Guided demo · prepared sample data'), 'The workbench must identify illustrative data')
 for (const page of ['work', 'about', 'toolkit', 'contact']) {
   assert.ok(home.includes(`href="/${page}"`), `${page} must be a real navigation destination`)
   const html = page === 'work' ? work : await (await get(`/${page}`)).text()
@@ -54,6 +56,8 @@ for (const page of ['work', 'about', 'toolkit', 'contact']) {
   assert.ok(html.includes(`${canonicalOrigin}/${page}`), `${page} must have its own canonical URL`)
 }
 const soundtrack = await get('/audio/quiet-circuit.wav')
+const contact = await (await get('/contact')).text()
+assert.ok(contact.includes('closing-landscape'), 'The final page must include the closing artwork')
 assert.ok(
   soundtrack.headers.get('content-type')?.startsWith('audio/'),
   'The audio must be served as audio'
@@ -88,6 +92,9 @@ for (const path of [
   '/manifest.json',
   '/fonts/syne-latin.woff2',
   '/fonts/manrope-latin.woff2',
+  '/fonts/bricolage-latin.ttf',
+  '/fonts/BRICOLAGE-OFL.txt',
+  '/art/frontier-silhouettes.webp',
   '/pushkar-3d-portrait.png',
   '/arthai.png',
   '/interviewai.png',

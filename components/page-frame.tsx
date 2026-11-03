@@ -24,7 +24,16 @@ export function PageFrame({ children }: { children: ReactNode }) {
             <Link href={previous.href} transitionTypes={['page-prev']}>
               <ArrowUp size={15} /> {previous.label}
             </Link>
-            <span>{String(index + 1).padStart(2, '0')} / 05</span>
+            <div className="page-rail" aria-label="All portfolio pages">
+              {PORTFOLIO_PAGES.map((page, pageIndex) => (
+                <Link key={page.href} href={page.href} aria-label={`Page ${pageIndex + 1}: ${page.label}`}
+                  aria-current={pageIndex === index ? 'page' : undefined}
+                  transitionTypes={[pageIndex < index ? 'page-prev' : 'page-next']}>
+                  <span>{String(pageIndex + 1).padStart(2, '0')}</span>
+                  <span className="rail-label">{page.label}</span>
+                </Link>
+              ))}
+            </div>
             {next ? (
               <Link href={next.href} transitionTypes={['page-next']}>
                 {next.label} <ArrowDown size={15} />

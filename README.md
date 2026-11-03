@@ -1,6 +1,6 @@
 # Pushkar Raj — Portfolio
 
-A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. The reference-inspired editorial layout retains the original themes: jet black, cerulean blue, and neon rose in dark mode; ice silver, deep aubergine, and marigold in light mode. The portrait card and subtle light-leak effect follow the active theme across the five pages. Syne and Manrope are self-hosted with their licenses in `public/fonts/`.
+A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. The reference-inspired editorial layout retains the original themes: jet black, cerulean blue, and neon rose in dark mode; ice silver, deep aubergine, and marigold in light mode. The portrait card and subtle light-leak effect follow the active theme across the five pages. Bricolage Grotesque headings and Manrope body text are self-hosted with their licenses in `public/fonts/`. The Bricolage variable font is subset to the Latin characters used by the portfolio.
 
 ## Pages and movement
 
@@ -12,11 +12,19 @@ A minimal developer portfolio with five separate pages: Home, Work, About, Toolk
 | Toolkit | `/toolkit` |
 | Contact | `/contact` |
 
-Home ends after the intro shown in the design reference. It does not contain the other sections or an offscreen spacer. Work is a compact directory; the four detailed case studies keep their direct `/projects/[id]` URLs.
+Home ends after the intro shown in the design reference. It does not contain the other sections or an offscreen spacer. Work is a compact directory; the four detailed case studies keep their direct `/projects/[id]` URLs. Project screenshots share a named ViewTransition with their case-study covers, with a normal navigation fallback when unsupported. The numbered page rail provides direct navigation between the five pages.
 
 At the end of a page, a deliberate wheel movement or upward touch swipe opens the next route. Swiping down at the start returns to the previous route. PageDown/PageUp and visible Previous/Next links provide keyboard and click alternatives. Longer pages scroll normally until their boundary. Controls, horizontal gestures, and pinch zoom are excluded from gesture navigation. A cooldown prevents momentum from skipping several pages.
 
 The installed Next.js 16 App Router supports React ViewTransition. A new solid page slides over the outgoing page while the header remains fixed. Reduced motion and the animation pause control disable the transition animation. Browsers without View Transitions still navigate normally. Browser history and direct links remain available. Old section bookmarks redirect to the corresponding page.
+
+## ArthAI workbench
+
+Use **Explore ArthAI** on the Work page to open a native modal dialog. Four clickable stages trace a request through the interface, queue, research, and report. The sample workflow uses a fictional company and explicitly labeled prepared data; it makes no live AI calls. **Under the hood** explains the engineering decision at each stage. Escape and the close button dismiss it and restore focus to its launcher. Page-swipe navigation is suspended while the dialog is open.
+
+## Closing artwork
+
+The final Contact page ends with an original generated frontier silhouette, inspired by the supplied western poster reference. A transparent WebP mask lets the landscape use the existing palette tokens in both themes instead of introducing a red/orange background. The sun moves gently; the scene has a progressive scroll reveal where CSS view timelines are supported. Reduced motion and the site's motion-pause control stop these effects. No video, canvas loop, or additional animation dependency is needed.
 
 ## Soundtrack
 

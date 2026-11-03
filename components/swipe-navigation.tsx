@@ -31,6 +31,7 @@ export function SwipeNavigation() {
       })
     }
     function onWheel(event: WheelEvent) {
+      if (document.querySelector('dialog[open]')) return
       if (
         event.ctrlKey ||
         Math.abs(event.deltaX) > Math.abs(event.deltaY) ||
@@ -56,6 +57,7 @@ export function SwipeNavigation() {
       }
     }
     function onTouchStart(event: TouchEvent) {
+      if (document.querySelector('dialog[open]')) return
       if (
         event.touches.length !== 1 ||
         (event.target instanceof Element &&
@@ -84,6 +86,7 @@ export function SwipeNavigation() {
       touch = null
     }
     function onKey(event: KeyboardEvent) {
+      if (document.querySelector('dialog[open]')) return
       if (event.target instanceof Element && event.target.closest('a,button,input,textarea,select'))
         return
       if (event.key === 'PageDown' && atBottom()) {

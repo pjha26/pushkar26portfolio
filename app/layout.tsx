@@ -13,10 +13,10 @@ const manrope = localFont({
   weight: '200 800',
   display: 'swap',
 })
-const syne = localFont({
-  src: '../public/fonts/syne-latin.woff2',
-  variable: '--font-syne',
-  weight: '400 800',
+const bricolage = localFont({
+  src: '../public/fonts/bricolage-latin.ttf',
+  variable: '--font-bricolage',
+  weight: '200 800',
   display: 'swap',
 })
 const description =
@@ -52,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${syne.variable}`}
+      className={`${manrope.variable} ${bricolage.variable}`}
       data-theme="dark"
       data-scroll-behavior="smooth"
       suppressHydrationWarning

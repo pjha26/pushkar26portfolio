@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ViewTransition } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
@@ -79,16 +80,18 @@ export default async function CaseStudy({ params }: Props) {
         </div>
       </header>
       {project.image && (
-        <div className="case-cover">
-          <Image
-            src={project.image}
-            alt={`${project.title} application interface`}
-            width={1024}
-            height={483}
-            sizes="(max-width: 700px) 90vw, 1000px"
-            loading="eager"
-          />
-        </div>
+        <ViewTransition name={`project-cover-${project.id}`} share="project-morph" default="none">
+          <div className="case-cover">
+            <Image
+              src={project.image}
+              alt={`${project.title} application interface`}
+              width={1024}
+              height={483}
+              sizes="(max-width: 700px) 90vw, 1000px"
+              loading="eager"
+            />
+          </div>
+        </ViewTransition>
       )}
       <dl className="case-facts">
         <div>
