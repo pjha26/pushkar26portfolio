@@ -8,9 +8,8 @@ export const metadata: Metadata = {
 }
 export default function ContactPage() {
   return (
-    <PageFrame>
+    <PageFrame ending={<ClosingScene />}>
       <SecureComm />
-      <ClosingScene />
     </PageFrame>
   )
 }

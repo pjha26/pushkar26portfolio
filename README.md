@@ -24,6 +24,8 @@ Use **Explore ArthAI** on the Work page to open a native modal dialog. Four clic
 
 ## Closing artwork
 
+The closing scene is edge to edge and fills the viewport below the persistent header. On Contact it follows the page navigation, so the artwork is the final screen rather than a framed card. Its caption sits within the scene, and narrow displays use a centered crop of the silhouettes.
+
 The final Contact page ends with an original generated frontier silhouette, inspired by the supplied western poster reference. A transparent WebP mask lets the landscape use the existing palette tokens in both themes instead of introducing a red/orange background. The sun moves gently; the scene has a progressive scroll reveal where CSS view timelines are supported. Reduced motion and the site's motion-pause control stop these effects. No video, canvas loop, or additional animation dependency is needed.
 
 ## Soundtrack

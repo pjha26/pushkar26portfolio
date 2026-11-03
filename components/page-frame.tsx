@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import { PORTFOLIO_PAGES } from '@/lib/portfolio-pages'
 
-export function PageFrame({ children }: { children: ReactNode }) {
+export function PageFrame({ children, ending }: { children: ReactNode; ending?: ReactNode }) {
   const path = usePathname()
   const index = PORTFOLIO_PAGES.findIndex((page) => page.href === path)
   const previous = PORTFOLIO_PAGES[index - 1]
@@ -45,6 +45,7 @@ export function PageFrame({ children }: { children: ReactNode }) {
             )}
           </nav>
         )}
+        {ending}
       </main>
     </ViewTransition>
   )

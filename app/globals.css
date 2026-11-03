@@ -2232,18 +2232,19 @@ html:has(.project-lab[open]) { overflow: hidden; scrollbar-gutter: stable; }
 }
 
 /* The artwork is a transparent mask: both themes retain their own colors. */
-.closing-scene { margin-block: 8px 28px; }
-.closing-scene figcaption { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; padding-bottom: 16px; font-size: 12px; color: var(--muted); }
-.closing-landscape { position: relative; isolation: isolate; overflow: hidden; height: clamp(220px, 28vw, 390px); border: 1px solid var(--line); border-radius: 12px; background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 22%, var(--paper)), var(--paper) 75%); }
-.closing-sun { position: absolute; width: clamp(200px, 30vw, 400px); aspect-ratio: 1; left: 50%; bottom: -18%; translate: -50% 0; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 12px color-mix(in srgb, var(--signal) 9%, transparent), 0 0 0 28px color-mix(in srgb, var(--signal) 4%, transparent); animation: closing-drift 8s ease-in-out infinite alternate; }
-.closing-ridge { position: absolute; inset: 0; background: var(--accent); mask: url('/art/frontier-silhouettes.webp') center bottom / cover no-repeat; }
+.closing-scene { position: relative; width: 100%; margin: 8px 0 0; }
+.closing-scene figcaption { position: absolute; inset: 28px 0 auto; z-index: 1; display: flex; justify-content: space-between; gap: 16px; align-items: baseline; font-size: 12px; color: var(--muted); }
+.closing-landscape { position: relative; isolation: isolate; overflow: hidden; height: calc(100svh - var(--nav-height)); min-height: 420px; background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 22%, var(--paper)), var(--paper) 75%); }
+.closing-sun { position: absolute; width: min(68svh, 58vw); aspect-ratio: 1; left: 50%; bottom: 3%; translate: -50% 0; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 12px color-mix(in srgb, var(--signal) 9%, transparent), 0 0 0 28px color-mix(in srgb, var(--signal) 4%, transparent); animation: closing-drift 8s ease-in-out infinite alternate; }
+.closing-ridge { position: absolute; inset: 0; background: var(--accent); mask: url('/art/frontier-silhouettes.webp') center bottom / max(100%, 135svh) auto no-repeat; }
 html[data-theme='dark'] .closing-ridge { background: var(--paper); }
 @keyframes closing-drift { from { transform: translateY(8px); } to { transform: translateY(-8px); } }
-@keyframes closing-arrive { from { opacity: .65; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes closing-arrive { from { opacity: .65; } to { opacity: 1; } }
 @supports (animation-timeline: view()) {
   .closing-landscape { animation: closing-arrive linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
 }
 @media (max-width: 600px) {
   .closing-scene figcaption { align-items: start; flex-direction: column; gap: 6px; }
-  .closing-ridge { mask-size: auto 100%; }
+  .closing-sun { width: min(70svh, 110vw); bottom: 12%; }
+  .closing-ridge { mask-size: auto 72%; }
 }

@@ -1,7 +1,7 @@
 export function ClosingScene() {
   return (
-    <figure className="closing-scene shell" aria-label="Frontier travelers silhouetted against a sun on the horizon">
-      <figcaption>
+    <figure className="closing-scene" aria-label="Frontier travelers silhouetted against a sun on the horizon">
+      <figcaption className="shell">
         <span className="eyebrow">Beyond the last line.</span>
         <span>Still curious. Still building.</span>
       </figcaption>
