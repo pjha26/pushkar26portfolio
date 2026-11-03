@@ -18,6 +18,10 @@ At the end of a page, a deliberate wheel movement or upward touch swipe opens th
 
 The installed Next.js 16 App Router supports React ViewTransition. A new solid page slides over the outgoing page while the header remains fixed. Reduced motion and the animation pause control disable the transition animation. Browsers without View Transitions still navigate normally. Browser history and direct links remain available. Old section bookmarks redirect to the corresponding page.
 
+## Homepage brush spotlight
+
+On devices with a fine mouse pointer, the introduction, specialties, and facts appear beneath a moving soft brush. Revealed areas disappear when the pointer moves away. The headline, actions, portrait, and audio controls stay visible. **Show details** exposes the entire introduction with keyboard access. Touch/coarse-pointer devices, reduced motion, motion pause, and visits without JavaScript receive visible details without needing hover. The effect uses a local CSS mask and pointer coordinates, with no extra dependency or animation loop.
+
 ## ArthAI workbench
 
 Use **Explore ArthAI** on the Work page to open a native modal dialog. Four clickable stages trace a request through the interface, queue, research, and report. The sample workflow uses a fictional company and explicitly labeled prepared data; it makes no live AI calls. **Under the hood** explains the engineering decision at each stage. Escape and the close button dismiss it and restore focus to its launcher. Page-swipe navigation is suspended while the dialog is open.

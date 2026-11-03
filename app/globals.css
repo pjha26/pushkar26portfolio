@@ -2058,6 +2058,26 @@ html[data-theme='dark'] .warm-hero {
 .warm-actions .button { border-radius: 8px; gap: 16px; }
 .warm-secondary { border: 1px solid var(--line); background: var(--paper); }
 .warm-secondary:hover { border-color: var(--accent); }
+.brush-introduction { margin-top: 8px; }
+.brush-details .warm-description { margin-top: 0; }
+.brush-details .warm-tags { margin-top: 10px; }
+.brush-details .warm-facts { margin-top: 12px; }
+.brush-toolbar { display: none; justify-content: space-between; align-items: center; gap: 12px; max-width: 540px; }
+.brush-instruction { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font: 10px ui-monospace, monospace; }
+.brush-toggle { border: 0; border-bottom: 1px solid var(--line); padding: 4px 0; background: transparent; color: var(--muted); font-size: 10px; }
+.brush-toggle:hover { color: var(--accent); }
+.brush-surface { position: relative; max-width: 580px; }
+.brush-hint, .brush-tip { display: none; }
+.brush-hint { position: absolute; top: 50%; left: 0; transform: translateY(-50%); pointer-events: none; color: var(--muted); font: 450 clamp(16px, 1.5vw, 22px)/1.4 var(--font-bricolage), sans-serif; }
+.brush-hint > span { display: block; margin-top: 6px; font: 10px/1.6 var(--font-manrope), sans-serif; }
+@media (min-width: 701px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html:not([data-motion='paused']) .brush-introduction[data-ready='true'] .brush-toolbar { display: flex; }
+  html:not([data-motion='paused']) .brush-introduction[data-ready='true'][data-open='false'] .brush-details { mask-image: linear-gradient(transparent, transparent); }
+  html:not([data-motion='paused']) .brush-introduction[data-ready='true'][data-open='false'] .brush-surface:hover .brush-details { mask-image: radial-gradient(ellipse 170px 105px at var(--brush-x, 50%) var(--brush-y, 50%), black 62%, transparent 100%); }
+  html:not([data-motion='paused']) .brush-introduction[data-ready='true'][data-open='false'] .brush-hint { display: block; }
+  html:not([data-motion='paused']) .brush-introduction[data-ready='true'][data-open='false'] .brush-surface:hover .brush-hint { visibility: hidden; }
+  html:not([data-motion='paused']) .brush-introduction[data-ready='true'][data-open='false'] .brush-surface:hover .brush-tip { display: block; position: absolute; left: var(--brush-x); top: var(--brush-y); width: 64px; height: 28px; translate: -50% -50%; rotate: -20deg; border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 38% 60% 43% 58%; pointer-events: none; }
+}
 .warm-intro .hero-sound { display: grid; grid-template-columns: auto 1fr; gap: 0 18px; max-width: 440px; margin-top: 20px; }
 .warm-intro .sound-invitation { grid-column: 1; grid-row: 1; font-size: 11px; }
 .warm-intro .hero-sound > p:not(.sound-status) { grid-row: 2; grid-column: 1 / -1; margin: 0; font-size: 9px; }

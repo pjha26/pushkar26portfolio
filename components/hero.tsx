@@ -5,6 +5,7 @@ import { SiGithub, SiLeetcode } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import { CASES, LINKS } from '@/lib/dossier-data'
 import { SceneSound } from '@/components/scene-sound'
+import { BrushReveal } from '@/components/brush-reveal'
 
 const technologies = ['React', 'Next.js', 'TypeScript', 'Python', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker']
 
@@ -19,17 +20,19 @@ export function Hero() {
             <em>websites</em> that solve<br className="wide-break" />{' '}
             real-world problems.
           </h1>
-          <p className="warm-description">
-            I’m Pushkar, a developer in Bengaluru. I build AI workflows, voice interfaces, and
-            real-time apps — from the first interaction to the worker behind it.
-          </p>
-          <ul className="warm-tags" aria-label="Specialties">
-            {['Next.js', 'TypeScript', 'Python', 'Applied AI'].map((tool) => <li key={tool}>{tool}</li>)}
-          </ul>
-          <dl className="warm-facts">
-            <div><dt>Selected projects</dt><dd>{String(CASES.length).padStart(2, '0')}</dd></div>
-            <div><dt>Computer Science · JSSATE</dt><dd>2027</dd></div>
-          </dl>
+          <BrushReveal>
+            <p className="warm-description">
+              I’m Pushkar, a developer in Bengaluru. I build AI workflows, voice interfaces, and
+              real-time apps — from the first interaction to the worker behind it.
+            </p>
+            <ul className="warm-tags" aria-label="Specialties">
+              {['Next.js', 'TypeScript', 'Python', 'Applied AI'].map((tool) => <li key={tool}>{tool}</li>)}
+            </ul>
+            <dl className="warm-facts">
+              <div><dt>Selected projects</dt><dd>{String(CASES.length).padStart(2, '0')}</dd></div>
+              <div><dt>Computer Science · JSSATE</dt><dd>2027</dd></div>
+            </dl>
+          </BrushReveal>
           <div className="warm-actions">
             <a className="button button-primary" href={LINKS.email}>
               Start a conversation <ArrowUpRight size={16} />
