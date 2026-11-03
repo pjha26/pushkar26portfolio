@@ -29,7 +29,13 @@ export function BrushReveal({ children }: { children: ReactNode }) {
         </div>
       </div>
       <div className="brush-surface" onPointerMove={moveBrush} onPointerEnter={moveBrush}>
-        <div className="brush-hint" aria-hidden="true">A little curiosity goes a long way.<span>Move your pointer across this space.</span></div>
+        <div className="brush-hint" aria-hidden="true">
+          <span className="brush-hint-gesture"><Paintbrush size={22} /></span>
+          <span className="brush-hint-title">
+            <span>A little </span><span className="brush-curiosity">curiosity</span><span> goes a long way.</span>
+          </span>
+          <span className="brush-hint-note">Move your pointer across this space.</span>
+        </div>
         <div className="brush-details" id={detailsId}>{children}</div>
         <span className="brush-tip" aria-hidden="true" />
       </div>

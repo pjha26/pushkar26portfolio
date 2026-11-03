@@ -2071,7 +2071,15 @@ html[data-theme='dark'] .warm-hero {
 .brush-surface { position: relative; }
 .brush-hint, .brush-tip { display: none; }
 .brush-hint { position: absolute; top: 50%; left: 0; transform: translateY(-50%); pointer-events: none; color: var(--muted); font: 450 clamp(16px, 1.5vw, 22px)/1.4 var(--font-bricolage), sans-serif; }
-.brush-hint > span { display: block; margin-top: 6px; font: 10px/1.6 var(--font-manrope), sans-serif; }
+.brush-hint-gesture { display: block; width: 72px; height: 30px; color: var(--accent); margin-bottom: 8px; }
+.brush-hint-gesture svg { animation: brush-invitation 6s ease-in-out infinite; }
+.brush-hint-title > span { display: inline-block; white-space: pre; animation: brush-phrase-in 650ms cubic-bezier(.22,.68,0,1) backwards; }
+.brush-hint-title > span:nth-child(2) { animation-delay: 120ms; }
+.brush-hint-title > span:nth-child(3) { animation-delay: 240ms; }
+.brush-curiosity { color: var(--accent); }
+.brush-hint-note { display: block; margin-top: 8px; font: 10px/1.6 var(--font-manrope), sans-serif; animation: brush-phrase-in 650ms 360ms backwards; }
+@keyframes brush-invitation { 0%, 15%, 100% { transform: translateX(0) rotate(-12deg); } 45%, 60% { transform: translateX(42px) rotate(12deg); } }
+@keyframes brush-phrase-in { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
 @media (min-width: 701px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   html:not([data-motion='paused']) .brush-introduction[data-ready='true'] .brush-toolbar { display: flex; }
   html:not([data-motion='paused']) .brush-introduction[data-ready='true'][data-open='false'] .brush-details { mask-image: linear-gradient(transparent, transparent); }

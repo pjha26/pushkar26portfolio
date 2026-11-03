@@ -20,6 +20,8 @@ The installed Next.js 16 App Router supports React ViewTransition. A new solid p
 
 ## Homepage brush spotlight
 
+The idle invitation has a staggered phrase entrance and a gentle brush-icon sweep. Its animations are scoped to the hint and obey reduced motion and the existing pause control.
+
 On wide screens with a fine mouse pointer, **Brush** reveals all introductory text beneath a moving soft brush, including the kicker, headline, biography, specialties, and facts. Revealed areas disappear when the pointer moves away. **Unbrush** shows all of that text and supports keyboard access. Actions, the portrait card, and audio controls stay visible in both modes. Narrow screens, touch/coarse-pointer devices, reduced motion, motion pause, and visits without JavaScript receive visible details without needing hover. The effect uses a local CSS mask and pointer coordinates, with no extra dependency or animation loop.
 
 ## ArthAI workbench
@@ -43,6 +45,8 @@ Audio loads only after a visitor clicks Enable sound or the header sound icon. O
 The asset is `public/audio/quiet-circuit.wav`. Regenerate it with `node scripts/generate-soundtrack.mjs`. The file is about 1.35 MB and is not loaded before interaction. `npm run test:audio` checks its PCM format, duration, audible first second, average level, and clipping headroom.
 
 ## Development
+
+Future work is prioritized in [the improvement plan](docs/improvement-plan.md).
 
 ```sh
 pnpm install
