@@ -20,7 +20,7 @@ The installed Next.js 16 App Router supports React ViewTransition. A new solid p
 
 ## Homepage brush spotlight
 
-On devices with a fine mouse pointer, the introduction, specialties, and facts appear beneath a moving soft brush. Revealed areas disappear when the pointer moves away. The headline, actions, portrait, and audio controls stay visible. **Show details** exposes the entire introduction with keyboard access. Touch/coarse-pointer devices, reduced motion, motion pause, and visits without JavaScript receive visible details without needing hover. The effect uses a local CSS mask and pointer coordinates, with no extra dependency or animation loop.
+On wide screens with a fine mouse pointer, **Brush** reveals all introductory text beneath a moving soft brush, including the kicker, headline, biography, specialties, and facts. Revealed areas disappear when the pointer moves away. **Unbrush** shows all of that text and supports keyboard access. Actions, the portrait card, and audio controls stay visible in both modes. Narrow screens, touch/coarse-pointer devices, reduced motion, motion pause, and visits without JavaScript receive visible details without needing hover. The effect uses a local CSS mask and pointer coordinates, with no extra dependency or animation loop.
 
 ## ArthAI workbench
 

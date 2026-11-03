@@ -40,7 +40,7 @@ assert.ok(home.includes('/audio/quiet-circuit.wav'), 'The real local audio file 
 assert.ok(home.includes('preload="none"'), 'Audio loading must be visitor initiated')
 assert.ok(!/<audio[^>]*autoplay/.test(home), 'Sound must never autoplay on a new visit')
 assert.ok(home.includes('class="hero-sound"'), 'Sound must be discoverable in the hero')
-assert.ok(home.includes('Show details'), 'The brush introduction must have a non-hover alternative')
+assert.ok(home.includes('Unbrush'), 'The brush introduction must have a non-hover alternative')
 assert.ok(home.includes('I’m Pushkar'), 'The introduction must remain in server-rendered content')
 assert.ok(
   !home.includes('id="work-title"'),

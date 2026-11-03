@@ -14,13 +14,13 @@ export function Hero() {
     <section className="warm-hero" aria-labelledby="hero-title">
       <div className="warm-stage shell">
         <div className="warm-intro">
-          <p className="warm-kicker">Introduction</p>
-          <h1 id="hero-title">
-            Building thoughtful<br className="wide-break" />{' '}
-            <em>websites</em> that solve<br className="wide-break" />{' '}
-            real-world problems.
-          </h1>
           <BrushReveal>
+            <p className="warm-kicker">Introduction</p>
+            <h1 id="hero-title">
+              Building thoughtful<br className="wide-break" />{' '}
+              <em>websites</em> that solve<br className="wide-break" />{' '}
+              real-world problems.
+            </h1>
             <p className="warm-description">
               I’m Pushkar, a developer in Bengaluru. I build AI workflows, voice interfaces, and
               real-time apps — from the first interaction to the worker behind it.
