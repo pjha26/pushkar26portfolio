@@ -34,7 +34,7 @@ assert.ok(
   'The LeetCode profile must be correct'
 )
 assert.ok(home.includes('href="#main-content"'), 'A keyboard skip link must be present')
-assert.ok(home.includes('pushkar-neon-portrait.webp'), 'The dark homepage must show the neon portrait')
+assert.ok(home.includes('pushkar-3d-portrait.png'), 'The centered homepage portrait must be server rendered')
 assert.ok(home.includes('Quiet Circuit'), 'The original soundtrack must be named')
 assert.ok(home.includes('/audio/quiet-circuit.wav'), 'The real local audio file must be attached')
 assert.ok(home.includes('preload="none"'), 'Audio loading must be visitor initiated')
@@ -42,11 +42,10 @@ assert.ok(!/<audio[^>]*autoplay/.test(home), 'Sound must never autoplay on a new
 assert.ok(home.includes('class="hero-sound"'), 'Sound must be discoverable in the hero')
 assert.ok(home.includes('Unbrush'), 'The brush introduction must have a non-hover alternative')
 assert.ok(home.includes('Building thoughtful websites'), 'The portfolio promise must remain in server-rendered content')
-assert.ok(
-  !home.includes('id="work-title"'),
-  'Home must end with the intro rather than contain work'
-)
-assert.ok(!home.includes('id="about-title"'), 'Home must not contain the about page')
+assert.ok(home.includes('id="work-title"'), 'The homepage must include the native-scroll work section')
+assert.ok(home.includes('id="about-title"'), 'The homepage must include the about section')
+assert.ok(home.includes('closing-landscape'), 'The continuous homepage must end with the existing artwork')
+assert.ok(home.includes('href="#about"'), 'The scroll cue must lead to a real section anchor')
 assert.ok(!/<iframe[\s>]/.test(home), 'Embedded players must be absent')
 const work = await (await get('/work')).text()
 assert.ok(work.includes('Explore ArthAI'), 'Work must expose the interactive workbench')
@@ -57,7 +56,8 @@ assert.ok(work.includes('<noscript>'), 'All case studies must remain reachable w
 const toolkit = await (await get('/toolkit')).text()
 assert.equal((toolkit.match(/<details\b/g) || []).length, 4, 'All four tool groups must have native disclosures')
 for (const page of ['work', 'about', 'toolkit', 'contact']) {
-  assert.ok(home.includes(`href="/${page}"`), `${page} must be a real navigation destination`)
+  const anchor = page === 'toolkit' ? 'skills' : page
+  assert.ok(home.includes(`href="/#${anchor}"`), `${page} must have native section navigation`)
   const html = page === 'work' ? work : await (await get(`/${page}`)).text()
   assert.equal((html.match(/<h1[\s>]/g) || []).length, 1, `${page} must have one primary heading`)
   assert.ok(html.includes(`${canonicalOrigin}/${page}`), `${page} must have its own canonical URL`)
@@ -102,6 +102,7 @@ for (const path of [
   '/fonts/bricolage-latin.ttf',
   '/fonts/BRICOLAGE-OFL.txt',
   '/art/frontier-silhouettes.webp',
+  '/art/about-ink.png',
   '/pushkar-3d-portrait.png',
   '/pushkar-neon-portrait.webp',
   '/arthai.png',

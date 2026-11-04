@@ -1,52 +1,45 @@
 # Pushkar Raj — Portfolio
 
-A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. The poster homepage uses jet black, cerulean blue, and neon rose in dark mode; ice silver, deep aubergine, and marigold in light mode. Its free-standing portrait follows the active theme. The oversized homepage name uses the existing self-hosted Syne asset; the middle-page display headings also use Syne, supporting headings use Bricolage Grotesque, and body text uses Manrope, with licenses in `public/fonts/`. The Bricolage variable font is subset to the Latin characters used by the portfolio.
+A continuous-scroll developer portfolio, reconstructed from the supplied creative portfolio reel: centered portrait, cinematic About, curved project previews, a circular work overview, a detailed project index, compact toolkit, contact, and the existing full-window closing artwork.
 
-## Pages and movement
+Headings use normal-width, self-hosted Bricolage Grotesque; body text uses Manrope. Display sizes are capped at 48–64 px on desktop. The previous stretched Syne poster typography is no longer loaded. The neutral light canvas and charcoal sections use restrained blue and rose accents; dark mode remains available. Font licenses are in `public/fonts/`.
 
-The homepage now uses the reference's borderless poster composition: oversized blue/rose name, dominant portrait, text actions, and a compact footer. See [the poster homepage design](docs/poster-homepage.md). Unbrush is the default; visitors can opt into Brush discovery.
+## Navigation and motion
 
-The reference-led dark palette and theme-specific portrait are documented in [the neon design direction](docs/neon-design-direction.md), including how the supplied UI/UX Pro Max repository was used. The original light theme remains intact.
+The homepage includes all sections. Header links use native anchors: `/#about`, `/#work`, `/#skills`, and `/#contact`. Legacy `/#projects` and `/#hero-section` anchors also remain valid. There are no global wheel, touch, or PageDown/PageUp handlers and no automatic route changes at scroll boundaries. Normal browser scrolling, trackpad momentum, pinch zoom, and keyboard scrolling stay in control.
 
-| Page | Route |
+Existing direct routes remain available:
+
+| Content | Route |
 | --- | --- |
-| Home | `/` |
+| Full portfolio | `/` |
 | Selected work | `/work` |
 | About | `/about` |
 | Toolkit | `/toolkit` |
 | Contact | `/contact` |
+| Detailed case studies | `/projects/[id]` |
 
-Home ends after the intro shown in the design reference. It does not contain the other sections or an offscreen spacer. Work is a perspective gallery with explicit project selectors, arrow controls, and a no-JavaScript case-study list; the four detailed case studies keep their direct `/projects/[id]` URLs. Project screenshots share a named ViewTransition with their case-study covers, with a normal navigation fallback when unsupported. The numbered page rail provides direct navigation between the five pages.
+Section reveals, artwork parallax, project tilts, and the circular overview follow native scroll position. A passive, frame-scheduled listener updates CSS variables without changing scroll position. Reduced motion and the header pause control show static content.
 
-At the end of a page, a deliberate wheel movement or upward touch swipe opens the next route. Swiping down at the start returns to the previous route. PageDown/PageUp and visible Previous/Next links provide keyboard and click alternatives. Longer pages scroll normally until their boundary. Controls, horizontal gestures, and pinch zoom are excluded from gesture navigation. A cooldown prevents momentum from skipping several pages.
+## Project gallery
 
-The installed Next.js 16 App Router supports React ViewTransition. A new solid page slides over the outgoing page while the header remains fixed. Reduced motion and the animation pause control disable the transition animation. Browsers without View Transitions still navigate normally. Browser history and direct links remain available. Old section bookmarks redirect to the corresponding page.
+The desktop gallery bends the real application screenshots over segmented 3D surfaces. The renderer is dynamically imported only near the viewport on eligible desktop displays and renders on demand rather than running a permanent loop. Arrow controls, project selectors, and left/right keys select projects. DOM links and optimized images remain underneath the enhancement; small screens, reduced motion, and unavailable WebGL use the image gallery. A no-JavaScript list and the detailed project index keep every case study reachable.
 
-## Homepage brush spotlight
+The circular overview and detailed index use the same four real projects. Their motion is bounded by scroll progress. No new dependency was added.
 
-The idle invitation has a staggered phrase entrance and a gentle brush-icon sweep. Its animations are scoped to the hint and obey reduced motion and the existing pause control.
+## Biography brush
 
-On wide screens with a fine mouse pointer, **Brush** reveals the name, role, and short website promise beneath a moving soft brush. Revealed areas disappear when the pointer moves away. **Unbrush** is the default and shows all of that text with keyboard access. Actions, the free-standing portrait, and audio controls stay visible in both modes. Narrow screens, touch/coarse-pointer devices, reduced motion, motion pause, and visits without JavaScript receive visible details without needing hover. The effect uses a local CSS mask and pointer coordinates, with no extra dependency or animation loop.
+Brush/Unbrush is retained as an optional discovery effect within the About biography. Unbrush is the default. Touch devices, small screens, animation pause, reduced motion, and visits without JavaScript receive visible details. Actions and navigation stay accessible.
 
-## ArthAI workbench
+## Artwork and sound
 
-Use **Explore ArthAI** on the Work page to open a native modal dialog. Four clickable stages trace a request through the interface, queue, research, and report. The sample workflow uses a fictional company and explicitly labeled prepared data; it makes no live AI calls. **Under the hood** explains the engineering decision at each stage. Escape and the close button dismiss it and restore focus to its launcher. Page-swipe navigation is suspended while the dialog is open.
+`public/art/about-ink.png` is original generated monochrome artwork for the cinematic About section. The portrait uses the existing illustration based on Pushkar's profile photo. The existing frontier silhouette and its caption animation remain the final full-width scene on the homepage and Contact route.
 
-## Closing artwork
+Quiet Circuit is the original 32-second instrumental in `public/audio/quiet-circuit.wav`. Sound is opt-in, the header control persists across sections and routes, and the hero retains volume controls. No commercial recordings or embeds are included. `node scripts/generate-soundtrack.mjs` regenerates the source audio; `npm run test:audio` validates it.
 
-The closing scene is edge to edge and fills the viewport below the persistent header. On Contact it follows the page navigation, so the artwork is the final screen rather than a framed card. Its caption sits within the scene, and narrow displays use a centered crop of the silhouettes.
+Explore ArthAI opens the existing native workbench dialog with its labeled prepared sample workflow. No live research is run by the demo.
 
-The closing tagline reveals in a staggered sequence on the scene's own CSS view timeline. Its small accent line shares the sun's eight-second rhythm. These styles are scoped to the caption; reduced motion and animation pause show all words immediately, and browsers without scroll-timeline support retain readable static text.
-
-The final Contact page ends with an original generated frontier silhouette, inspired by the supplied western poster reference. A transparent WebP mask lets the landscape use the existing palette tokens in both themes instead of introducing a red/orange background. The sun moves gently; the scene has a progressive scroll reveal where CSS view timelines are supported. Reduced motion and the site's motion-pause control stop these effects. No video, canvas loop, or additional animation dependency is needed.
-
-## Soundtrack
-
-**Quiet Circuit** is an original 32-second instrumental synthesized specifically for this portfolio, with no recordings or third-party samples. The previous low-frequency Web Audio pads have been replaced by a local PCM WAV with audible midrange notes and an immediate, short attack.
-
-Audio loads only after a visitor clicks Enable sound or the header sound icon. One native audio element in the root layout persists between routes. The hero offers a volume slider, initially 65%. The header icon can pause playback on every page. Sound is independent of animation pause, pauses while the tab is hidden, and resumes only if the visitor had enabled it. A new visit starts silent. No Spotify embed or commercial song is included.
-
-The asset is `public/audio/quiet-circuit.wav`. Regenerate it with `node scripts/generate-soundtrack.mjs`. The file is about 1.35 MB and is not loaded before interaction. `npm run test:audio` checks its PCM format, duration, audible first second, average level, and clipping headroom.
+Earlier poster and neon design documents describe superseded iterations; this README describes the current implementation.
 
 ## Development
 
@@ -67,8 +60,8 @@ npm run test:contrast
 node scripts/smoke-check.mjs http://127.0.0.1:3000
 ```
 
-Smoke checks cover the five distinct pages, case studies, contact/profile links, local audio delivery, optimized images, assets, social preview, sitemap, and 404 behavior. Browser QA checks actual media playhead progression, sound across route changes, swipe navigation, keyboard controls, and responsive layouts. Hardware speaker output, Safari/Firefox, and a full assistive-technology audit require separate checks.
+Smoke checks cover the five distinct pages, case studies, contact/profile links, local audio delivery, optimized images, assets, social preview, sitemap, and 404 behavior. Browser QA checks actual media playhead progression, sound across route changes, native section scrolling, keyboard controls, and responsive layouts. Hardware speaker output, Safari/Firefox, and a full assistive-technology audit require separate checks.
 
-The homepage portrait is a generated 3D-style illustration based on the profile photograph; see [portrait artwork](docs/portrait-artwork.md). Existing optional AI/API/3D source remains in the checkout but is not mounted in the portfolio.
+The homepage portrait is a generated 3D-style illustration based on the profile photograph; see [portrait artwork](docs/portrait-artwork.md). Older optional AI/API components remain unmounted. The work gallery lazily uses the installed Three.js renderer for curved screenshot surfaces.
 
 Design references: [Dribbble portfolio animation](https://dribbble.com/search/portfolio-animation) and [Next.js view-transition patterns](https://nextjs.org/docs/app/guides/view-transitions). The layout and interactions are implemented locally; reference-site assets and code are not copied.

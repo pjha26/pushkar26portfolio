@@ -15,6 +15,7 @@ const items = [
 
 export function FloatingNav() {
   const pathname = usePathname()
+  const destination = (id: string) => pathname === '/' ? (id === '/toolkit' ? '/#skills' : `/#${id.slice(1)}`) : id
   const [open, setOpen] = useState(false)
   const [dark, setDark] = useState(false)
   const [motionPaused, setMotionPaused] = useState(false)
@@ -70,7 +71,7 @@ export function FloatingNav() {
           {items.map((item) => (
             <Link
               key={item.id}
-              href={item.id}
+              href={destination(item.id)}
               transitionTypes={['page-next']}
               aria-current={pathname === item.id ? 'page' : undefined}
             >
@@ -116,7 +117,7 @@ export function FloatingNav() {
           {items.map((item) => (
             <Link
               key={item.id}
-              href={item.id}
+              href={destination(item.id)}
               transitionTypes={['page-next']}
               aria-current={pathname === item.id ? 'page' : undefined}
               onClick={() => setOpen(false)}

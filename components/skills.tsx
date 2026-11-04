@@ -21,11 +21,14 @@ const toolkit = [
   },
 ]
 
-export function Skills() {
+export function Skills({ embedded = false }: { embedded?: boolean }) {
+  const Heading = embedded ? 'h2' : 'h1'
+  const GroupHeading = embedded ? 'h3' : 'h2'
   return (
-    <section className="reel-toolkit shell" id="skills" aria-labelledby="toolkit-title">
+    <section className="studio-toolkit studio-dark" id="skills" aria-labelledby="toolkit-title">
+      <div className="studio-toolkit-layout shell">
         <div className="reel-toolkit-heading">
-          <h1 id="toolkit-title">A practical<br /><span>toolkit.</span></h1>
+          <Heading id="toolkit-title">A practical<br /><span>toolkit.</span></Heading>
           <p>
             The tools change. The goal stays the same:
             <br />
@@ -35,7 +38,7 @@ export function Skills() {
         <div className="reel-toolkit-index">
           {toolkit.map((group, index) => (
             <details className="reel-toolkit-item" name="toolkit" key={group.label} open={index === 0}>
-              <summary><span>0{index + 1}</span><h2>{group.label}</h2><span className="reel-disclosure" aria-hidden="true" /></summary>
+              <summary><span>0{index + 1}</span><GroupHeading>{group.label}</GroupHeading><span className="reel-disclosure" aria-hidden="true" /></summary>
               <div className="reel-toolkit-detail">
               <p>{group.description}</p>
               <ul>
@@ -47,6 +50,7 @@ export function Skills() {
             </details>
           ))}
         </div>
+      </div>
     </section>
   )
 }

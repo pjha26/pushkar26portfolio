@@ -10,7 +10,7 @@ function subscribe(onChange: () => void) {
 }
 
 const isDark = () => document.documentElement.dataset.theme !== 'light'
-const serverTheme = () => true
+const serverTheme = () => false
 
 export function ThemedPortrait() {
   const dark = useSyncExternalStore(subscribe, isDark, serverTheme)
@@ -20,7 +20,7 @@ export function ThemedPortrait() {
       alt="Illustrated portrait of Pushkar Raj"
       width={dark ? 1000 : 1223}
       height={dark ? 1052 : 1286}
-      sizes="(max-width: 900px) 100vw, 62vw"
+      sizes="(max-width: 700px) 260px, 340px"
       loading="eager"
     />
   )

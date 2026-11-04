@@ -4,7 +4,7 @@ import localFont from 'next/font/local'
 import { FloatingNav } from '@/components/floating-nav'
 import { Footer } from '@/components/footer'
 import { SoundProvider } from '@/components/scene-sound'
-import { SwipeNavigation } from '@/components/swipe-navigation'
+import { NativeScrollMotion } from '@/components/native-scroll-motion'
 import './globals.css'
 
 const manrope = localFont({
@@ -18,13 +18,6 @@ const bricolage = localFont({
   variable: '--font-bricolage',
   weight: '200 800',
   display: 'swap',
-})
-const poster = localFont({
-  src: '../public/fonts/syne-latin.woff2',
-  variable: '--font-poster',
-  weight: '400 800',
-  display: 'swap',
-  preload: false,
 })
 const description =
   'I’m Pushkar Raj, a full-stack developer and computer science student in Bengaluru. Explore my work in AI applications, real-time systems, and the web.'
@@ -50,8 +43,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#eef1f5' },
-    { media: '(prefers-color-scheme: dark)', color: '#030407' },
+    { media: '(prefers-color-scheme: light)', color: '#f1f0ec' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b0d13' },
   ],
 }
 
@@ -59,8 +52,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${bricolage.variable} ${poster.variable}`}
-      data-theme="dark"
+      className={`${manrope.variable} ${bricolage.variable}`}
+      data-theme="light"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
@@ -68,7 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{document.documentElement.dataset.theme=localStorage.getItem('portfolio-color-mode')==='light'?'light':'dark'}catch{}",
+              "try{document.documentElement.dataset.theme=localStorage.getItem('portfolio-color-mode')==='dark'?'dark':'light'}catch{}",
           }}
         />
       </head>
@@ -78,7 +71,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         <SoundProvider>
           <FloatingNav />
-          <SwipeNavigation />
+          <NativeScrollMotion />
           {children}
           <Footer />
         </SoundProvider>
