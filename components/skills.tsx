@@ -32,7 +32,7 @@ export function Skills() {
             choose what helps the idea work.
           </p>
         </div>
-        <div className="reel-toolkit-index" data-no-swipe>
+        <div className="reel-toolkit-index">
           {toolkit.map((group, index) => (
             <details className="reel-toolkit-item" name="toolkit" key={group.label} open={index === 0}>
               <summary><span>0{index + 1}</span><h2>{group.label}</h2><span className="reel-disclosure" aria-hidden="true" /></summary>

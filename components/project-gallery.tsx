@@ -13,7 +13,7 @@ export function ProjectGallery({ projects }: { projects: Project[] }) {
   const move = (direction: number) => setSelected(index => (index + direction + projects.length) % projects.length)
 
   return (
-    <div className="reel-gallery" data-no-swipe onKeyDown={event => {
+    <div className="reel-gallery" onKeyDown={event => {
       if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
         event.preventDefault()
         move(event.key === 'ArrowRight' ? 1 : -1)
