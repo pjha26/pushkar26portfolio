@@ -1,6 +1,6 @@
 # Pushkar Raj — Portfolio
 
-A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. The poster homepage uses jet black, cerulean blue, and neon rose in dark mode; ice silver, deep aubergine, and marigold in light mode. Its free-standing portrait follows the active theme. The oversized homepage name uses the existing self-hosted Syne asset; other headings use Bricolage Grotesque and body text uses Manrope, with licenses in `public/fonts/`. The Bricolage variable font is subset to the Latin characters used by the portfolio.
+A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. The poster homepage uses jet black, cerulean blue, and neon rose in dark mode; ice silver, deep aubergine, and marigold in light mode. Its free-standing portrait follows the active theme. The oversized homepage name uses the existing self-hosted Syne asset; the middle-page display headings also use Syne, supporting headings use Bricolage Grotesque, and body text uses Manrope, with licenses in `public/fonts/`. The Bricolage variable font is subset to the Latin characters used by the portfolio.
 
 ## Pages and movement
 
@@ -16,7 +16,7 @@ The reference-led dark palette and theme-specific portrait are documented in [th
 | Toolkit | `/toolkit` |
 | Contact | `/contact` |
 
-Home ends after the intro shown in the design reference. It does not contain the other sections or an offscreen spacer. Work is a compact directory; the four detailed case studies keep their direct `/projects/[id]` URLs. Project screenshots share a named ViewTransition with their case-study covers, with a normal navigation fallback when unsupported. The numbered page rail provides direct navigation between the five pages.
+Home ends after the intro shown in the design reference. It does not contain the other sections or an offscreen spacer. Work is a perspective gallery with explicit project selectors, arrow controls, and a no-JavaScript case-study list; the four detailed case studies keep their direct `/projects/[id]` URLs. Project screenshots share a named ViewTransition with their case-study covers, with a normal navigation fallback when unsupported. The numbered page rail provides direct navigation between the five pages.
 
 At the end of a page, a deliberate wheel movement or upward touch swipe opens the next route. Swiping down at the start returns to the previous route. PageDown/PageUp and visible Previous/Next links provide keyboard and click alternatives. Longer pages scroll normally until their boundary. Controls, horizontal gestures, and pinch zoom are excluded from gesture navigation. A cooldown prevents momentum from skipping several pages.
 

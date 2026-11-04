@@ -23,36 +23,30 @@ const toolkit = [
 
 export function Skills() {
   return (
-    <section className="toolkit-section section-space" id="skills" aria-labelledby="toolkit-title">
-      <div className="shell">
-        <div className="section-heading" data-reveal>
-          <div>
-            <p className="eyebrow section-kicker">03 / Tools of the trade</p>
-            <h1 id="toolkit-title">
-              A practical <em>toolkit.</em>
-            </h1>
-          </div>
+    <section className="reel-toolkit shell" id="skills" aria-labelledby="toolkit-title">
+        <div className="reel-toolkit-heading">
+          <h1 id="toolkit-title">A practical<br /><span>toolkit.</span></h1>
           <p>
             The tools change. The goal stays the same:
             <br />
             choose what helps the idea work.
           </p>
         </div>
-        <div className="toolkit-grid" data-reveal>
+        <div className="reel-toolkit-index" data-no-swipe>
           {toolkit.map((group, index) => (
-            <div className="toolkit-group" key={group.label}>
-              <span className="toolkit-index">0{index + 1}</span>
-              <h3>{group.label}</h3>
+            <details className="reel-toolkit-item" name="toolkit" key={group.label} open={index === 0}>
+              <summary><span>0{index + 1}</span><h2>{group.label}</h2><span className="reel-disclosure" aria-hidden="true" /></summary>
+              <div className="reel-toolkit-detail">
               <p>{group.description}</p>
               <ul>
                 {group.skills.map((skill) => (
                   <li key={skill}>{skill}</li>
                 ))}
               </ul>
-            </div>
+              </div>
+            </details>
           ))}
         </div>
-      </div>
     </section>
   )
 }

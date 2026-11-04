@@ -19,11 +19,11 @@ export function SecureComm() {
 
   return (
     <section
-      className="contact-section section-space shell"
+      className="reel-contact shell"
       id="contact"
       aria-labelledby="contact-title"
     >
-      <div className="contact-panel" data-reveal>
+      <div className="reel-contact-content">
         <div className="contact-topline">
           <span className="eyebrow">04 / Let’s make something worthwhile</span>
           <span className="availability">

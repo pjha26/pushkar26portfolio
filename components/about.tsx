@@ -3,33 +3,22 @@ import { ArrowUpRight } from 'lucide-react'
 
 export function About() {
   return (
-    <section className="about-section section-space shell" id="about" aria-labelledby="about-title">
-      <div className="about-grid">
-        <div className="about-portrait" data-reveal>
-          <div className="portrait-frame">
+    <section className="reel-about shell" id="about" aria-labelledby="about-title">
+      <div className="reel-about-heading">
+        <span className="reel-build-word" aria-hidden="true">BUILD</span>
+        <h1 id="about-title">Between the<br /><span>UI /</span> and the<br /><em>worker queue.</em></h1>
+      </div>
+      <div className="reel-about-grid">
+        <div className="reel-about-photo">
             <Image
               src="/PRF1.jpeg"
               alt="Pushkar Raj"
               width={768}
               height={812}
-              sizes="(max-width: 700px) 80vw, 320px"
+              sizes="(max-width: 700px) 90vw, 42vw"
             />
-            <span className="portrait-mark" aria-hidden="true">
-              pr.
-            </span>
-          </div>
-          <div className="portrait-caption">
-            <span>Pushkar Raj</span>
-            <span>Bengaluru, IN ↗</span>
-          </div>
         </div>
-        <div className="about-copy" data-reveal>
-          <p className="eyebrow section-kicker">02 / The person behind the code</p>
-          <h1 id="about-title">
-            Between the UI
-            <br />
-            and the <em>worker queue.</em>
-          </h1>
+        <div className="reel-about-copy">
           <p>
             I’m Pushkar, a Computer Science student at JSS Academy of Technical Education,
             Bengaluru, specializing in AI & Machine Learning.
@@ -40,16 +29,16 @@ export function About() {
             the decisions behind each build.
           </p>
           <a
-            className="text-link about-resume"
+            className="text-link"
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
           >
-            A little more about my background <ArrowUpRight size={16} />
+            Résumé <ArrowUpRight size={20} />
           </a>
         </div>
       </div>
-      <div className="about-foundation">
+      <div className="reel-foundation">
         <span className="eyebrow">2023–2027 / JSSATE, Bengaluru</span>
         <p>B.E. Computer Science · AI &amp; Machine Learning</p>
       </div>
