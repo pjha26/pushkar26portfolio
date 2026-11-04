@@ -1,5 +1,7 @@
 # Blue / rose dark-mode refinement
 
+The later [poster homepage redesign](poster-homepage.md) replaces the earlier card-based composition described below. These palette and portrait choices remain in use.
+
 The user's supplied futuristic portrait reference is the color and lighting direction. This update refines the existing portfolio rather than replacing its routes, copy, or interactions.
 
 ## Tokens

@@ -19,6 +19,13 @@ const bricolage = localFont({
   weight: '200 800',
   display: 'swap',
 })
+const poster = localFont({
+  src: '../public/fonts/syne-latin.woff2',
+  variable: '--font-poster',
+  weight: '400 800',
+  display: 'swap',
+  preload: false,
+})
 const description =
   'I’m Pushkar Raj, a full-stack developer and computer science student in Bengaluru. Explore my work in AI applications, real-time systems, and the web.'
 
@@ -52,7 +59,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${bricolage.variable}`}
+      className={`${manrope.variable} ${bricolage.variable} ${poster.variable}`}
       data-theme="dark"
       data-scroll-behavior="smooth"
       suppressHydrationWarning

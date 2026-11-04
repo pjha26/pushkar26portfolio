@@ -1,8 +1,10 @@
 # Pushkar Raj — Portfolio
 
-A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. The reference-inspired editorial layout retains the original themes: jet black, cerulean blue, and neon rose in dark mode; ice silver, deep aubergine, and marigold in light mode. The portrait card and subtle light-leak effect follow the active theme across the five pages. Bricolage Grotesque headings and Manrope body text are self-hosted with their licenses in `public/fonts/`. The Bricolage variable font is subset to the Latin characters used by the portfolio.
+A minimal developer portfolio with five separate pages: Home, Work, About, Toolkit, and Contact. The poster homepage uses jet black, cerulean blue, and neon rose in dark mode; ice silver, deep aubergine, and marigold in light mode. Its free-standing portrait follows the active theme. The oversized homepage name uses the existing self-hosted Syne asset; other headings use Bricolage Grotesque and body text uses Manrope, with licenses in `public/fonts/`. The Bricolage variable font is subset to the Latin characters used by the portfolio.
 
 ## Pages and movement
+
+The homepage now uses the reference's borderless poster composition: oversized blue/rose name, dominant portrait, text actions, and a compact footer. See [the poster homepage design](docs/poster-homepage.md). Unbrush is the default; visitors can opt into Brush discovery.
 
 The reference-led dark palette and theme-specific portrait are documented in [the neon design direction](docs/neon-design-direction.md), including how the supplied UI/UX Pro Max repository was used. The original light theme remains intact.
 
@@ -24,7 +26,7 @@ The installed Next.js 16 App Router supports React ViewTransition. A new solid p
 
 The idle invitation has a staggered phrase entrance and a gentle brush-icon sweep. Its animations are scoped to the hint and obey reduced motion and the existing pause control.
 
-On wide screens with a fine mouse pointer, **Brush** reveals all introductory text beneath a moving soft brush, including the kicker, headline, biography, specialties, and facts. Revealed areas disappear when the pointer moves away. **Unbrush** shows all of that text and supports keyboard access. Actions, the portrait card, and audio controls stay visible in both modes. Narrow screens, touch/coarse-pointer devices, reduced motion, motion pause, and visits without JavaScript receive visible details without needing hover. The effect uses a local CSS mask and pointer coordinates, with no extra dependency or animation loop.
+On wide screens with a fine mouse pointer, **Brush** reveals the name, role, and short website promise beneath a moving soft brush. Revealed areas disappear when the pointer moves away. **Unbrush** is the default and shows all of that text with keyboard access. Actions, the free-standing portrait, and audio controls stay visible in both modes. Narrow screens, touch/coarse-pointer devices, reduced motion, motion pause, and visits without JavaScript receive visible details without needing hover. The effect uses a local CSS mask and pointer coordinates, with no extra dependency or animation loop.
 
 ## ArthAI workbench
 

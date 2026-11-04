@@ -41,7 +41,7 @@ assert.ok(home.includes('preload="none"'), 'Audio loading must be visitor initia
 assert.ok(!/<audio[^>]*autoplay/.test(home), 'Sound must never autoplay on a new visit')
 assert.ok(home.includes('class="hero-sound"'), 'Sound must be discoverable in the hero')
 assert.ok(home.includes('Unbrush'), 'The brush introduction must have a non-hover alternative')
-assert.ok(home.includes('I’m Pushkar'), 'The introduction must remain in server-rendered content')
+assert.ok(home.includes('Building thoughtful websites'), 'The portfolio promise must remain in server-rendered content')
 assert.ok(
   !home.includes('id="work-title"'),
   'Home must end with the intro rather than contain work'

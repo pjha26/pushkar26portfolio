@@ -20,7 +20,7 @@ export function ThemedPortrait() {
       alt="Illustrated portrait of Pushkar Raj"
       width={dark ? 1000 : 1223}
       height={dark ? 1052 : 1286}
-      sizes="(max-width: 700px) 320px, 380px"
+      sizes="(max-width: 900px) 100vw, 62vw"
       loading="eager"
     />
   )

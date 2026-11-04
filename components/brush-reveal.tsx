@@ -5,7 +5,7 @@ import { Paintbrush } from 'lucide-react'
 
 export function BrushReveal({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const detailsId = useId()
 
   useEffect(() => setReady(true), [])

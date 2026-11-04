@@ -1,69 +1,46 @@
 import Link from 'next/link'
-import { ArrowDown, ArrowUpRight, Download, Mail } from 'lucide-react'
-import { SiGithub, SiLeetcode } from 'react-icons/si'
-import { FaLinkedin } from 'react-icons/fa'
-import { CASES, LINKS } from '@/lib/dossier-data'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import { LINKS } from '@/lib/dossier-data'
 import { SceneSound } from '@/components/scene-sound'
 import { BrushReveal } from '@/components/brush-reveal'
 import { ThemedPortrait } from '@/components/themed-portrait'
 
-const technologies = ['React', 'Next.js', 'TypeScript', 'Python', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker']
-
 export function Hero() {
   return (
-    <section className="warm-hero" aria-labelledby="hero-title">
-      <div className="warm-stage shell">
-        <div className="warm-intro">
+    <section className="poster-hero" aria-labelledby="hero-title">
+      <div className="poster-scene">
+        <div className="poster-copy">
+          <p className="poster-kicker">Independent developer<br />Bengaluru, IN</p>
           <BrushReveal>
-            <p className="warm-kicker">Introduction</p>
-            <h1 id="hero-title">
-              <span className="hero-lead">Building thoughtful</span><br className="wide-break" />{' '}
-              <em>websites</em> that solve<br className="wide-break" />{' '}
-              <span className="hero-outcome">real-world problems.</span>
+            <h1 id="hero-title" className="poster-title">
+              <span>Pushkar</span>{' '}<span className="poster-name-end">Raj</span>
             </h1>
-            <p className="warm-description">
-              I’m Pushkar, a developer in Bengaluru. I build AI workflows, voice interfaces, and
-              real-time apps — from the first interaction to the worker behind it.
-            </p>
-            <ul className="warm-tags" aria-label="Specialties">
-              {['Next.js', 'TypeScript', 'Python', 'Applied AI'].map((tool) => <li key={tool}>{tool}</li>)}
-            </ul>
-            <dl className="warm-facts">
-              <div><dt>Selected projects</dt><dd>{String(CASES.length).padStart(2, '0')}</dd></div>
-              <div><dt>Computer Science · JSSATE</dt><dd>2027</dd></div>
-            </dl>
+            <p className="poster-role">Full stack developer &amp; AI builder</p>
+            <p className="poster-description">Building thoughtful websites that solve real world problems.</p>
           </BrushReveal>
-          <div className="warm-actions">
-            <a className="button button-primary" href={LINKS.email}>
-              Start a conversation <ArrowUpRight size={16} />
-            </a>
-            <Link className="button warm-secondary" href="/work" transitionTypes={['page-next']}>
-              Explore my work <ArrowDown size={16} />
+          <div className="poster-actions">
+            <Link className="poster-primary" href="/work" transitionTypes={['page-next']}>
+              Explore my work <ArrowDown size={18} />
             </Link>
+            <a href={LINKS.email}>Start a conversation <ArrowUpRight size={18} /></a>
           </div>
           <SceneSound />
         </div>
-        <aside className="profile-card" aria-label="About Pushkar Raj">
-          <p className="profile-availability"><span /> Open to opportunities</p>
-          <div className="profile-art">
-            <ThemedPortrait />
-          </div>
-          <h2>Pushkar Raj</h2>
-          <p className="profile-role">Full-stack developer & AI builder</p>
-          <a className="profile-email" href={LINKS.email}><Mail size={16} /> pjha2608@gmail.com</a>
-          <div className="profile-socials">
-            <a href={LINKS.github} target="_blank" rel="noopener noreferrer"><SiGithub size={16} /> GitHub</a>
-            <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedin size={16} /> LinkedIn</a>
-            <a href={LINKS.leetcode} target="_blank" rel="noopener noreferrer"><SiLeetcode size={16} /> LeetCode</a>
-          </div>
-          <a className="button profile-resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-            <Download size={16} /> Download résumé <ArrowUpRight size={15} />
-          </a>
-        </aside>
+        <div className="poster-portrait">
+          <ThemedPortrait />
+        </div>
       </div>
-      <div className="warm-footer shell">
-        <ul aria-label="Development tools">{technologies.map((tool) => <li key={tool}>{tool}</li>)}</ul>
-        <Link href="/work" className="scroll-cue" transitionTypes={['page-next']}>
+      <div className="poster-footer shell">
+        <div className="poster-contact">
+          <a href={LINKS.email}>pjha2608@gmail.com</a>
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé <ArrowUpRight size={13} /></a>
+        </div>
+        <nav className="poster-socials" aria-label="Social profiles">
+          <a href={LINKS.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href={LINKS.leetcode} target="_blank" rel="noopener noreferrer">LeetCode</a>
+        </nav>
+        <Link href="/work" className="poster-scroll" transitionTypes={['page-next']}>
           Swipe up to explore <ArrowDown size={14} />
         </Link>
       </div>
