@@ -12,6 +12,7 @@ async function get(path) {
 }
 
 const home = await (await get('/')).text()
+assert.match(home, /<canvas\b(?=[^>]*class="ascii-intro")(?=[^>]*\bhidden\b)[^>]*>/, 'The intro must start hidden without JavaScript')
 assert.ok(
   home.includes('data-scroll-behavior="smooth"'),
   'Next.js must know about native smooth scrolling'

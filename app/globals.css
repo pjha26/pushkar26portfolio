@@ -56,6 +56,17 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
+.ascii-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ascii-intro { display: none; }
+}
 a {
   color: inherit;
   text-decoration: none;

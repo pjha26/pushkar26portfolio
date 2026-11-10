@@ -5,6 +5,7 @@ import { FloatingNav } from '@/components/floating-nav'
 import { Footer } from '@/components/footer'
 import { SoundProvider } from '@/components/scene-sound'
 import { NativeScrollMotion } from '@/components/native-scroll-motion'
+import { Preloader } from '@/components/preloader'
 import './globals.css'
 
 const manrope = localFont({
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body>
+        <Preloader />
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
