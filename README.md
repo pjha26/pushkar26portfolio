@@ -1,6 +1,6 @@
 # Pushkar Raj — Portfolio
 
-A continuous-scroll developer portfolio, reconstructed from the supplied creative portfolio reel: centered portrait, cinematic About, curved project previews, a circular work overview, a detailed project index, compact toolkit, contact, and the existing full-window closing artwork.
+A continuous-scroll developer portfolio, reconstructed from the supplied creative portfolio reel: centered portrait, cinematic About, an interactive project book, compact toolkit, contact, and the existing full-window closing artwork.
 
 Headings use normal-width, self-hosted Bricolage Grotesque; body text uses Manrope. Display sizes are capped at 48–64 px on desktop. The previous stretched Syne poster typography is no longer loaded. The neutral light canvas and charcoal sections use restrained blue and rose accents; dark mode remains available. Font licenses are in `public/fonts/`.
 
@@ -19,13 +19,11 @@ Existing direct routes remain available:
 | Contact | `/contact` |
 | Detailed case studies | `/projects/[id]` |
 
-Section reveals, artwork parallax, project tilts, and the circular overview follow native scroll position. A passive, frame-scheduled listener updates CSS variables without changing scroll position. Reduced motion and the header pause control show static content.
+Section reveals and artwork parallax follow native scroll position. A passive, frame-scheduled listener updates CSS variables without changing scroll position. Reduced motion and the header pause control show static content.
 
 ## Project gallery
 
-The desktop gallery bends the real application screenshots over segmented 3D surfaces. The renderer is dynamically imported only near the viewport on eligible desktop displays and renders on demand rather than running a permanent loop. Arrow controls, project selectors, and left/right keys select projects. DOM links and optimized images remain underneath the enhancement; small screens, reduced motion, and unavailable WebGL use the image gallery. A no-JavaScript list and the detailed project index keep every case study reachable.
-
-The circular overview and detailed index use the same four real projects. Their motion is bounded by scroll progress. No new dependency was added.
+The project book pairs each application screenshot with its case study and four implementation steps. Select a project by name or with the arrow controls. The short page turn respects reduced motion and the motion pause control. All four case studies also have plain links when JavaScript is disabled.
 
 ## Biography brush
 
@@ -62,6 +60,6 @@ node scripts/smoke-check.mjs http://127.0.0.1:3000
 
 Smoke checks cover the five distinct pages, case studies, contact/profile links, local audio delivery, optimized images, assets, social preview, sitemap, and 404 behavior. Browser QA checks actual media playhead progression, sound across route changes, native section scrolling, keyboard controls, and responsive layouts. Hardware speaker output, Safari/Firefox, and a full assistive-technology audit require separate checks.
 
-The homepage portrait is a generated 3D-style illustration based on the profile photograph; see [portrait artwork](docs/portrait-artwork.md). Older optional AI/API components remain unmounted. The work gallery lazily uses the installed Three.js renderer for curved screenshot surfaces.
+The homepage portrait is a generated 3D-style illustration based on the profile photograph; see [portrait artwork](docs/portrait-artwork.md). Older optional AI/API components remain unmounted.
 
 Design references: [Dribbble portfolio animation](https://dribbble.com/search/portfolio-animation) and [Next.js view-transition patterns](https://nextjs.org/docs/app/guides/view-transitions). The layout and interactions are implemented locally; reference-site assets and code are not copied.
