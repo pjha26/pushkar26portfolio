@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import Image from 'next/image'
+import { ArrowDown, MapPin } from 'lucide-react'
 import { SceneSound } from '@/components/scene-sound'
 import { ThemedPortrait } from '@/components/themed-portrait'
 
@@ -12,16 +13,19 @@ export function Hero() {
         <div className="studio-portrait"><ThemedPortrait /></div>
         <p className="studio-name">Pushkar Raj</p>
         <p className="studio-role">Full-stack developer &amp; AI builder</p>
+        <p className="studio-promise">I build tools that help developers trace failures, teams research leads, and students practice interviews.</p>
       </div>
       <div className="studio-hero-bottom">
-        <p className="studio-location">Independent developer<br /><span>Bengaluru, IN</span></p>
-        <div className="studio-hero-actions">
-          <Link className="text-link" href="#work">Explore my work <ArrowUpRight size={16} /></Link>
-          <SceneSound />
-        </div>
-        <p className="studio-promise">Building thoughtful websites that solve real world problems.</p>
+        <p className="studio-location"><MapPin size={15} aria-hidden="true" /> Bengaluru, IN</p>
+        <Link className="studio-work-link" href="#work">
+          Explore my work <ArrowDown size={16} aria-hidden="true" />
+          <span className="studio-work-print" aria-hidden="true">
+            <Image src="/arthai.png" alt="" width={1024} height={483} sizes="220px" />
+            <span>ArthAI <i>Research workspace</i></span>
+          </span>
+        </Link>
+        <SceneSound />
       </div>
-      <a className="studio-scroll-cue" href="#about" aria-label="Scroll to About"><ArrowDown size={17} /><span>Scroll to explore</span></a>
     </section>
   )
 }

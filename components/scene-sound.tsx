@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
-import { Volume2, VolumeX } from 'lucide-react'
+import { ChevronUp, Volume2, VolumeX } from 'lucide-react'
 
 type SoundState = {
   status: 'off' | 'loading' | 'on' | 'paused' | 'error'
@@ -96,56 +96,54 @@ export function SceneSound({ compact = false }: { compact?: boolean }) {
       </button>
     )
   return (
-    <div className="hero-sound" data-playing={playing}>
-      <button
-        className="sound-invitation"
-        onClick={sound.toggle}
-        aria-label={
-          playing
-            ? 'Sound on — pause Quiet Circuit soundtrack'
-            : 'Enable sound — play Quiet Circuit soundtrack'
-        }
-        aria-pressed={playing}
-      >
-        <span className="sound-orb" aria-hidden="true">
-          {playing ? <Volume2 size={15} /> : <VolumeX size={15} />}
-        </span>
-        <span className="sound-wave" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-        </span>
-        <span>
-          {sound.status === 'loading'
-            ? 'Loading sound…'
-            : playing
-              ? 'Sound on'
-              : sound.status === 'error'
-                ? 'Retry sound'
-                : 'Enable sound'}
-        </span>
-      </button>
-      <p>Quiet Circuit · original instrumental</p>
-      <label className="sound-volume">
-        Volume{' '}
-        <input
-          aria-label="Soundtrack volume"
-          type="range"
-          min="0"
-          max="1"
-          step="0.05"
-          value={sound.volume}
-          onChange={(event) => sound.setVolume(Number(event.target.value))}
-        />{' '}
-        {Math.round(sound.volume * 100)}%
-      </label>
-      <p className="sound-status" role="status">
-        {sound.status === 'error'
-          ? 'Audio could not play. Tap Retry sound; check the tab is not muted.'
-          : ''}
-      </p>
-    </div>
+    <details className="hero-sound" onKeyDown={event => {
+      if (event.key === 'Escape') {
+        event.currentTarget.open = false
+        event.currentTarget.querySelector('summary')?.focus()
+      }
+    }} onBlur={event => {
+      if (!event.currentTarget.contains(event.relatedTarget)) event.currentTarget.open = false
+    }}>
+      <summary aria-label={`Sound settings, sound ${playing ? 'on' : 'off'}`}>
+        {playing ? <Volume2 size={16} /> : <VolumeX size={16} />}
+        Sound {playing ? 'on' : 'off'} <ChevronUp size={13} aria-hidden="true" />
+      </summary>
+      <div className="sound-settings">
+        <p>Quiet Circuit <small>Original instrumental</small></p>
+        <button
+          className="sound-invitation"
+          onClick={sound.toggle}
+          aria-label={label}
+        >
+          <span>
+            {sound.status === 'loading'
+              ? 'Loading sound…'
+              : playing
+                ? 'Pause soundtrack'
+                : sound.status === 'error'
+                  ? 'Retry sound'
+                  : 'Play soundtrack'}
+          </span>
+        </button>
+        <label className="sound-volume">
+          Volume{' '}
+          <input
+            aria-label="Soundtrack volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value={sound.volume}
+            onChange={(event) => sound.setVolume(Number(event.target.value))}
+          />{' '}
+          {Math.round(sound.volume * 100)}%
+        </label>
+        <p className="sound-status" role="status">
+          {sound.status === 'error'
+            ? 'Playback failed. Check your tab sound settings and try again.'
+            : ''}
+        </p>
+      </div>
+    </details>
   )
 }
