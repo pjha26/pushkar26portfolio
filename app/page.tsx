@@ -4,6 +4,7 @@ import { PageFrame } from '@/components/page-frame'
 import { About } from '@/components/about'
 import { Projects } from '@/components/projects'
 import { Skills } from '@/components/skills'
+import { ProjectDiary } from '@/components/project-diary'
 import { SecureComm } from '@/components/secure-comm'
 import { ClosingScene } from '@/components/closing-scene'
 
@@ -16,6 +17,7 @@ export default function Page() {
       <About embedded />
       <Projects embedded />
       <Skills embedded />
+      <ProjectDiary />
       <SecureComm embedded />
     </PageFrame>
   )

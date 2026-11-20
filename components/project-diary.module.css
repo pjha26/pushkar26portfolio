@@ -1,0 +1,80 @@
+.diary {
+  background: var(--paper);
+  color: var(--ink);
+  padding-block: clamp(44px, 6vw, 88px);
+}
+.heading, .folio, .inscription, .source { display: flex; align-items: center; }
+.heading { gap: 14px; margin-bottom: 28px; }
+.heading svg, .inscription svg, .source { color: var(--accent); }
+.heading h2 { font: 600 clamp(32px, 4vw, 50px)/1.05 var(--font-bricolage), sans-serif; letter-spacing: -.045em; }
+.heading h2 span { color: var(--signal); }
+.notebook {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) minmax(0, 2.2fr);
+  grid-template-rows: repeat(5, minmax(54px, auto));
+  align-items: stretch;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-inline-start: 5px solid var(--accent);
+  background: var(--surface);
+  box-shadow: 2px 3px 0 var(--paper), 3px 4px 0 var(--line), 5px 7px 0 var(--surface);
+}
+.choice { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
+.ribbon {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 12px clamp(14px, 2.8vw, 42px);
+  cursor: pointer;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font: 550 clamp(15px, 1.45vw, 20px)/1.25 var(--font-bricolage), sans-serif;
+}
+.ribbon:last-of-type { border-bottom: 0; }
+.ribbon span, .folio, .note strong { font: 11px/1.5 ui-monospace, monospace; }
+.choice:checked + .ribbon {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  box-shadow: inset 3px 0 var(--signal);
+}
+.choice:focus-visible + .ribbon { outline: 2px solid var(--accent); outline-offset: -4px; }
+.ribbon:hover { color: var(--ink); }
+.leaf {
+  display: none;
+  position: relative;
+  grid-column: 2;
+  grid-row: 1 / span 5;
+  flex-direction: column;
+  align-items: start;
+  margin: 0;
+  padding: clamp(24px, 3.5vw, 52px);
+  border-inline-start: 1px solid var(--line);
+  background: repeating-linear-gradient(0deg, transparent 0 27px, color-mix(in srgb, var(--line) 36%, transparent) 27px 28px), var(--paper);
+  transform-origin: left center;
+}
+.leaf::before { content: ''; position: absolute; top: -1px; right: 7%; width: 16px; height: 25px; background: var(--signal); clip-path: polygon(0 0,100% 0,100% 100%,50% 73%,0 100%); }
+.choice:checked + .ribbon + .leaf { display: flex; }
+.folio { width: 100%; justify-content: space-between; color: var(--muted); }
+.inscription { gap: 10px; margin: 22px 0 7px; }
+.inscription h3 { font: 550 18px/1.2 var(--font-bricolage), sans-serif; }
+.headline { font: italic clamp(28px, 3vw, 42px)/1.1 var(--serif); letter-spacing: -.035em; max-width: 25ch; }
+.body, .note p { max-width: 65ch; font-size: 15px; line-height: 1.6; }
+.body { margin-block: 12px 18px; }
+.note { padding-left: 13px; border-left: 2px solid var(--signal); }
+.note strong { color: var(--signal); }
+.note p { margin-top: 4px; color: var(--muted); }
+.source { gap: 7px; font-size: 14px; min-height: 44px; margin-top: 12px; text-decoration: underline; text-underline-offset: 4px; }
+@media (prefers-reduced-motion: no-preference) {
+  :global(html:not([data-motion='paused'])) .choice:checked + .ribbon + .leaf { animation: unfold .32s cubic-bezier(.2,.75,.25,1); }
+  @keyframes unfold { from { transform: perspective(950px) rotateY(-5deg) translateX(-5px); opacity: .72; } to { transform: none; opacity: 1; } }
+}
+@media (max-width: 700px) {
+  .notebook { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; }
+  .ribbon { grid-column: auto; padding: 10px; gap: 7px; min-height: 48px; }
+  .leaf { grid-column: 1 / -1; grid-row: 4; border-inline-start: 0; border-top: 1px solid var(--line); padding: 24px 17px 12px; }
+}
